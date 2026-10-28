@@ -1,0 +1,263 @@
+﻿[
+    {
+        "Id": "f0098bd52719b79e8eff9415eb4af148ffaca76ad6abf7cadc3c600baba72ab7",
+        "Created": "2026-10-23T22:55:54.816043069Z",
+        "Path": "named",
+        "Args": [
+            "-g",
+            "-u",
+            "named",
+            "-c",
+            "/etc/bind/named.conf"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 652,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-23T22:55:55.806058806Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:7910b10b7ef59210c2fad7a804bcc9efba25dd6d69b4b762bf568db2c28065ba",
+        "ResolvConfPath": "/var/lib/docker/containers/f0098bd52719b79e8eff9415eb4af148ffaca76ad6abf7cadc3c600baba72ab7/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f0098bd52719b79e8eff9415eb4af148ffaca76ad6abf7cadc3c600baba72ab7/hostname",
+        "HostsPath": "/var/lib/docker/containers/f0098bd52719b79e8eff9415eb4af148ffaca76ad6abf7cadc3c600baba72ab7/hosts",
+        "LogPath": "",
+        "Name": "/ns3",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "C:\\dns-m2\\configs\\ns3\\named.conf:/etc/bind/named.conf:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "local",
+                "Config": {}
+            },
+            "NetworkMode": "m2_dns_clientes",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 134217728,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 268435456,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "C:\\dns-m2\\configs\\ns3\\named.conf",
+                "Destination": "/etc/bind/named.conf",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "f0098bd52719",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "53/tcp": {},
+                "53/udp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "named",
+                "-g",
+                "-u",
+                "named",
+                "-c",
+                "/etc/bind/named.conf"
+            ],
+            "Image": "m2-dns-bind-local",
+            "Volumes": null,
+            "WorkingDir": "/",
+            "Entrypoint": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "fdc8764329b9d7041b9495b385202acf521261e6b7c0a14a989dd4cd16130573",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "ns1:service_started:false",
+                "com.docker.compose.image": "sha256:cb0064450c178191508469bf7f83f3ef060f03f8e191bdb2a6ca85030b203cd8",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "dns-m2",
+                "com.docker.compose.project.config_files": "C:\\dns-m2\\compose.yaml",
+                "com.docker.compose.project.working_dir": "C:\\dns-m2",
+                "com.docker.compose.service": "ns3",
+                "com.docker.compose.version": "5.6.1"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "1f60d39bbff1226ef5e7114d263bc6dc937d98f563073f19f34cc02a834e0a8b",
+            "SandboxKey": "/var/run/docker/netns/1f60d39bbff1",
+            "Ports": {
+                "53/tcp": null,
+                "53/udp": null
+            },
+            "Networks": {
+                "m2_dns_clientes": {
+                    "IPAMConfig": {
+                        "IPv4Address": "172.31.0.13"
+                    },
+                    "Links": null,
+                    "Aliases": [
+                        "ns3",
+                        "ns3"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "65ca7577c840249764948e7698bbf1fe72ffafca996a66ce487add27b0847b80",
+                    "EndpointID": "c85a59a04c4bb6f86c7de46a2c160a5e7d29463b20e2e5371bd2f0c6eb27f4b8",
+                    "Gateway": "172.31.0.1",
+                    "IPAddress": "172.31.0.13",
+                    "MacAddress": "06:af:29:f9:2c:37",
+                    "IPPrefixLen": 24,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "ns3",
+                        "f0098bd52719"
+                    ]
+                },
+                "m2_dns_interna": {
+                    "IPAMConfig": {
+                        "IPv4Address": "172.30.0.13"
+                    },
+                    "Links": null,
+                    "Aliases": [
+                        "ns3",
+                        "ns3"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "2bbd19e1ae1221dce9e8aa3e590edda6b30b018cbb25058fe0a6cba91bf21b20",
+                    "EndpointID": "7a7f97c2905ceaeab04169163af44f22f22210e70033f3047e6b52dc4994a27f",
+                    "Gateway": "172.30.0.1",
+                    "IPAddress": "172.30.0.13",
+                    "MacAddress": "aa:32:8d:6f:8e:c5",
+                    "IPPrefixLen": 24,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "ns3",
+                        "f0098bd52719"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:cb0064450c178191508469bf7f83f3ef060f03f8e191bdb2a6ca85030b203cd8",
+            "size": 673,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

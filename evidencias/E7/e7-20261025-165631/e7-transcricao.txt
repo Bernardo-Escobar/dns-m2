@@ -1,0 +1,3355 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261025165632
+Nome de Usuário: Bortoloci\Gabriel Bortoloci
+Executar como Usuário: Bortoloci\Gabriel Bortoloci
+Nome da Configuração: 
+Computador: BORTOLOCI (Microsoft Windows NT 10.0.26200.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 101592
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcrição iniciada, o arquivo de saída é C:\dns-m2\evidencias\E7\e7-20261025-165631\e7-transcricao.txt
+PS C:\dns-m2> @(
+    "E7 - RECUPERACAO"
+    "Previsao registrada antes das medicoes:"
+    "NS3 recuperara a comunicacao com NS1 ao ser reconectado."
+    "NS3 devera transferir a versao mais recente da zona."
+    "O serial SOA devera convergir para o mesmo valor de NS1 e NS2."
+    "A recuperacao sera medida em cinco repeticoes."
+) | Set-Content "$pastaE7\e7-previsao.txt" -Encoding UTF8
+PS C:\dns-m2> docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    Tee-Object -FilePath "$pastaE7\e7-estado-rede-inicial.txt"
+{"m2_dns_clientes":{"IPAMConfig":{"IPv4Address":"172.31.0.13"},"Links":null,"Aliases":["ns3","ns3"],"DriverOpts":null,"GwPriority":0,"NetworkID":"65ca7577c840249764948e7698bbf1fe72ffafca996a66ce487add27b0847b80","EndpointID":"c85a59a04c4bb6f86c7de46a2c160a5e7d29463b20e2e5371bd2f0c6eb27f4b8","Gateway":"172.31.0.1","IPAddress":"172.31.0.13","MacAddress":"06:af:29:f9:2c:37","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["ns3","f0098bd52719"]}}
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.13" sd.lab SOA +norecurse +noall +comments +answer |
+    Tee-Object -FilePath "$pastaE7\e7-estado-ns3-inicial.txt"
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 2626
+;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 3df134979d46ea2a010000006ade5efd77eb11073c3bcf3b (good)
+PS C:\dns-m2> $respostaPrimario = docker exec cliente dig "@172.31.0.11" sd.lab SOA +short
+PS C:\dns-m2> $serialAlvo = [regex]::Match(
+    ($respostaPrimario -join " "),
+    '\b\d{10}\b'
+).Value
+PS C:\dns-m2> if (-not $serialAlvo) {
+    throw "Nao foi possivel obter o serial do NS1."
+}
+PS C:\dns-m2> Write-Host "Serial alvo: $serialAlvo"
+Serial alvo: 2026102317
+PS C:\dns-m2> $csvE7 = "$pastaE7\e7-medicao-01.csv"
+PS C:\dns-m2> $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+PS C:\dns-m2> docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    $relogio.Stop()
+    throw "Falha ao reconectar NS3."
+}
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $tentativa = 0
+PS C:\dns-m2> $ultimoEstado = ""
+PS C:\dns-m2> while ($relogio.Elapsed.TotalSeconds -lt 180) {
+
+    $tentativa++
+
+    $resposta = @(
+        docker exec cliente dig "@172.31.0.13" sd.lab SOA +norecurse +short +time=2 +tries=1 2>&1
+    )
+
+    $serialNS3 = [regex]::Match(
+        ($resposta -join " "),
+        '\b\d{10}\b'
+    ).Value
+
+    $segundos = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+    $estado = if ($serialNS3 -eq $serialAlvo) {
+        "SINCRONIZADO"
+    } elseif ($serialNS3) {
+        "DESATUALIZADO"
+    } else {
+        "SEM_SOA"
+    }
+
+    [PSCustomObject]@{
+        Horario = (Get-Date).ToString("o")
+        Tentativa = $tentativa
+        Segundos = $segundos
+        SerialNS3 = $serialNS3
+        SerialAlvo = $serialAlvo
+        Estado = $estado
+    } | Export-Csv $csvE7 -NoTypeInformation -Append -Encoding UTF8
+
+    if ($estado -ne $ultimoEstado -or $tentativa % 10 -eq 0) {
+        Write-Host "[$segundos s] NS3: $serialNS3 | $estado"
+    }
+
+    $ultimoEstado = $estado
+
+    if ($serialNS3 -eq $serialAlvo) {
+        $sincronizado = $true
+        break
+    }
+
+    Start-Sleep -Milliseconds 100
+}
+[0.419 s] NS3:  | SEM_SOA
+[2.658 s] NS3:  | SEM_SOA
+[5.227 s] NS3:  | SEM_SOA
+[7.955 s] NS3:  | SEM_SOA
+[10.799 s] NS3:  | SEM_SOA
+[13.536 s] NS3:  | SEM_SOA
+[15.947 s] NS3:  | SEM_SOA
+[18.506 s] NS3:  | SEM_SOA
+[21.083 s] NS3:  | SEM_SOA
+[23.589 s] NS3:  | SEM_SOA
+[26.004 s] NS3:  | SEM_SOA
+[28.696 s] NS3:  | SEM_SOA
+[31.202 s] NS3:  | SEM_SOA
+[33.695 s] NS3:  | SEM_SOA
+[36.108 s] NS3:  | SEM_SOA
+[38.486 s] NS3:  | SEM_SOA
+[41.016 s] NS3:  | SEM_SOA
+[43.779 s] NS3:  | SEM_SOA
+[46.428 s] NS3:  | SEM_SOA
+[48.907 s] NS3:  | SEM_SOA
+[51.617 s] NS3:  | SEM_SOA
+[54.037 s] NS3:  | SEM_SOA
+[56.633 s] NS3:  | SEM_SOA
+[59.334 s] NS3:  | SEM_SOA
+[61.948 s] NS3:  | SEM_SOA
+[64.502 s] NS3:  | SEM_SOA
+[66.985 s] NS3:  | SEM_SOA
+[69.607 s] NS3:  | SEM_SOA
+[72.265 s] NS3:  | SEM_SOA
+[74.966 s] NS3:  | SEM_SOA
+[77.416 s] NS3:  | SEM_SOA
+[79.885 s] NS3:  | SEM_SOA
+[82.267 s] NS3:  | SEM_SOA
+[84.91 s] NS3:  | SEM_SOA
+[87.5 s] NS3:  | SEM_SOA
+[89.97 s] NS3:  | SEM_SOA
+[92.643 s] NS3:  | SEM_SOA
+[95.381 s] NS3:  | SEM_SOA
+[97.995 s] NS3:  | SEM_SOA
+[101.048 s] NS3:  | SEM_SOA
+[103.814 s] NS3:  | SEM_SOA
+[106.25 s] NS3:  | SEM_SOA
+[109.086 s] NS3:  | SEM_SOA
+[111.891 s] NS3:  | SEM_SOA
+[114.634 s] NS3:  | SEM_SOA
+[117.227 s] NS3:  | SEM_SOA
+[119.674 s] NS3:  | SEM_SOA
+[122.103 s] NS3:  | SEM_SOA
+[124.521 s] NS3:  | SEM_SOA
+[126.939 s] NS3:  | SEM_SOA
+[129.589 s] NS3:  | SEM_SOA
+[132.684 s] NS3:  | SEM_SOA
+[136.185 s] NS3:  | SEM_SOA
+[138.8 s] NS3:  | SEM_SOA
+[141.309 s] NS3:  | SEM_SOA
+[143.77 s] NS3:  | SEM_SOA
+[146.241 s] NS3:  | SEM_SOA
+[148.64 s] NS3:  | SEM_SOA
+[151.297 s] NS3:  | SEM_SOA
+[154.015 s] NS3:  | SEM_SOA
+[156.721 s] NS3:  | SEM_SOA
+[159.181 s] NS3:  | SEM_SOA
+[161.636 s] NS3:  | SEM_SOA
+[164.03 s] NS3:  | SEM_SOA
+[166.894 s] NS3:  | SEM_SOA
+[169.602 s] NS3:  | SEM_SOA
+[172.376 s] NS3:  | SEM_SOA
+[175.116 s] NS3:  | SEM_SOA
+[177.522 s] NS3:  | SEM_SOA
+[180.118 s] NS3:  | SEM_SOA
+PS C:\dns-m2> $relogio.Stop()
+PS C:\dns-m2> "Medicao 01 - Sincronizado: $sincronizado | Tempo: $segundos s | Serial: $serialNS3" |
+    Tee-Object -FilePath "$pastaE7\e7-resultado-medicao-01.txt"
+Medicao 01 - Sincronizado: False | Tempo: 180.118 s | Serial:
+PS C:\dns-m2> docker logs --timestamps ns3 2>&1 |
+    Out-File "$pastaE7\e7-logs-ns3-medicao-01.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --timestamps ns1 2>&1 |
+    Out-File "$pastaE7\e7-logs-ns1-medicao-01.txt" -Encoding UTF8
+PS C:\dns-m2> $pastaE7 = (
+    Get-ChildItem "C:\dns-m2\evidencias\E7" -Directory |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+).FullName
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $arquivoDiag = "$pastaE7\e7-diagnostico-$carimbo.txt"
+PS C:\dns-m2> function Registrar-Diagnostico {
+    param([string]$Titulo, [scriptblock]$Comando)
+
+    "`n=== $Titulo ===" |
+        Tee-Object -FilePath $arquivoDiag -Append
+
+    & $Comando 2>&1 |
+        Out-String -Width 240 |
+        Tee-Object -FilePath $arquivoDiag -Append
+}
+PS C:\dns-m2> Registrar-Diagnostico "REDES DO NS3" {
+    docker inspect ns3 --format '{{json .NetworkSettings.Networks}}'
+}
+
+=== REDES DO NS3 ===
+{"m2_dns_clientes":{"IPAMConfig":{"IPv4Address":"172.31.0.13"},"Links":null,"Aliases":["ns3","ns3"],"DriverOpts":null,"GwPriority":0,"NetworkID":"65ca7577c840249764948e7698bbf1fe72ffafca996a66ce487add27b0847b80","EndpointID":"c85a59a04c4bb6f86c7de46a2c160a5e7d29463b20e2e5371bd2f0c6eb27f4b8","Gateway":"172.31.0.1","IPAddress":"172.31.0.13","MacAddress":"06:af:29:f9:2c:37","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["ns3","f0098bd52719"]},"m2_dns_interna":{"IPAMConfig":{"IPv4Address":"172.30.0.13"},"Links":null,"Aliases":[],"DriverOpts":{},"GwPriority":0,"NetworkID":"2bbd19e1ae1221dce9e8aa3e590edda6b30b018cbb25058fe0a6cba91bf21b20","EndpointID":"b7c5da3b1301fd8f3b6f39951eccd83c107a6ecf302e104276c471fa3eac32e1","Gateway":"172.30.0.1","IPAddress":"172.30.0.13","MacAddress":"fe:d4:28:5a:6f:f3","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["ns3","f0098bd52719"]}}
+PS C:\dns-m2> Registrar-Diagnostico "COMUNICACAO NS3 PARA NS1" {
+    docker exec ns3 dig "@172.30.0.11" sd.lab SOA +time=2 +tries=1 +noall +comments +answer
+}
+
+=== COMUNICACAO NS3 PARA NS1 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 56356
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: cc613213f3c15c6f010000006ade61a8412605d810d94bf9 (good)
+;; ANSWER SECTION:
+sd.lab.			60	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+PS C:\dns-m2> Registrar-Diagnostico "ESTADO DA ZONA NS3" {
+    docker exec ns3 rndc zonestatus sd.lab
+}
+
+=== ESTADO DA ZONA NS3 ===
+name: sd.lab
+type: secondary
+files: /var/lib/bind/db.sd.lab
+serial: 2026102317
+nodes: 6
+last loaded: Sun, 25 Oct 2026 20:00:55 GMT
+next refresh: Sun, 25 Oct 2026 20:09:02 GMT
+expires: Sun, 25 Oct 2026 20:13:38 GMT
+secure: no
+dynamic: no
+reconfigurable via modzone: no
+PS C:\dns-m2> Registrar-Diagnostico "RESPOSTA AUTORITATIVA NS3" {
+    docker exec cliente dig "@172.31.0.13" sd.lab SOA +norecurse +time=2 +tries=1 +noall +comments +answer
+}
+
+=== RESPOSTA AUTORITATIVA NS3 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 31665
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: c2412fe14c6b7974010000006ade61f27c3777fcb997d289 (good)
+;; ANSWER SECTION:
+sd.lab.			60	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+PS C:\dns-m2> Registrar-Diagnostico "LOGS RECENTES NS3" {
+    docker logs --since 15m ns3 2>&1 |
+        Select-Object -Last 70
+}
+
+=== LOGS RECENTES NS3 ===
+25-Oct-2026 19:59:45.306 client @0x74bbc9735410 172.31.0.100#56498 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:45.306 client @0x74bbc9735410 172.31.0.100#56498 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:45.654 client @0x74bbc97382e0 172.31.0.100#49563 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:45.654 client @0x74bbc97382e0 172.31.0.100#49563 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:45.995 client @0x74bbc36b52e0 172.31.0.100#49221 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:45.995 client @0x74bbc36b52e0 172.31.0.100#49221 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:46.227 client @0x74bbc9735410 172.31.0.100#42891 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:46.227 client @0x74bbc9735410 172.31.0.100#42891 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:46.459 client @0x74bbc36c5240 172.31.0.100#36926 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:46.459 client @0x74bbc36c5240 172.31.0.100#36926 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:46.707 client @0x74bbc36e5250 172.31.0.100#35101 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:46.707 client @0x74bbc36e5250 172.31.0.100#35101 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:46.967 client @0x74bbc973c2b0 172.31.0.100#58340 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:46.967 client @0x74bbc973c2b0 172.31.0.100#58340 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:47.303 client @0x74bbc97382e0 172.31.0.100#52460 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:47.303 client @0x74bbc97382e0 172.31.0.100#52460 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:47.559 client @0x74bbc36d11a0 172.31.0.100#43884 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:47.559 client @0x74bbc36d11a0 172.31.0.100#43884 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:47.799 client @0x74bbc9735410 172.31.0.100#57584 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:47.799 client @0x74bbc9735410 172.31.0.100#57584 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:48.039 client @0x74bbc36e5250 172.31.0.100#42870 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:48.039 client @0x74bbc36e5250 172.31.0.100#42870 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:48.279 client @0x74bbc973c2b0 172.31.0.100#47967 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:48.279 client @0x74bbc973c2b0 172.31.0.100#47967 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:48.527 client @0x74bbc36e5250 172.31.0.100#50859 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:48.527 client @0x74bbc36e5250 172.31.0.100#50859 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:48.791 client @0x74bbc36e5250 172.31.0.100#33084 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:48.791 client @0x74bbc36e5250 172.31.0.100#33084 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:49.019 client @0x74bbc36d7170 172.31.0.100#59753 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:49.019 client @0x74bbc36d7170 172.31.0.100#59753 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:49.243 client @0x74bbc36d3220 172.31.0.100#51938 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:49.243 client @0x74bbc36d3220 172.31.0.100#51938 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:49.471 client @0x74bbc36eb280 172.31.0.100#36549 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:49.471 client @0x74bbc36eb280 172.31.0.100#36549 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:49.687 client @0x74bbc36b52e0 172.31.0.100#57346 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:49.687 client @0x74bbc36b52e0 172.31.0.100#57346 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:49.971 client @0x74bbc36c5240 172.31.0.100#59097 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:49.971 client @0x74bbc36c5240 172.31.0.100#59097 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:50.231 client @0x74bbc36d3220 172.31.0.100#51204 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:50.231 client @0x74bbc36d3220 172.31.0.100#51204 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:50.463 client @0x74bbc973c2b0 172.31.0.100#53360 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:50.463 client @0x74bbc973c2b0 172.31.0.100#53360 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:50.687 client @0x74bbc36e5250 172.31.0.100#51295 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:50.687 client @0x74bbc36e5250 172.31.0.100#51295 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:50.932 client @0x74bbc36e5250 172.31.0.100#53303 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:50.932 client @0x74bbc36e5250 172.31.0.100#53303 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:51.236 client @0x74bbc36d3220 172.31.0.100#56019 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:51.236 client @0x74bbc36d3220 172.31.0.100#56019 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:51.536 client @0x74bbc36eb280 172.31.0.100#37966 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:51.536 client @0x74bbc36eb280 172.31.0.100#37966 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:51.796 client @0x74bbc36e5250 172.31.0.100#46680 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:51.796 client @0x74bbc36e5250 172.31.0.100#46680 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:52.048 client @0x74bbc36eb280 172.31.0.100#46881 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:52.048 client @0x74bbc36eb280 172.31.0.100#46881 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:52.300 client @0x74bbc36d7170 172.31.0.100#48795 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:52.300 client @0x74bbc36d7170 172.31.0.100#48795 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:52.544 client @0x74bbc36d11a0 172.31.0.100#41558 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:52.544 client @0x74bbc36d11a0 172.31.0.100#41558 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:52.816 client @0x74bbc36e32e0 172.31.0.100#36353 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:52.816 client @0x74bbc36e32e0 172.31.0.100#36353 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 19:59:53.060 client @0x74bbc36d11a0 172.31.0.100#47641 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+25-Oct-2026 19:59:53.060 client @0x74bbc36d11a0 172.31.0.100#47641 (sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+25-Oct-2026 20:00:55.910 zone sd.lab/IN: Transfer started.
+25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53: connected using 172.30.0.11#53
+25-Oct-2026 20:00:55.910 zone sd.lab/IN: transferred serial 2026102317
+25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer status: success
+25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 2026102317)
+25-Oct-2026 20:00:55.910 zone sd.lab/IN: sending notifies (serial 2026102317)
+25-Oct-2026 20:08:49.233 received control channel command 'zonestatus sd.lab'
+25-Oct-2026 20:09:22.753 client @0x74bbc36d3220 172.31.0.100#51142 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+PS C:\dns-m2> $arquivoCSV = "$pastaE7\e7-medicao-01.csv"
+PS C:\dns-m2> $primeiraLinha = Import-Csv $arquivoCSV |
+    Select-Object -First 1
+PS C:\dns-m2> $segundosPrimeiraConsulta = [double]::Parse(
+    ($primeiraLinha.Segundos -replace ',', '.'),
+    [System.Globalization.CultureInfo]::InvariantCulture
+)
+PS C:\dns-m2> $inicioEstimado = (
+    [datetimeoffset]::Parse($primeiraLinha.Horario)
+).AddSeconds(-$segundosPrimeiraConsulta)
+PS C:\dns-m2> $momentoTransferencia = [datetimeoffset]::Parse(
+    "2026-10-25T20:00:55.910Z"
+)
+PS C:\dns-m2> $tempoRecuperacao = [math]::Round(
+    ($momentoTransferencia - $inicioEstimado).TotalSeconds,
+    3
+)
+PS C:\dns-m2> $resultado = @(
+    "E7 - PRIMEIRA RECUPERACAO"
+    "Inicio estimado: $inicioEstimado"
+    "Transferencia: $momentoTransferencia"
+    "Tempo aproximado: $tempoRecuperacao segundos"
+    "Resultado: sincronizacao automatica confirmada pelos logs"
+    "Observacao: monitoramento encerrado antes da convergencia"
+)
+PS C:\dns-m2> $resultado |
+    Tee-Object -FilePath "$pastaE7\e7-medicao-01-analise.txt"
+E7 - PRIMEIRA RECUPERACAO
+Inicio estimado: 10/25/2026 16:56:52 -03:00
+Transferencia: 10/25/2026 20:00:55 +00:00
+Tempo aproximado: 242.966 segundos
+Resultado: sincronizacao automatica confirmada pelos logs
+Observacao: monitoramento encerrado antes da convergencia
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $arquivoLogs = "$pastaE7\e7-logs-recuperacao-$carimbo.txt"
+PS C:\dns-m2> docker logs --timestamps ns3 2>&1 |
+    Out-File $arquivoLogs -Encoding UTF8
+PS C:\dns-m2> Select-String -Path $arquivoLogs `
+    -Pattern "transferred serial 2026102317|Transfer status: success" `
+    -Context 3,3 |
+    Tee-Object -FilePath "$pastaE7\e7-transferencia-confirmada-$carimbo.txt"
+
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:128:2026-10-23T22:55:56.21
+7583846Z 23-Oct-2026 22:55:56.216 network unreachable resolving './DNSKEY/IN':
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:129:2001:500:12::d0d#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:130:2026-10-23T22:55:56.21
+7586027Z 23-Oct-2026 22:55:56.216 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:131:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:132:2026-10-23T22:55:56.21
+7588084Z 23-Oct-2026 22:55:56.216 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:133:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:134:2026102301)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:175:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:176:2026-10-23T23:02:34.25
+9607725Z 23-Oct-2026 23:02:34.257 zone sd.lab/IN: transferred serial 2026102302
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:177:2026-10-23T23:02:34.25
+9660628Z 23-Oct-2026 23:02:34.257 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:178:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:179:2026-10-23T23:02:34.25
+9673641Z 23-Oct-2026 23:02:34.257 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:180:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:181:2026102302)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:198:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:199:2026-10-23T23:07:35.36
+1464892Z 23-Oct-2026 23:07:35.356 zone sd.lab/IN: transferred serial 2026102303
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:200:2026-10-23T23:07:35.36
+2355756Z 23-Oct-2026 23:07:35.356 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:201:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:202:2026-10-23T23:07:35.36
+2399257Z 23-Oct-2026 23:07:35.356 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:203:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:204:2026102303)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:221:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:222:2026-10-23T23:07:40.36
+2588295Z 23-Oct-2026 23:07:40.359 zone sd.lab/IN: transferred serial 2026102304
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:223:2026-10-23T23:07:40.36
+2948743Z 23-Oct-2026 23:07:40.359 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:224:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:225:2026-10-23T23:07:40.36
+2972948Z 23-Oct-2026 23:07:40.359 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:226:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:227:2026102304)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:244:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:245:2026-10-23T23:07:45.35
+9308530Z 23-Oct-2026 23:07:45.355 zone sd.lab/IN: transferred serial 2026102305
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:246:2026-10-23T23:07:45.35
+9343647Z 23-Oct-2026 23:07:45.355 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:247:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:248:2026-10-23T23:07:45.35
+9349628Z 23-Oct-2026 23:07:45.355 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:249:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:250:2026102305)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:267:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:268:2026-10-23T23:07:50.36
+2348701Z 23-Oct-2026 23:07:50.356 zone sd.lab/IN: transferred serial 2026102306
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:269:2026-10-23T23:07:50.36
+2391546Z 23-Oct-2026 23:07:50.360 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:270:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:271:2026-10-23T23:07:50.36
+2396269Z 23-Oct-2026 23:07:50.360 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:272:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:273:2026102306)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:290:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:291:2026-10-23T23:07:55.35
+8885881Z 23-Oct-2026 23:07:55.356 zone sd.lab/IN: transferred serial 2026102307
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:292:2026-10-23T23:07:55.35
+8913566Z 23-Oct-2026 23:07:55.356 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:293:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:294:2026-10-23T23:07:55.35
+8918895Z 23-Oct-2026 23:07:55.356 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:295:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:296:2026102307)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:301:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:302:2026-10-23T23:11:59.39
+1544693Z 23-Oct-2026 23:11:59.389 zone sd.lab/IN: transferred serial 2026102308
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:303:2026-10-23T23:11:59.39
+1891202Z 23-Oct-2026 23:11:59.389 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:304:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:305:2026-10-23T23:11:59.39
+1907070Z 23-Oct-2026 23:11:59.389 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:306:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:307:2026102308)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:316:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:317:2026-10-23T23:12:24.43
+7235236Z 23-Oct-2026 23:12:24.391 zone sd.lab/IN: transferred serial 2026102309
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:318:2026-10-23T23:12:24.43
+8044650Z 23-Oct-2026 23:12:24.431 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:319:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:320:2026-10-23T23:12:24.43
+8189222Z 23-Oct-2026 23:12:24.431 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:321:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.040 secs (5600 bytes/sec) (serial 2026102309)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:322:2026-10-23T23:12:24.43
+8225837Z 23-Oct-2026 23:12:24.431 zone sd.lab/IN: sending notifies (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:330:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:331:2026-10-23T23:12:52.40
+2494255Z 23-Oct-2026 23:12:52.394 zone sd.lab/IN: transferred serial 2026102310
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:332:2026-10-23T23:12:52.40
+2522389Z 23-Oct-2026 23:12:52.398 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:333:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:334:2026-10-23T23:12:52.40
+2527324Z 23-Oct-2026 23:12:52.398 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:335:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:336:2026102310)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:345:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:346:2026-10-23T23:13:46.40
+4711852Z 23-Oct-2026 23:13:46.400 zone sd.lab/IN: transferred serial 2026102311
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:347:2026-10-23T23:13:46.40
+4737904Z 23-Oct-2026 23:13:46.400 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:348:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:349:2026-10-23T23:13:46.40
+4744493Z 23-Oct-2026 23:13:46.400 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:350:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:351:2026102311)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:364:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:365:2026-10-23T23:14:14.41
+1786065Z 23-Oct-2026 23:14:14.407 zone sd.lab/IN: transferred serial 2026102312
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:366:2026-10-23T23:14:14.41
+2378416Z 23-Oct-2026 23:14:14.407 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:367:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:368:2026-10-23T23:14:14.41
+2425029Z 23-Oct-2026 23:14:14.407 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:369:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.004 secs (56000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:370:2026102312)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:395:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:396:2026-10-23T23:18:54.51
+8833096Z 23-Oct-2026 23:18:54.512 zone sd.lab/IN: transferred serial 2026102313
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:397:2026-10-23T23:18:54.51
+8852349Z 23-Oct-2026 23:18:54.512 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:398:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:399:2026-10-23T23:18:54.51
+8856980Z 23-Oct-2026 23:18:54.512 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:400:Transfer completed: 1
+messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:401:2026102313)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:418:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:419:2026-10-23T23:24:39.60
+0817679Z 23-Oct-2026 23:24:39.598 zone sd.lab/IN: transferred serial 2026102314
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:420:2026-10-23T23:24:39.60
+0843217Z 23-Oct-2026 23:24:39.598 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:421:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:422:2026-10-23T23:24:39.60
+0849322Z 23-Oct-2026 23:24:39.598 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:423:Transfer completed: 1
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:424:2026102314)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:504:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:505:2026-10-23T23:41:00.92
+7306861Z 23-Oct-2026 23:41:00.925 zone sd.lab/IN: transferred serial 2026102315
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:506:2026-10-23T23:41:00.92
+7586644Z 23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:507:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:508:2026-10-23T23:41:00.92
+7598338Z 23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:509:Transfer completed: 1
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:510:2026102315)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:522:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:523:2026-10-24T05:49:45.36
+3065229Z 24-Oct-2026 05:49:45.336 zone sd.lab/IN: transferred serial 2026102315
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:524:2026-10-24T05:49:45.36
+3070730Z 24-Oct-2026 05:49:45.336 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:525:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:526:2026-10-24T05:49:45.36
+3076221Z 24-Oct-2026 05:49:45.336 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:527:Transfer completed: 1
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:528:2026102315)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:570:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:571:2026-10-25T18:44:15.09
+5986847Z 25-Oct-2026 18:44:15.091 zone sd.lab/IN: transferred serial 2026102315
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:572:2026-10-25T18:44:15.09
+6348865Z 25-Oct-2026 18:44:15.091 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:573:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:574:2026-10-25T18:44:15.09
+6391935Z 25-Oct-2026 18:44:15.091 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:575:Transfer completed: 1
+messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:576:2026102315)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:631:connected using
+172.30.0.11#53
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:632:2026-10-25T19:03:30.92
+5628795Z 25-Oct-2026 19:03:30.921 zone sd.lab/IN: transferred serial 2026102316
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:633:2026-10-25T19:03:30.92
+5661281Z 25-Oct-2026 19:03:30.921 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:634:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:635:2026-10-25T19:03:30.92
+5667500Z 25-Oct-2026 19:03:30.921 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:636:Transfer completed: 1
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:637:2026102316)
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3476:2026-10-25T20:00:55.9
+14795234Z 25-Oct-2026 20:00:55.910 zone sd.lab/IN: Transfer started.
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3477:2026-10-25T20:00:55.9
+15087667Z 25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3478:connected using
+172.30.0.11#53
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3479:2026-10-25T20:00:55.9
+15854698Z 25-Oct-2026 20:00:55.910 zone sd.lab/IN: transferred serial 2026102317
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3480:2026-10-25T20:00:55.9
+15861217Z 25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3481:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3482:2026-10-25T20:00:55.9
+15863122Z 25-Oct-2026 20:00:55.910 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3483:Transfer completed:
+1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\e7-logs-recuperacao-20261025-171246.txt:3484:2026102317)
+
+
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    Write-Host "=== NS$s ==="
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short
+}
+=== NS11 ===
+
+=== NS12 ===
+
+=== NS13 ===
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $pastaRodada = "$pastaE7\rodada-02-$carimbo"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada -ErrorAction Stop | Out-Null
+PS C:\dns-m2> Write-Host "Evidencias da rodada: $pastaRodada"
+Evidencias da rodada: C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550
+PS C:\dns-m2> $arquivoAntes = "$pastaRodada\e7-02-estado-inicial.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoAntes -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoAntes -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+PS C:\dns-m2> "Inicio da particao: $(Get-Date -Format o)" |
+    Tee-Object -FilePath "$pastaRodada\e7-02-eventos.txt"
+Inicio da particao: 2026-10-25T17:16:01.8933425-03:00
+PS C:\dns-m2> docker network disconnect m2_dns_interna ns3
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Falha ao desconectar o NS3."
+}
+PS C:\dns-m2> .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.3 |
+    Tee-Object -FilePath "$pastaRodada\e7-02-alteracao.txt"
+app.sd.lab: 10.0.0.2 -> 10.0.0.3 | serial 2026102317 -> 2026102318
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+PS C:\dns-m2> Start-Sleep -Seconds 5
+PS C:\dns-m2> $arquivoDivergencia = "$pastaRodada\e7-02-divergencia.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoDivergencia -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoDivergencia -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoDivergencia -Append
+}
+=== NS11 ===
+10.0.0.3
+ns1.sd.lab. admin.sd.lab. 2026102318 30 10 300 20
+=== NS12 ===
+10.0.0.3
+ns1.sd.lab. admin.sd.lab. 2026102318 30 10 300 20
+=== NS13 ===
+10.0.0.2
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaRodada = "C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550"
+PS C:\dns-m2> $csvE7 = "$pastaRodada\e7-02-monitoramento.csv"
+PS C:\dns-m2> $arquivoResultado = "$pastaRodada\e7-02-resultado.txt"
+PS C:\dns-m2> $arquivoEventos = "$pastaRodada\e7-02-eventos.txt"
+PS C:\dns-m2> # Consultar o serial esperado no primario
+PS C:\dns-m2> $respostaNS1 = docker exec cliente dig "@172.31.0.11" sd.lab SOA +norecurse +short
+PS C:\dns-m2> $serialAlvo = [regex]::Match(
+    ($respostaNS1 -join " "),
+    '\b\d{10}\b'
+).Value
+PS C:\dns-m2> if (-not $serialAlvo) {
+    throw "Nao foi possivel identificar o serial do NS1."
+}
+PS C:\dns-m2> Write-Host "Serial alvo: $serialAlvo"
+Serial alvo: 2026102318
+PS C:\dns-m2> # Iniciar medicao
+PS C:\dns-m2> $inicioReconexao = Get-Date
+PS C:\dns-m2> $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+PS C:\dns-m2> "Reconexao iniciada: $($inicioReconexao.ToString('o'))" |
+    Add-Content $arquivoEventos
+PS C:\dns-m2> docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    $relogio.Stop()
+    throw "Falha na reconexao do NS3. Nao continuar a medicao."
+}
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $tentativa = 0
+PS C:\dns-m2> $ultimoEstado = ""
+PS C:\dns-m2> while ($relogio.Elapsed.TotalSeconds -lt 420) {
+
+    $tentativa++
+
+    $resposta = @(
+        docker exec cliente dig "@172.31.0.13" sd.lab SOA +norecurse +short +time=2 +tries=1 2>&1
+    )
+
+    $serialNS3 = [regex]::Match(
+        ($resposta -join " "),
+        '\b\d{10}\b'
+    ).Value
+
+    $tempo = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+    if ($serialNS3 -eq $serialAlvo) {
+        $estado = "SINCRONIZADO"
+    }
+    elseif ($serialNS3) {
+        $estado = "DESATUALIZADO"
+    }
+    else {
+        $estado = "SEM_SOA"
+    }
+
+    [PSCustomObject]@{
+        Horario = (Get-Date).ToString("o")
+        Tentativa = $tentativa
+        Segundos = $tempo
+        SerialNS3 = $serialNS3
+        SerialAlvo = $serialAlvo
+        Estado = $estado
+    } | Export-Csv $csvE7 -NoTypeInformation -Append -Encoding UTF8
+
+    if ($estado -ne $ultimoEstado -or $tentativa % 20 -eq 0) {
+        Write-Host "[$tempo s] NS3: $serialNS3 | $estado"
+    }
+
+    $ultimoEstado = $estado
+
+    if ($estado -eq "SINCRONIZADO") {
+        $sincronizado = $true
+        break
+    }
+
+    Start-Sleep -Milliseconds 100
+}
+[0.492 s] NS3: 2026102317 | DESATUALIZADO
+[5.062 s] NS3: 2026102317 | DESATUALIZADO
+[9.952 s] NS3: 2026102317 | DESATUALIZADO
+[14.966 s] NS3: 2026102317 | DESATUALIZADO
+[19.865 s] NS3: 2026102317 | DESATUALIZADO
+[24.771 s] NS3: 2026102317 | DESATUALIZADO
+[29.922 s] NS3: 2026102317 | DESATUALIZADO
+[34.973 s] NS3: 2026102317 | DESATUALIZADO
+[40.212 s] NS3: 2026102317 | DESATUALIZADO
+[45.326 s] NS3: 2026102317 | DESATUALIZADO
+[50.403 s] NS3: 2026102317 | DESATUALIZADO
+[55.248 s] NS3: 2026102317 | DESATUALIZADO
+[60.69 s] NS3: 2026102317 | DESATUALIZADO
+[65.838 s] NS3: 2026102317 | DESATUALIZADO
+[70.869 s] NS3: 2026102317 | DESATUALIZADO
+[76.607 s] NS3: 2026102317 | DESATUALIZADO
+[82.439 s] NS3: 2026102317 | DESATUALIZADO
+[87.828 s] NS3: 2026102317 | DESATUALIZADO
+[93.747 s] NS3: 2026102317 | DESATUALIZADO
+[97.877 s] NS3:  | SEM_SOA
+[99.589 s] NS3:  | SEM_SOA
+[105.309 s] NS3:  | SEM_SOA
+[110.915 s] NS3:  | SEM_SOA
+[116.386 s] NS3:  | SEM_SOA
+[122.013 s] NS3:  | SEM_SOA
+[127.434 s] NS3:  | SEM_SOA
+[132.261 s] NS3:  | SEM_SOA
+[137.193 s] NS3:  | SEM_SOA
+[142.461 s] NS3:  | SEM_SOA
+[147.565 s] NS3:  | SEM_SOA
+[152.628 s] NS3:  | SEM_SOA
+[157.858 s] NS3:  | SEM_SOA
+[162.987 s] NS3:  | SEM_SOA
+[168.262 s] NS3:  | SEM_SOA
+[173.586 s] NS3:  | SEM_SOA
+[178.828 s] NS3:  | SEM_SOA
+[183.923 s] NS3:  | SEM_SOA
+[189.5 s] NS3:  | SEM_SOA
+[194.403 s] NS3:  | SEM_SOA
+[199.205 s] NS3:  | SEM_SOA
+[204.589 s] NS3:  | SEM_SOA
+[209.438 s] NS3:  | SEM_SOA
+[214.42 s] NS3:  | SEM_SOA
+[219.235 s] NS3:  | SEM_SOA
+[224.409 s] NS3:  | SEM_SOA
+[229.679 s] NS3:  | SEM_SOA
+[234.871 s] NS3:  | SEM_SOA
+[239.924 s] NS3:  | SEM_SOA
+[245.159 s] NS3:  | SEM_SOA
+[250.015 s] NS3:  | SEM_SOA
+[255.241 s] NS3:  | SEM_SOA
+[260.199 s] NS3:  | SEM_SOA
+[265.347 s] NS3:  | SEM_SOA
+[270.542 s] NS3:  | SEM_SOA
+[275.433 s] NS3:  | SEM_SOA
+[280.428 s] NS3:  | SEM_SOA
+[285.449 s] NS3:  | SEM_SOA
+[290.379 s] NS3:  | SEM_SOA
+[295.727 s] NS3:  | SEM_SOA
+[300.679 s] NS3:  | SEM_SOA
+[305.58 s] NS3:  | SEM_SOA
+[310.512 s] NS3:  | SEM_SOA
+[315.331 s] NS3:  | SEM_SOA
+[320.168 s] NS3:  | SEM_SOA
+[325.331 s] NS3:  | SEM_SOA
+[330.512 s] NS3:  | SEM_SOA
+[335.567 s] NS3:  | SEM_SOA
+[340.629 s] NS3:  | SEM_SOA
+[345.639 s] NS3:  | SEM_SOA
+[350.926 s] NS3:  | SEM_SOA
+[355.962 s] NS3:  | SEM_SOA
+[361.285 s] NS3:  | SEM_SOA
+[366.302 s] NS3:  | SEM_SOA
+[371.205 s] NS3:  | SEM_SOA
+[376.188 s] NS3:  | SEM_SOA
+[381.637 s] NS3:  | SEM_SOA
+[386.951 s] NS3:  | SEM_SOA
+[391.827 s] NS3:  | SEM_SOA
+[397.185 s] NS3:  | SEM_SOA
+[402.427 s] NS3:  | SEM_SOA
+[407.382 s] NS3:  | SEM_SOA
+[412.693 s] NS3:  | SEM_SOA
+[417.615 s] NS3:  | SEM_SOA
+PS C:\dns-m2> $relogio.Stop()
+PS C:\dns-m2> $tempoFinal = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+PS C:\dns-m2> @(
+    "E7 - RODADA 02"
+    "Inicio: $($inicioReconexao.ToString('o'))"
+    "Serial alvo: $serialAlvo"
+    "Serial final NS3: $serialNS3"
+    "Sincronizado: $sincronizado"
+    "Tempo observado: $tempoFinal segundos"
+) | Tee-Object -FilePath $arquivoResultado
+E7 - RODADA 02
+Inicio: 2026-10-25T17:19:23.3430926-03:00
+Serial alvo: 2026102318
+Serial final NS3:
+Sincronizado: False
+Tempo observado: 420.05 segundos
+PS C:\dns-m2> docker exec ns3 dig "@172.30.0.11" sd.lab SOA +norecurse +time=2 +tries=1 +noall +comments +answer
+
+PS C:\dns-m2> docker exec ns3 rndc zonestatus sd.lab
+
+PS C:\dns-m2> $pastaRodada = "C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550"
+PS C:\dns-m2> docker logs --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada\e7-02-logs-investigacao.txt" -Encoding UTF8
+PS C:\dns-m2> Select-String -Path "$pastaRodada\e7-02-logs-investigacao.txt" `
+    -Pattern "refresh|transfer|failed|timed out|serial|notify|expire" |
+    Select-Object -Last 40 |
+    Tee-Object -FilePath "$pastaRodada\e7-02-investigacao.txt"
+
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9174:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9178:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9182:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9186:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9190:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9194:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9198:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9202:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9206:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9210:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9214:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9218:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9222:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9226:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9230:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9234:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9238:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9242:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9246:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9250:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9254:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9258:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9262:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9266:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9270:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9274:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9278:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9282:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9286:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9290:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9294:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9298:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9302:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9306:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9310:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9314:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9318:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9322:(sd.lab):
+ query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9323:2026-10-2
+5T20:26:51.975828636Z 25-Oct-2026 20:26:51.973 zone sd.lab/IN: refresh: skipping zone
+evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-logs-investigacao.txt:9324:transfer
+as primary 172.30.0.11#53 (source 0.0.0.0#0) is unreachable (cached)
+
+
+PS C:\dns-m2> $pastaRodada = "C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550"
+PS C:\dns-m2> $carimboDiag = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> docker exec ns3 dig "@172.30.0.11" sd.lab AXFR +time=5 +tries=1 2>&1 |
+    Tee-Object -FilePath "$pastaRodada\e7-02-teste-axfr-$carimboDiag.txt"
+
+; <<>> DiG 9.18.49 <<>> @172.30.0.11 sd.lab AXFR +time=5 +tries=1
+; (1 server found)
+;; global options: +cmd
+sd.lab.			60	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102318 30 10 300 20
+sd.lab.			60	IN	NS	ns1.sd.lab.
+sd.lab.			60	IN	NS	ns2.sd.lab.
+sd.lab.			60	IN	NS	ns3.sd.lab.
+app.sd.lab.		60	IN	A	10.0.0.3
+novo.sd.lab.		60	IN	A	10.0.0.50
+ns1.sd.lab.		60	IN	A	172.31.0.11
+ns2.sd.lab.		60	IN	A	172.31.0.12
+ns3.sd.lab.		60	IN	A	172.31.0.13
+sd.lab.			60	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102318 30 10 300 20
+;; Query time: 0 msec
+;; SERVER: 172.30.0.11#53(172.30.0.11) (TCP)
+;; WHEN: Sun Oct 25 20:36:11 UTC 2026
+;; XFR size: 10 records (messages 1, bytes 284)
+
+PS C:\dns-m2> docker logs --since 20m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada\e7-02-diagnostico-ns3-$carimboDiag.txt" -Encoding UTF8
+PS C:\dns-m2> Select-String `
+    -Path "$pastaRodada\e7-02-diagnostico-ns3-$carimboDiag.txt" `
+    -Pattern "sd.lab|refresh|transfer|notify|expired|refused|timed out|unreachable" `
+    -Context 1,1 |
+    Select-Object -Last 45
+
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5760:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5761:2026-10-25T20:26:18.785654400Z 25-Oct-2026 20:26:18.779 client @0x74bbc36b52e0
+172.31.0.100#56640
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5762:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5763:2026-10-25T20:26:19.036122834Z 25-Oct-2026 20:26:19.031 client @0x74bbc36d11a0
+172.31.0.100#52670
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5764:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5765:2026-10-25T20:26:19.036154578Z 25-Oct-2026 20:26:19.031 client @0x74bbc36d11a0
+172.31.0.100#52670
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5766:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5767:2026-10-25T20:26:19.268482574Z 25-Oct-2026 20:26:19.263 client @0x74bbc973c2b0
+172.31.0.100#57919
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5768:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5769:2026-10-25T20:26:19.268501003Z 25-Oct-2026 20:26:19.263 client @0x74bbc973c2b0
+172.31.0.100#57919
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5770:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5771:2026-10-25T20:26:19.500238316Z 25-Oct-2026 20:26:19.495 client @0x74bbc36d11a0
+172.31.0.100#49229
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5772:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5773:2026-10-25T20:26:19.500272683Z 25-Oct-2026 20:26:19.495 client @0x74bbc36d11a0
+172.31.0.100#49229
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5774:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5775:2026-10-25T20:26:19.729268256Z 25-Oct-2026 20:26:19.723 client @0x74bbc973c2b0
+172.31.0.100#36492
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5776:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5777:2026-10-25T20:26:19.729286054Z 25-Oct-2026 20:26:19.723 client @0x74bbc973c2b0
+172.31.0.100#36492
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5778:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5779:2026-10-25T20:26:20.008016382Z 25-Oct-2026 20:26:20.003 client @0x74bbc9735410
+172.31.0.100#42204
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5780:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5781:2026-10-25T20:26:20.008036011Z 25-Oct-2026 20:26:20.003 client @0x74bbc9735410
+172.31.0.100#42204
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5782:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5783:2026-10-25T20:26:20.282271014Z 25-Oct-2026 20:26:20.279 client @0x74bbc36e5250
+172.31.0.100#41243
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5784:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5785:2026-10-25T20:26:20.282294924Z 25-Oct-2026 20:26:20.279 client @0x74bbc36e5250
+172.31.0.100#41243
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5786:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5787:2026-10-25T20:26:20.515090692Z 25-Oct-2026 20:26:20.511 client @0x74bbc36d7170
+172.31.0.100#38287
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5788:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5789:2026-10-25T20:26:20.515126670Z 25-Oct-2026 20:26:20.511 client @0x74bbc36d7170
+172.31.0.100#38287
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5790:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5791:2026-10-25T20:26:20.740354221Z 25-Oct-2026 20:26:20.735 client @0x74bbc36d11a0
+172.31.0.100#57094
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5792:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5793:2026-10-25T20:26:20.740385663Z 25-Oct-2026 20:26:20.735 client @0x74bbc36d11a0
+172.31.0.100#57094
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5794:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5795:2026-10-25T20:26:20.979012925Z 25-Oct-2026 20:26:20.975 client @0x74bbc36b7360
+172.31.0.100#52454
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5796:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5797:2026-10-25T20:26:20.979030730Z 25-Oct-2026 20:26:20.975 client @0x74bbc36b7360
+172.31.0.100#52454
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5798:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5799:2026-10-25T20:26:21.211108840Z 25-Oct-2026 20:26:21.207 client @0x74bbc36b7360
+172.31.0.100#58308
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5800:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5801:2026-10-25T20:26:21.211126557Z 25-Oct-2026 20:26:21.207 client @0x74bbc36b7360
+172.31.0.100#58308
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5802:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5803:2026-10-25T20:26:21.497074212Z 25-Oct-2026 20:26:21.491 client @0x74bbc97382e0
+172.31.0.100#39713
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5804:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5805:2026-10-25T20:26:21.497094675Z 25-Oct-2026 20:26:21.491 client @0x74bbc97382e0
+172.31.0.100#39713
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5806:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5807:2026-10-25T20:26:21.798511622Z 25-Oct-2026 20:26:21.795 client @0x74bbc36e5250
+172.31.0.100#48645
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5808:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5809:2026-10-25T20:26:21.798546457Z 25-Oct-2026 20:26:21.795 client @0x74bbc36e5250
+172.31.0.100#48645
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5810:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5811:2026-10-25T20:26:22.138234425Z 25-Oct-2026 20:26:22.135 client @0x74bbc36b7360
+172.31.0.100#57410
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5812:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5813:2026-10-25T20:26:22.138326949Z 25-Oct-2026 20:26:22.135 client @0x74bbc36b7360
+172.31.0.100#57410
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5814:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5815:2026-10-25T20:26:22.514453010Z 25-Oct-2026 20:26:22.511 client @0x74bbc36b52e0
+172.31.0.100#42506
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5816:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5817:2026-10-25T20:26:22.514494530Z 25-Oct-2026 20:26:22.511 client @0x74bbc36b52e0
+172.31.0.100#42506
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5818:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5819:2026-10-25T20:26:22.914089352Z 25-Oct-2026 20:26:22.911 client @0x74bbc36e5250
+172.31.0.100#55527
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5820:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5821:2026-10-25T20:26:22.914114657Z 25-Oct-2026 20:26:22.911 client @0x74bbc36e5250
+172.31.0.100#55527
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5822:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5823:2026-10-25T20:26:23.251347737Z 25-Oct-2026 20:26:23.247 client @0x74bbc36d7170
+172.31.0.100#49222
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5824:(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5825:2026-10-25T20:26:23.251381885Z 25-Oct-2026 20:26:23.247 client @0x74bbc36d7170
+172.31.0.100#49222
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5826:(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5827:2026-10-25T20:26:51.975828636Z 25-Oct-2026 20:26:51.973 zone sd.lab/IN: refresh: skipping
+zone
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5828:transfer as primary 172.30.0.11#53 (source 0.0.0.0#0) is unreachable (cached)
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5829:2026-10-25T20:27:58.447107520Z 25-Oct-2026 20:27:58.443 received control channel command
+'zonestatus
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5830:sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5831:2026-10-25T20:32:52.980683316Z 25-Oct-2026 20:32:52.976 zone sd.lab/IN: Transfer started.
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5832:2026-10-25T20:32:52.981862256Z 25-Oct-2026 20:32:52.976 transfer of 'sd.lab/IN' from
+172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5833:connected using 172.30.0.11#53
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5834:2026-10-25T20:32:52.985393377Z 25-Oct-2026 20:32:52.980 zone sd.lab/IN: transferred serial
+2026102318
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5835:2026-10-25T20:32:52.985454238Z 25-Oct-2026 20:32:52.984 transfer of 'sd.lab/IN' from
+172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5836:Transfer status: success
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5837:2026-10-25T20:32:52.985463688Z 25-Oct-2026 20:32:52.984 transfer of 'sd.lab/IN' from
+172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5838:Transfer completed: 1 messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5839:2026102318)
+> evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5840:2026-10-25T20:32:52.986922223Z 25-Oct-2026 20:32:52.984 zone sd.lab/IN: sending notifies
+(serial
+  evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550\e7-02-diagnostico-ns3-20261025-173605.tx
+t:5841:2026102318)
+
+
+PS C:\dns-m2> $pastaRodada = "C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550"
+PS C:\dns-m2> $linha = Get-Content "$pastaRodada\e7-02-eventos.txt" |
+    Where-Object { $_ -match "^Reconexao iniciada:" } |
+    Select-Object -Last 1
+PS C:\dns-m2> if (-not $linha) {
+    Write-Host "Horario de reconexao nao encontrado." -ForegroundColor Yellow
+}
+PS C:\dns-m2> else {
+    $inicio = [datetimeoffset]::Parse(
+        ($linha -split "Reconexao iniciada:\s*", 2)[1]
+    )
+
+    $fim = [datetimeoffset]::Parse(
+        "2026-10-25T20:32:52.984Z"
+    )
+
+    $tempo = [math]::Round(
+        ($fim - $inicio).TotalSeconds, 3
+    )
+
+    @(
+        "E7 - RODADA 02"
+        "Reconexao iniciada: $inicio"
+        "Transferencia concluida: $fim"
+        "Tempo estimado de recuperacao: $tempo segundos"
+        "Serial final: 2026102318"
+        "Recuperacao automatica confirmada por log."
+        "Sincronizacao nao observada dentro dos 420 segundos iniciais."
+    ) | Tee-Object -FilePath "$pastaRodada\e7-02-analise-final.txt"
+}
+else : O termo 'else' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa operável. Verifique 
+a grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está correto e tente novamente.
+No linha:1 caractere:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+else : O termo 'else' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa
+operável. Verifique a grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está
+correto e tente novamente.
+No linha:1 caractere:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\dns-m2> $pastaRodada = "C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-02-20261025-171550"
+PS C:\dns-m2> $linha = Get-Content "$pastaRodada\e7-02-eventos.txt" |
+    Where-Object { $_ -match "^Reconexao iniciada:" } |
+    Select-Object -Last 1
+PS C:\dns-m2> if (-not $linha) {
+    throw "Horario de reconexao nao encontrado."
+}
+PS C:\dns-m2> $inicio = [datetimeoffset]::Parse(
+    $linha.Replace("Reconexao iniciada:", "").Trim()
+)
+PS C:\dns-m2> $fim = [datetimeoffset]::Parse(
+    "2026-10-25T20:32:52.984Z"
+)
+PS C:\dns-m2> $tempo = [math]::Round(
+    ($fim - $inicio).TotalSeconds, 3
+)
+PS C:\dns-m2> @(
+    "E7 - RODADA 02"
+    "Reconexao iniciada: $inicio"
+    "Transferencia concluida: $fim"
+    "Tempo estimado de recuperacao: $tempo segundos"
+    "Serial final: 2026102318"
+    "Recuperacao automatica confirmada por log."
+    "Sincronizacao nao observada dentro dos 420 segundos iniciais."
+) | Tee-Object -FilePath "$pastaRodada\e7-02-analise-final.txt"
+E7 - RODADA 02
+Reconexao iniciada: 10/25/2026 17:19:23 -03:00
+Transferencia concluida: 10/25/2026 20:32:52 +00:00
+Tempo estimado de recuperacao: 809.641 segundos
+Serial final: 2026102318
+Recuperacao automatica confirmada por log.
+Sincronizacao nao observada dentro dos 420 segundos iniciais.
+PS C:\dns-m2> docker exec ns3 rndc zonestatus sd.lab
+
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    Write-Host "=== NS$s ==="
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short
+}
+=== NS11 ===
+
+=== NS12 ===
+
+=== NS13 ===
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $carimbo03 = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $pastaRodada3 = "$pastaE7\rodada-03-$carimbo03"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada3 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> function Obter-SerialNS {
+    param([int]$No)
+
+    $resposta = docker exec cliente dig "@172.31.0.$No" sd.lab SOA +norecurse +short +time=2 +tries=1
+
+    return [regex]::Match(($resposta -join " "), '\b\d{10}\b').Value
+}
+PS C:\dns-m2> $serialInicial = Obter-SerialNS 11
+PS C:\dns-m2> $serialNS3 = Obter-SerialNS 13
+PS C:\dns-m2> Write-Host "Serial inicial NS1: $serialInicial"
+Serial inicial NS1: 2026102318
+PS C:\dns-m2> Write-Host "Serial inicial NS3: $serialNS3"
+Serial inicial NS3: 2026102318
+PS C:\dns-m2> Write-Host "Pasta: $pastaRodada3"
+Pasta: C:\dns-m2\evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418
+PS C:\dns-m2> if ($serialInicial -ne "2026102318" -or $serialNS3 -ne $serialInicial) {
+    throw "Estado inicial diferente do esperado. Nao iniciar a rodada."
+}
+PS C:\dns-m2> $desconectado = $false
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> try {
+    # 1. Isolar NS3
+    $inicioParticao = Get-Date
+
+    docker network disconnect m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao desconectar NS3."
+    }
+
+    $desconectado = $true
+
+    # 2. Alterar a zona
+    .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2 |
+        Tee-Object -FilePath "$pastaRodada3\e7-03-alteracao.txt"
+
+    Start-Sleep -Seconds 5
+
+    # 3. Confirmar divergencia
+    $serialNS1Novo = Obter-SerialNS 11
+    $serialNS2Novo = Obter-SerialNS 12
+    $serialNS3Antigo = Obter-SerialNS 13
+
+    @(
+        "Inicio particao: $($inicioParticao.ToString('o'))"
+        "NS1: $serialNS1Novo"
+        "NS2: $serialNS2Novo"
+        "NS3: $serialNS3Antigo"
+    ) | Tee-Object -FilePath "$pastaRodada3\e7-03-divergencia.txt"
+
+    if ($serialNS1Novo -eq $serialInicial -or
+        $serialNS2Novo -ne $serialNS1Novo -or
+        $serialNS3Antigo -ne $serialInicial) {
+        throw "Divergencia nao confirmada. Reconectar e investigar."
+    }
+
+    # 4. Iniciar cronometro e reconectar
+    $inicio = Get-Date
+    $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+
+    docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha na reconexao do NS3."
+    }
+
+    $desconectado = $false
+
+    # 5. Reenviar NOTIFY pelo NS1
+    docker exec ns1 rndc notify sd.lab 2>&1 |
+        Tee-Object -FilePath "$pastaRodada3\e7-03-notify.txt"
+
+    # 6. Monitorar sincronizacao
+    $csv03 = "$pastaRodada3\e7-03-monitoramento.csv"
+
+    while ($relogio.Elapsed.TotalSeconds -lt 120) {
+
+        $serialAtual = Obter-SerialNS 13
+        $segundos = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+        $estado = if ($serialAtual -eq $serialNS1Novo) {
+            "SINCRONIZADO"
+        } elseif ($serialAtual) {
+            "DESATUALIZADO"
+        } else {
+            "SEM_SOA"
+        }
+
+        [PSCustomObject]@{
+            Horario = (Get-Date).ToString("o")
+            Segundos = $segundos
+            SerialNS3 = $serialAtual
+            SerialAlvo = $serialNS1Novo
+            Estado = $estado
+        } | Export-Csv $csv03 -Append -NoTypeInformation -Encoding UTF8
+
+        Write-Host "[$segundos s] NS3: $serialAtual | $estado"
+
+        if ($estado -eq "SINCRONIZADO") {
+            $sincronizado = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    $relogio.Stop()
+
+    @(
+        "E7 - RODADA 03"
+        "Metodo: reconexao seguida de NOTIFY explicito"
+        "Inicio reconexao: $($inicio.ToString('o'))"
+        "Serial esperado: $serialNS1Novo"
+        "Serial final: $serialAtual"
+        "Sincronizado: $sincronizado"
+        "Tempo observado: $segundos segundos"
+    ) | Tee-Object -FilePath "$pastaRodada3\e7-03-resultado.txt"
+
+}
+finally {
+    if ($desconectado) {
+        docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+    }
+}
+
+app.sd.lab: 10.0.0.3 -> 10.0.0.2 | serial 2026102318 -> 2026102319
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+Inicio particao: 2026-10-25T17:44:32.4786283-03:00
+NS1: 2026102319
+NS2: 2026102319
+NS3: 2026102318
+
+zone notify queued
+[0.376 s] NS3: 2026102318 | DESATUALIZADO
+[1.536 s] NS3: 2026102319 | SINCRONIZADO
+E7 - RODADA 03
+Metodo: reconexao seguida de NOTIFY explicito
+Inicio reconexao: 2026-10-25T17:44:38.2974533-03:00
+Serial esperado: 2026102319
+Serial final: 2026102319
+Sincronizado: True
+Tempo observado: 1.536 segundos
+PS C:\dns-m2> docker logs --since 20m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada3\e7-03-logs-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since 20m --timestamps ns1 2>&1 |
+    Out-File "$pastaRodada3\e7-03-logs-ns1.txt" -Encoding UTF8
+PS C:\dns-m2> docker exec ns3 rndc zonestatus sd.lab 2>&1 |
+    Tee-Object -FilePath "$pastaRodada3\e7-03-zonestatus.txt"
+name: sd.lab
+type: secondary
+files: /var/lib/bind/db.sd.lab
+serial: 2026102319
+nodes: 6
+last loaded: Sun, 25 Oct 2026 20:44:39 GMT
+next refresh: Sun, 25 Oct 2026 20:45:04 GMT
+expires: Sun, 25 Oct 2026 20:49:39 GMT
+secure: no
+dynamic: no
+reconfigurable via modzone: no
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    Write-Host "=== NS$s ==="
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short
+}
+=== NS11 ===
+
+=== NS12 ===
+
+=== NS13 ===
+
+PS C:\dns-m2> $arquivoLogs03 = "$pastaRodada3\e7-03-logs-ns3.txt"
+PS C:\dns-m2> Select-String -Path $arquivoLogs03 `
+    -Pattern "notify|transferred serial 2026102319|Transfer status: success" |
+    Select-Object -Last 25 |
+    Tee-Object -FilePath "$pastaRodada3\e7-03-eventos-transferencia.txt"
+
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1465:Transfer status:
+success
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1479:received notify
+for zone 'sd.lab'
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1480:2026-10-25T20:44:3
+2.837457605Z 25-Oct-2026 20:44:32.831 zone sd.lab/IN: refused notify from
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1483:received notify
+for zone 'sd.lab'
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1484:2026-10-25T20:44:3
+3.328789484Z 25-Oct-2026 20:44:33.327 zone sd.lab/IN: refused notify from
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1493:received notify
+for zone 'sd.lab'
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1495:received notify
+for zone 'sd.lab'
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1496:2026-10-25T20:44:3
+9.025833633Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: notify from
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1498:2026-10-25T20:44:3
+9.025841554Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: refused notify from
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1503:2026-10-25T20:44:3
+9.027569827Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: transferred serial 2026102319
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1505:Transfer status:
+success
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1514:received notify
+for zone 'sd.lab'
+evidencias\E7\e7-20261025-165631\rodada-03-20261025-174418\e7-03-logs-ns3.txt:1515:2026-10-25T20:44:4
+3.335553190Z 25-Oct-2026 20:44:43.332 zone sd.lab/IN: notify from
+
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $carimbo04 = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $pastaRodada4 = "$pastaE7\rodada-04-$carimbo04"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada4 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> function Obter-SerialNS {
+    param([int]$No)
+
+    $resposta = docker exec cliente dig "@172.31.0.$No" sd.lab SOA +norecurse +short +time=2 +tries=1
+
+    return [regex]::Match(($resposta -join " "), '\b\d{10}\b').Value
+}
+PS C:\dns-m2> $serialNS1 = Obter-SerialNS 11
+PS C:\dns-m2> $serialNS2 = Obter-SerialNS 12
+PS C:\dns-m2> $serialNS3 = Obter-SerialNS 13
+PS C:\dns-m2> $ipInicial = docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +short
+PS C:\dns-m2> if ($serialNS1 -ne "2026102319" -or
+    $serialNS2 -ne $serialNS1 -or
+    $serialNS3 -ne $serialNS1 -or
+    $ipInicial -ne "10.0.0.2") {
+    throw "Estado inicial inesperado. Nao iniciar a rodada."
+}
+PS C:\dns-m2> $redes = docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    ConvertFrom-Json
+PS C:\dns-m2> if (-not $redes.m2_dns_interna) {
+    throw "NS3 nao esta conectado a rede interna."
+}
+PS C:\dns-m2> @(
+    "Rodada 04"
+    "Estado inicial validado: $(Get-Date -Format o)"
+    "NS1: $serialNS1"
+    "NS2: $serialNS2"
+    "NS3: $serialNS3"
+    "IP inicial: $ipInicial"
+    "Metodo: particao curta, reconexao e NOTIFY"
+) | Tee-Object -FilePath "$pastaRodada4\e7-04-estado-inicial.txt"
+Rodada 04
+Estado inicial validado: 2026-10-25T17:50:40.3576507-03:00
+NS1: 2026102319
+NS2: 2026102319
+NS3: 2026102319
+IP inicial: 10.0.0.2
+Metodo: particao curta, reconexao e NOTIFY
+PS C:\dns-m2> $isolado = $false
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $relogio = $null
+PS C:\dns-m2> try {
+    # Desconectar NS3
+    $inicioParticao = Get-Date
+
+    docker network disconnect m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao desconectar NS3."
+    }
+
+    $isolado = $true
+
+    # Alterar registro no primario
+    .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.3 |
+        Tee-Object -FilePath "$pastaRodada4\e7-04-alteracao.txt"
+
+    Start-Sleep -Seconds 5
+
+    # Validar divergencia
+    $serialAlvo = Obter-SerialNS 11
+    $serialNS2 = Obter-SerialNS 12
+    $serialAntigoNS3 = Obter-SerialNS 13
+
+    @(
+        "Particao iniciada: $($inicioParticao.ToString('o'))"
+        "NS1: $serialAlvo"
+        "NS2: $serialNS2"
+        "NS3: $serialAntigoNS3"
+    ) | Tee-Object -FilePath "$pastaRodada4\e7-04-divergencia.txt"
+
+    if ($serialAlvo -ne "2026102320" -or
+        $serialNS2 -ne $serialAlvo -or
+        $serialAntigoNS3 -ne "2026102319") {
+        throw "Divergencia inesperada. Interrompendo a medicao."
+    }
+
+    # Reconectar e iniciar cronometro
+    $inicioReconexao = Get-Date
+    $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+
+    docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha na reconexao do NS3."
+    }
+
+    $isolado = $false
+
+    # Solicitar NOTIFY
+    docker exec ns1 rndc notify sd.lab 2>&1 |
+        Tee-Object -FilePath "$pastaRodada4\e7-04-notify.txt"
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao solicitar NOTIFY."
+    }
+
+    # Monitorar recuperacao
+    $csv04 = "$pastaRodada4\e7-04-monitoramento.csv"
+    $serialAtual = ""
+    $segundos = 0
+
+    while ($relogio.Elapsed.TotalSeconds -lt 120) {
+
+        $serialAtual = Obter-SerialNS 13
+        $segundos = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+        $estado = if ($serialAtual -eq $serialAlvo) {
+            "SINCRONIZADO"
+        } elseif ($serialAtual) {
+            "DESATUALIZADO"
+        } else {
+            "SEM_SOA"
+        }
+
+        [PSCustomObject]@{
+            Horario = (Get-Date).ToString("o")
+            Segundos = $segundos
+            SerialNS3 = $serialAtual
+            SerialAlvo = $serialAlvo
+            Estado = $estado
+        } | Export-Csv $csv04 -Append -NoTypeInformation -Encoding UTF8
+
+        Write-Host "[$segundos s] NS3: $serialAtual | $estado"
+
+        if ($estado -eq "SINCRONIZADO") {
+            $sincronizado = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    $relogio.Stop()
+
+    @(
+        "E7 - RODADA 04"
+        "Metodo: reconexao seguida de NOTIFY"
+        "Inicio: $($inicioReconexao.ToString('o'))"
+        "Serial esperado: $serialAlvo"
+        "Serial final: $serialAtual"
+        "Sincronizado: $sincronizado"
+        "Tempo observado: $segundos segundos"
+    ) | Tee-Object -FilePath "$pastaRodada4\e7-04-resultado.txt"
+
+}
+finally {
+    if ($relogio -and $relogio.IsRunning) {
+        $relogio.Stop()
+    }
+
+    if ($isolado) {
+        docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+    }
+}
+
+app.sd.lab: 10.0.0.2 -> 10.0.0.3 | serial 2026102319 -> 2026102320
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+Particao iniciada: 2026-10-25T17:50:48.6903709-03:00
+NS1: 2026102320
+NS2: 2026102320
+NS3: 2026102319
+
+zone notify queued
+[0.374 s] NS3: 2026102320 | SINCRONIZADO
+E7 - RODADA 04
+Metodo: reconexao seguida de NOTIFY
+Inicio: 2026-10-25T17:50:54.4227339-03:00
+Serial esperado: 2026102320
+Serial final: 2026102320
+Sincronizado: True
+Tempo observado: 0.374 segundos
+PS C:\dns-m2> docker logs --since 10m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada4\e7-04-logs-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since 10m --timestamps ns1 2>&1 |
+    Out-File "$pastaRodada4\e7-04-logs-ns1.txt" -Encoding UTF8
+PS C:\dns-m2> $arquivoFinal = "$pastaRodada4\e7-04-validacao-final.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoFinal -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoFinal -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102320 30 10 300 20
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102320 30 10 300 20
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102320 30 10 300 20
+PS C:\dns-m2> Select-String -Path "$pastaRodada4\e7-04-logs-ns3.txt" `
+    -Pattern "transferred serial 2026102320|Transfer status: success|notify from" `
+    -Context 2,2 |
+    Select-Object -Last 15 |
+    Tee-Object -FilePath "$pastaRodada4\e7-04-eventos-transferencia.txt"
+
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:10:2026-10-25T20:44:3
+2.837431485Z 25-Oct-2026 20:44:32.831 client @0x74bbc36d3220 172.31.0.12#56279:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:11:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:12:2026-10-25T20:44:3
+2.837457605Z 25-Oct-2026 20:44:32.831 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:13:non-primary:
+172.31.0.12#56279
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:14:2026-10-25T20:44:3
+3.328767397Z 25-Oct-2026 20:44:33.327 client @0x74bbc36d11a0 172.31.0.11#49311:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:15:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:16:2026-10-25T20:44:3
+3.328789484Z 25-Oct-2026 20:44:33.327 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:17:non-primary:
+172.31.0.11#49311
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:18:2026-10-25T20:44:3
+8.250033706Z 25-Oct-2026 20:44:38.248 client @0x74bbc973c2b0 172.31.0.100#49106
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:26:2026-10-25T20:44:3
+9.025831918Z 25-Oct-2026 20:44:39.024 client @0x74bbc36b52e0 172.31.0.11#39242:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:27:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:28:2026-10-25T20:44:3
+9.025833633Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:29:172.30.0.11#49296:
+serial 2026102319
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:30:2026-10-25T20:44:3
+9.025841554Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:31:non-primary:
+172.31.0.11#39242
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:32:2026-10-25T20:44:3
+9.026559928Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: Transfer started.
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:35:2026-10-25T20:44:3
+9.027569827Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: transferred serial 2026102319
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:36:2026-10-25T20:44:3
+9.027739821Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:37:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:38:2026-10-25T20:44:3
+9.027744498Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:39:Transfer
+completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:45:2026-10-25T20:44:4
+3.335529387Z 25-Oct-2026 20:44:43.332 client @0x74bbc36c7250 172.30.0.11#55664:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:46:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:47:2026-10-25T20:44:4
+3.335553190Z 25-Oct-2026 20:44:43.332 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:48:172.30.0.11#55664:
+zone is up to date
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:49:2026-10-25T20:44:5
+0.746063746Z 25-Oct-2026 20:44:50.742 received control channel command 'zonestatus
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:56:2026-10-25T20:50:4
+9.020256917Z 25-Oct-2026 20:50:49.015 client @0x74bbc36c5240 172.31.0.12#50482:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:57:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:58:2026-10-25T20:50:4
+9.020275219Z 25-Oct-2026 20:50:49.015 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:59:non-primary:
+172.31.0.12#50482
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:60:2026-10-25T20:50:4
+9.509327950Z 25-Oct-2026 20:50:49.507 client @0x74bbc36e32e0 172.31.0.11#36117:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:61:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:62:2026-10-25T20:50:4
+9.509345842Z 25-Oct-2026 20:50:49.507 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:63:non-primary:
+172.31.0.11#36117
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:64:2026-10-25T20:50:5
+4.403054521Z 25-Oct-2026 20:50:54.399 client @0x74bbc36d3220 172.31.0.100#52483
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:68:2026-10-25T20:50:5
+4.514185754Z 25-Oct-2026 20:50:54.511 client @0x74bbc36b9380 172.30.0.11#40972:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:69:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:70:2026-10-25T20:50:5
+4.514289310Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:71:172.30.0.11#40972:
+serial 2026102320
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:72:2026-10-25T20:50:5
+4.514633271Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: Transfer started.
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:73:2026-10-25T20:50:5
+4.514861992Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:74:connected using
+172.30.0.11#53
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:75:2026-10-25T20:50:5
+4.515511005Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: transferred serial 2026102320
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:76:2026-10-25T20:50:5
+4.515514430Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:77:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:78:2026-10-25T20:50:5
+4.515515831Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:79:Transfer
+completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:85:2026-10-25T20:50:5
+5.141750045Z 25-Oct-2026 20:50:55.140 client @0x74bbc36bb3e0 172.30.0.11#49621:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:86:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:87:2026-10-25T20:50:5
+5.141782821Z 25-Oct-2026 20:50:55.140 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:88:172.30.0.11#49621:
+zone is up to date
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:89:2026-10-25T20:50:5
+5.141862395Z 25-Oct-2026 20:50:55.140 client @0x74bbc36c5240 172.31.0.11#50541:
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:90:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:91:2026-10-25T20:50:5
+5.141874435Z 25-Oct-2026 20:50:55.140 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-04-20261025-175038\e7-04-logs-ns3.txt:92:non-primary:
+172.31.0.11#50541
+
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $carimbo05 = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $pastaRodada5 = "$pastaE7\rodada-05-$carimbo05"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada5 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> function Obter-SerialNS {
+    param([int]$No)
+
+    $resposta = docker exec cliente dig "@172.31.0.$No" sd.lab SOA +norecurse +short +time=2 +tries=1
+
+    return [regex]::Match(($resposta -join " "), '\b\d{10}\b').Value
+}
+PS C:\dns-m2> $serialInicial1 = Obter-SerialNS 11
+PS C:\dns-m2> $serialInicial2 = Obter-SerialNS 12
+PS C:\dns-m2> $serialInicial3 = Obter-SerialNS 13
+PS C:\dns-m2> $ipInicial = docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +short
+PS C:\dns-m2> $redes = docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    ConvertFrom-Json
+PS C:\dns-m2> if (
+    $serialInicial1 -ne "2026102320" -or
+    $serialInicial2 -ne $serialInicial1 -or
+    $serialInicial3 -ne $serialInicial1 -or
+    $ipInicial -ne "10.0.0.3" -or
+    -not $redes.m2_dns_interna
+) {
+    throw "Estado inicial inesperado. Nao executar rodada 05."
+}
+PS C:\dns-m2> @(
+    "E7 - Rodada 05"
+    "Horario inicial: $(Get-Date -Format o)"
+    "NS1: $serialInicial1"
+    "NS2: $serialInicial2"
+    "NS3: $serialInicial3"
+    "IP: $ipInicial"
+    "Metodo: particao curta + reconexao + NOTIFY"
+) | Tee-Object -FilePath "$pastaRodada5\e7-05-estado-inicial.txt"
+E7 - Rodada 05
+Horario inicial: 2026-10-25T18:00:38.5896324-03:00
+NS1: 2026102320
+NS2: 2026102320
+NS3: 2026102320
+IP: 10.0.0.3
+Metodo: particao curta + reconexao + NOTIFY
+PS C:\dns-m2> $isolado = $false
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $relogio = $null
+PS C:\dns-m2> try {
+    # 1. Isolar NS3
+    $inicioParticao = Get-Date
+
+    docker network disconnect m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao desconectar NS3."
+    }
+
+    $isolado = $true
+
+    # 2. Publicar nova versao
+    .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2 |
+        Tee-Object -FilePath "$pastaRodada5\e7-05-alteracao.txt"
+
+    Start-Sleep -Seconds 5
+
+    # 3. Confirmar divergencia
+    $serialAlvo = Obter-SerialNS 11
+    $serialNS2 = Obter-SerialNS 12
+    $serialAntigoNS3 = Obter-SerialNS 13
+
+    @(
+        "Inicio particao: $($inicioParticao.ToString('o'))"
+        "NS1: $serialAlvo"
+        "NS2: $serialNS2"
+        "NS3: $serialAntigoNS3"
+    ) | Tee-Object -FilePath "$pastaRodada5\e7-05-divergencia.txt"
+
+    if (
+        $serialAlvo -ne "2026102321" -or
+        $serialNS2 -ne $serialAlvo -or
+        $serialAntigoNS3 -ne "2026102320"
+    ) {
+        throw "Divergencia nao confirmada."
+    }
+
+    # 4. Reconectar e iniciar medicao
+    $inicioReconexao = Get-Date
+    $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+
+    docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao reconectar NS3."
+    }
+
+    $isolado = $false
+
+    # 5. NOTIFY explicito
+    docker exec ns1 rndc notify sd.lab 2>&1 |
+        Tee-Object -FilePath "$pastaRodada5\e7-05-notify.txt"
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha no comando NOTIFY."
+    }
+
+    # 6. Monitorar NS3
+    $csv05 = "$pastaRodada5\e7-05-monitoramento.csv"
+    $serialAtual = ""
+    $segundos = 0
+
+    while ($relogio.Elapsed.TotalSeconds -lt 120) {
+
+        $serialAtual = Obter-SerialNS 13
+        $segundos = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+        $estado = if ($serialAtual -eq $serialAlvo) {
+            "SINCRONIZADO"
+        } elseif ($serialAtual) {
+            "DESATUALIZADO"
+        } else {
+            "SEM_SOA"
+        }
+
+        [PSCustomObject]@{
+            Horario = (Get-Date).ToString("o")
+            Segundos = $segundos
+            SerialNS3 = $serialAtual
+            SerialAlvo = $serialAlvo
+            Estado = $estado
+        } | Export-Csv $csv05 -Append -NoTypeInformation -Encoding UTF8
+
+        Write-Host "[$segundos s] NS3: $serialAtual | $estado"
+
+        if ($estado -eq "SINCRONIZADO") {
+            $sincronizado = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    $relogio.Stop()
+
+    @(
+        "E7 - RODADA 05"
+        "Metodo: reconexao seguida de NOTIFY"
+        "Inicio: $($inicioReconexao.ToString('o'))"
+        "Serial esperado: $serialAlvo"
+        "Serial final: $serialAtual"
+        "Sincronizado: $sincronizado"
+        "Tempo observado: $segundos segundos"
+    ) | Tee-Object -FilePath "$pastaRodada5\e7-05-resultado.txt"
+}
+finally {
+    if ($relogio -and $relogio.IsRunning) {
+        $relogio.Stop()
+    }
+
+    if ($isolado) {
+        docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+    }
+}
+
+app.sd.lab: 10.0.0.3 -> 10.0.0.2 | serial 2026102320 -> 2026102321
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+Inicio particao: 2026-10-25T18:00:44.6886748-03:00
+NS1: 2026102321
+NS2: 2026102321
+NS3: 2026102320
+
+zone notify queued
+[0.383 s] NS3: 2026102320 | DESATUALIZADO
+[1.541 s] NS3: 2026102321 | SINCRONIZADO
+E7 - RODADA 05
+Metodo: reconexao seguida de NOTIFY
+Inicio: 2026-10-25T18:00:50.4237995-03:00
+Serial esperado: 2026102321
+Serial final: 2026102321
+Sincronizado: True
+Tempo observado: 1.541 segundos
+PS C:\dns-m2> docker logs --since 10m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada5\e7-05-logs-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since 10m --timestamps ns1 2>&1 |
+    Out-File "$pastaRodada5\e7-05-logs-ns1.txt" -Encoding UTF8
+PS C:\dns-m2> $arquivoFinal = "$pastaRodada5\e7-05-validacao-final.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoFinal -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoFinal -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102321 30 10 300 20
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102321 30 10 300 20
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102321 30 10 300 20
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $pastaRodada6 = "$pastaE7\rodada-06-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada6 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> function Obter-SerialNS {
+    param([int]$No)
+
+    $resposta = docker exec cliente dig "@172.31.0.$No" sd.lab SOA +norecurse +short +time=2 +tries=1
+    return [regex]::Match(($resposta -join " "), '\b\d{10}\b').Value
+}
+PS C:\dns-m2> $serial1 = Obter-SerialNS 11
+PS C:\dns-m2> $serial2 = Obter-SerialNS 12
+PS C:\dns-m2> $serial3 = Obter-SerialNS 13
+PS C:\dns-m2> $ip = docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +short
+PS C:\dns-m2> $redes = docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    ConvertFrom-Json
+PS C:\dns-m2> if ($serial1 -ne "2026102321" -or
+    $serial2 -ne $serial1 -or
+    $serial3 -ne $serial1 -or
+    $ip -ne "10.0.0.2" -or
+    -not $redes.m2_dns_interna) {
+    throw "Estado inicial invalido. Nao executar a rodada."
+}
+PS C:\dns-m2> @(
+    "Rodada 06 - $(Get-Date -Format o)"
+    "NS1: $serial1"
+    "NS2: $serial2"
+    "NS3: $serial3"
+    "IP inicial: $ip"
+    "Metodo: particao curta, reconexao e NOTIFY"
+) | Tee-Object -FilePath "$pastaRodada6\e7-06-inicial.txt"
+Rodada 06 - 2026-10-25T18:16:49.1491146-03:00
+NS1: 2026102321
+NS2: 2026102321
+NS3: 2026102321
+IP inicial: 10.0.0.2
+Metodo: particao curta, reconexao e NOTIFY
+PS C:\dns-m2> $isolado = $false
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $relogio = $null
+PS C:\dns-m2> try {
+    $inicioParticao = Get-Date
+
+    docker network disconnect m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao desconectar NS3."
+    }
+
+    $isolado = $true
+
+    .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.3 |
+        Tee-Object -FilePath "$pastaRodada6\e7-06-alteracao.txt"
+
+    Start-Sleep -Seconds 5
+
+    $alvo = Obter-SerialNS 11
+    $ns2 = Obter-SerialNS 12
+    $ns3 = Obter-SerialNS 13
+
+    @(
+        "Particao: $($inicioParticao.ToString('o'))"
+        "NS1: $alvo"
+        "NS2: $ns2"
+        "NS3: $ns3"
+    ) | Tee-Object -FilePath "$pastaRodada6\e7-06-divergencia.txt"
+
+    if ($alvo -ne "2026102322" -or
+        $ns2 -ne $alvo -or
+        $ns3 -ne "2026102321") {
+        throw "Divergencia nao confirmada."
+    }
+
+    $inicio = Get-Date
+    $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+
+    docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao reconectar NS3."
+    }
+
+    $isolado = $false
+
+    docker exec ns1 rndc notify sd.lab 2>&1 |
+        Tee-Object -FilePath "$pastaRodada6\e7-06-notify.txt"
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao solicitar NOTIFY."
+    }
+
+    $csv06 = "$pastaRodada6\e7-06-monitoramento.csv"
+    $tempo = 0
+    $atual = ""
+
+    while ($relogio.Elapsed.TotalSeconds -lt 120) {
+
+        $atual = Obter-SerialNS 13
+        $tempo = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+        $estado = if ($atual -eq $alvo) {
+            "SINCRONIZADO"
+        } elseif ($atual) {
+            "DESATUALIZADO"
+        } else {
+            "SEM_SOA"
+        }
+
+        [PSCustomObject]@{
+            Horario = (Get-Date).ToString("o")
+            Segundos = $tempo
+            SerialNS3 = $atual
+            SerialAlvo = $alvo
+            Estado = $estado
+        } | Export-Csv $csv06 -NoTypeInformation -Append -Encoding UTF8
+
+        Write-Host "[$tempo s] NS3: $atual | $estado"
+
+        if ($estado -eq "SINCRONIZADO") {
+            $sincronizado = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    $relogio.Stop()
+
+    @(
+        "E7 - RODADA 06"
+        "Inicio reconexao: $($inicio.ToString('o'))"
+        "Metodo: reconexao + NOTIFY"
+        "Serial esperado: $alvo"
+        "Serial final: $atual"
+        "Sincronizado: $sincronizado"
+        "Tempo observado: $tempo segundos"
+    ) | Tee-Object -FilePath "$pastaRodada6\e7-06-resultado.txt"
+
+}
+finally {
+    if ($relogio -and $relogio.IsRunning) {
+        $relogio.Stop()
+    }
+
+    if ($isolado) {
+        docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+    }
+}
+
+app.sd.lab: 10.0.0.2 -> 10.0.0.3 | serial 2026102321 -> 2026102322
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+Particao: 2026-10-25T18:16:59.2796994-03:00
+NS1: 2026102322
+NS2: 2026102322
+NS3: 2026102321
+
+zone notify queued
+[0.513 s] NS3: 2026102321 | DESATUALIZADO
+[1.671 s] NS3: 2026102322 | SINCRONIZADO
+E7 - RODADA 06
+Inicio reconexao: 2026-10-25T18:17:05.0891897-03:00
+Metodo: reconexao + NOTIFY
+Serial esperado: 2026102322
+Serial final: 2026102322
+Sincronizado: True
+Tempo observado: 1.671 segundos
+PS C:\dns-m2> docker logs --since 10m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada6\e7-06-logs-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since 10m --timestamps ns1 2>&1 |
+    Out-File "$pastaRodada6\e7-06-logs-ns1.txt" -Encoding UTF8
+PS C:\dns-m2> $arquivoFinal = "$pastaRodada6\e7-06-validacao-final.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoFinal -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoFinal -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102322 30 10 300 20
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102322 30 10 300 20
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102322 30 10 300 20
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $pastaRodada7 = "$pastaE7\rodada-07-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaRodada7 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> function Obter-SerialNS {
+    param([int]$No)
+
+    $resposta = docker exec cliente dig "@172.31.0.$No" sd.lab SOA +norecurse +short +time=2 +tries=1
+
+    return [regex]::Match(($resposta -join " "), '\b\d{10}\b').Value
+}
+PS C:\dns-m2> $serial1 = Obter-SerialNS 11
+PS C:\dns-m2> $serial2 = Obter-SerialNS 12
+PS C:\dns-m2> $serial3 = Obter-SerialNS 13
+PS C:\dns-m2> $ip = docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +short
+PS C:\dns-m2> $redes = docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    ConvertFrom-Json
+PS C:\dns-m2> if (
+    $serial1 -ne "2026102322" -or
+    $serial2 -ne $serial1 -or
+    $serial3 -ne $serial1 -or
+    $ip -ne "10.0.0.3" -or
+    -not $redes.m2_dns_interna
+) {
+    throw "Estado inicial invalido. Nao executar a rodada."
+}
+PS C:\dns-m2> @(
+    "E7 - Rodada 07"
+    "Horario: $(Get-Date -Format o)"
+    "NS1: $serial1"
+    "NS2: $serial2"
+    "NS3: $serial3"
+    "IP inicial: $ip"
+    "Metodo: particao curta + reconexao + NOTIFY"
+) | Tee-Object -FilePath "$pastaRodada7\e7-07-estado-inicial.txt"
+E7 - Rodada 07
+Horario: 2026-10-25T18:19:04.1802407-03:00
+NS1: 2026102322
+NS2: 2026102322
+NS3: 2026102322
+IP inicial: 10.0.0.3
+Metodo: particao curta + reconexao + NOTIFY
+PS C:\dns-m2> $isolado = $false
+PS C:\dns-m2> $sincronizado = $false
+PS C:\dns-m2> $relogio = $null
+PS C:\dns-m2> try {
+    # 1. Isolar NS3
+    $inicioParticao = Get-Date
+
+    docker network disconnect m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao desconectar NS3."
+    }
+
+    $isolado = $true
+
+    # 2. Alterar a zona no primario
+    .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2 |
+        Tee-Object -FilePath "$pastaRodada7\e7-07-alteracao.txt"
+
+    Start-Sleep -Seconds 5
+
+    # 3. Conferir divergencia
+    $alvo = Obter-SerialNS 11
+    $ns2 = Obter-SerialNS 12
+    $ns3 = Obter-SerialNS 13
+
+    @(
+        "Particao iniciada: $($inicioParticao.ToString('o'))"
+        "NS1: $alvo"
+        "NS2: $ns2"
+        "NS3: $ns3"
+    ) | Tee-Object -FilePath "$pastaRodada7\e7-07-divergencia.txt"
+
+    if (
+        $alvo -ne "2026102323" -or
+        $ns2 -ne $alvo -or
+        $ns3 -ne "2026102322"
+    ) {
+        throw "Divergencia nao confirmada."
+    }
+
+    # 4. Iniciar cronometro e reconectar
+    $inicioReconexao = Get-Date
+    $relogio = [System.Diagnostics.Stopwatch]::StartNew()
+
+    docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao reconectar NS3."
+    }
+
+    $isolado = $false
+
+    # 5. Solicitar NOTIFY
+    docker exec ns1 rndc notify sd.lab 2>&1 |
+        Tee-Object -FilePath "$pastaRodada7\e7-07-notify.txt"
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao solicitar NOTIFY."
+    }
+
+    # 6. Monitorar recuperacao
+    $csv07 = "$pastaRodada7\e7-07-monitoramento.csv"
+    $tempo = 0
+    $atual = ""
+
+    while ($relogio.Elapsed.TotalSeconds -lt 120) {
+
+        $atual = Obter-SerialNS 13
+        $tempo = [math]::Round($relogio.Elapsed.TotalSeconds, 3)
+
+        $estado = if ($atual -eq $alvo) {
+            "SINCRONIZADO"
+        } elseif ($atual) {
+            "DESATUALIZADO"
+        } else {
+            "SEM_SOA"
+        }
+
+        [PSCustomObject]@{
+            Horario = (Get-Date).ToString("o")
+            Segundos = $tempo
+            SerialNS3 = $atual
+            SerialAlvo = $alvo
+            Estado = $estado
+        } | Export-Csv $csv07 -NoTypeInformation -Append -Encoding UTF8
+
+        Write-Host "[$tempo s] NS3: $atual | $estado"
+
+        if ($estado -eq "SINCRONIZADO") {
+            $sincronizado = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    $relogio.Stop()
+
+    @(
+        "E7 - RODADA 07"
+        "Inicio reconexao: $($inicioReconexao.ToString('o'))"
+        "Metodo: reconexao + NOTIFY"
+        "Serial esperado: $alvo"
+        "Serial final: $atual"
+        "Sincronizado: $sincronizado"
+        "Tempo observado: $tempo segundos"
+    ) | Tee-Object -FilePath "$pastaRodada7\e7-07-resultado.txt"
+}
+finally {
+    if ($relogio -and $relogio.IsRunning) {
+        $relogio.Stop()
+    }
+
+    if ($isolado) {
+        docker network connect --ip 172.30.0.13 m2_dns_interna ns3
+    }
+}
+
+app.sd.lab: 10.0.0.3 -> 10.0.0.2 | serial 2026102322 -> 2026102323
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+Particao iniciada: 2026-10-25T18:19:14.7146263-03:00
+NS1: 2026102323
+NS2: 2026102323
+NS3: 2026102322
+
+zone notify queued
+[0.377 s] NS3: 2026102323 | SINCRONIZADO
+E7 - RODADA 07
+Inicio reconexao: 2026-10-25T18:19:20.3952930-03:00
+Metodo: reconexao + NOTIFY
+Serial esperado: 2026102323
+Serial final: 2026102323
+Sincronizado: True
+Tempo observado: 0.377 segundos
+PS C:\dns-m2> docker logs --since 10m --timestamps ns3 2>&1 |
+    Out-File "$pastaRodada7\e7-07-logs-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since 10m --timestamps ns1 2>&1 |
+    Out-File "$pastaRodada7\e7-07-logs-ns1.txt" -Encoding UTF8
+PS C:\dns-m2> $arquivoFinal = "$pastaRodada7\e7-07-validacao-final.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoFinal -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoFinal -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+PS C:\dns-m2> Select-String -Path "$pastaRodada7\e7-07-logs-ns3.txt" `
+    -Pattern "transferred serial 2026102323|Transfer status: success|notify from" `
+    -Context 2,2 |
+    Tee-Object -FilePath "$pastaRodada7\e7-07-eventos-transferencia.txt"
+
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:11:2026-10-25T21:16:5
+9.580754591Z 25-Oct-2026 21:16:59.577 client @0x74bbc36eb280 172.31.0.12#54262:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:12:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:13:2026-10-25T21:16:5
+9.580774443Z 25-Oct-2026 21:16:59.577 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:14:non-primary:
+172.31.0.12#54262
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:15:2026-10-25T21:17:0
+0.073281950Z 25-Oct-2026 21:17:00.069 client @0x74bbc97382e0 172.31.0.11#48305:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:16:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:17:2026-10-25T21:17:0
+0.073345859Z 25-Oct-2026 21:17:00.069 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:18:non-primary:
+172.31.0.11#48305
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:19:2026-10-25T21:17:0
+5.047382224Z 25-Oct-2026 21:17:05.041 client @0x74bbc36d11a0 172.31.0.100#56618
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:25:2026-10-25T21:17:0
+5.889898472Z 25-Oct-2026 21:17:05.885 client @0x74bbc36b9390 172.30.0.11#48027:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:26:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:27:2026-10-25T21:17:0
+5.889965724Z 25-Oct-2026 21:17:05.885 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:28:172.30.0.11#48027:
+serial 2026102322
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:29:2026-10-25T21:17:0
+5.890056193Z 25-Oct-2026 21:17:05.885 client @0x74bbc973c2b0 172.31.0.11#48692:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:30:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:31:2026-10-25T21:17:0
+5.891324060Z 25-Oct-2026 21:17:05.885 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:32:non-primary:
+172.31.0.11#48692
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:33:2026-10-25T21:17:0
+5.892022006Z 25-Oct-2026 21:17:05.889 zone sd.lab/IN: Transfer started.
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:36:2026-10-25T21:17:0
+5.895251702Z 25-Oct-2026 21:17:05.889 zone sd.lab/IN: transferred serial 2026102322
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:37:2026-10-25T21:17:0
+5.895773628Z 25-Oct-2026 21:17:05.889 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:38:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:39:2026-10-25T21:17:0
+5.895800713Z 25-Oct-2026 21:17:05.893 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:40:Transfer
+completed: 1 messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:46:2026-10-25T21:17:1
+0.081642538Z 25-Oct-2026 21:17:10.078 client @0x74bbc36bb3f0 172.30.0.11#33538:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:47:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:48:2026-10-25T21:17:1
+0.081683918Z 25-Oct-2026 21:17:10.078 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:49:172.30.0.11#33538:
+zone is up to date
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:50:2026-10-25T21:17:2
+9.322102531Z 25-Oct-2026 21:17:29.317 client @0x74bbc36e32e0 172.31.0.100#60820
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:55:2026-10-25T21:19:1
+5.097755654Z 25-Oct-2026 21:19:15.091 client @0x74bbc36eb280 172.31.0.12#34606:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:56:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:57:2026-10-25T21:19:1
+5.097786225Z 25-Oct-2026 21:19:15.091 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:58:non-primary:
+172.31.0.12#34606
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:59:2026-10-25T21:19:1
+5.512299926Z 25-Oct-2026 21:19:15.507 client @0x74bbc36d11a0 172.31.0.11#59064:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:60:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:61:2026-10-25T21:19:1
+5.512320540Z 25-Oct-2026 21:19:15.507 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:62:non-primary:
+172.31.0.11#59064
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:63:2026-10-25T21:19:2
+0.373665066Z 25-Oct-2026 21:19:20.368 client @0x74bbc36b7360 172.31.0.100#49116
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:67:2026-10-25T21:19:2
+0.514963918Z 25-Oct-2026 21:19:20.512 client @0x74bbc36d91b0 172.30.0.11#38835:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:68:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:69:2026-10-25T21:19:2
+0.515007226Z 25-Oct-2026 21:19:20.512 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:70:172.30.0.11#38835:
+serial 2026102323
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:71:2026-10-25T21:19:2
+0.515585676Z 25-Oct-2026 21:19:20.512 zone sd.lab/IN: Transfer started.
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:72:2026-10-25T21:19:2
+0.515851300Z 25-Oct-2026 21:19:20.512 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:73:connected using
+172.30.0.11#53
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:74:2026-10-25T21:19:2
+0.516480396Z 25-Oct-2026 21:19:20.512 zone sd.lab/IN: transferred serial 2026102323
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:75:2026-10-25T21:19:2
+0.516489924Z 25-Oct-2026 21:19:20.512 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:76:Transfer status:
+success
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:77:2026-10-25T21:19:2
+0.516493012Z 25-Oct-2026 21:19:20.512 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:78:Transfer
+completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:84:2026-10-25T21:19:2
+1.091801414Z 25-Oct-2026 21:19:21.088 client @0x74bbc36c7270 172.30.0.11#54945:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:85:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:86:2026-10-25T21:19:2
+1.091864577Z 25-Oct-2026 21:19:21.088 zone sd.lab/IN: notify from
+
+evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:87:172.30.0.11#54945:
+zone is up to date
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:88:2026-10-25T21:19:2
+1.091873623Z 25-Oct-2026 21:19:21.088 client @0x74bbc36d3220 172.31.0.11#45272:
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:89:received notify
+for zone 'sd.lab'
+> evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:90:2026-10-25T21:19:2
+1.091880263Z 25-Oct-2026 21:19:21.088 zone sd.lab/IN: refused notify from
+  evidencias\E7\e7-20261025-165631\rodada-07-20261025-181902\e7-07-logs-ns3.txt:91:non-primary:
+172.31.0.11#45272
+
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE7 = "C:\dns-m2\evidencias\E7\e7-20261025-165631"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $medicoes = @()
+PS C:\dns-m2> foreach ($numero in 3..7) {
+
+    $rodada = "{0:D2}" -f $numero
+
+    $arquivo = Get-ChildItem $pastaE7 -Recurse -File `
+        -Filter "e7-$rodada-resultado.txt" |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+
+    if (-not $arquivo) {
+        throw "Arquivo da rodada $rodada nao encontrado."
+    }
+
+    $conteudo = Get-Content $arquivo.FullName -Raw
+
+    if ($conteudo -notmatch '(?m)^Sincronizado:\s*True\s*$') {
+        throw "Rodada $rodada nao confirmou sincronizacao."
+    }
+
+    $matchTempo = [regex]::Match(
+        $conteudo,
+        'Tempo observado:\s*([0-9]+(?:[,.][0-9]+)?)\s+segundos'
+    )
+
+    if (-not $matchTempo.Success) {
+        throw "Tempo da rodada $rodada nao encontrado."
+    }
+
+    $tempo = [double]::Parse(
+        $matchTempo.Groups[1].Value.Replace(',', '.'),
+        [System.Globalization.CultureInfo]::InvariantCulture
+    )
+
+    $medicoes += [PSCustomObject]@{
+        Rodada = $rodada
+        TempoSegundos = $tempo
+        Sincronizado = "Sim"
+        Metodo = "Reconexao + NOTIFY"
+        Evidencia = $arquivo.FullName
+    }
+}
+PS C:\dns-m2> # Calcular as estatisticas
+PS C:\dns-m2> $estatisticas = $medicoes |
+    Measure-Object -Property TempoSegundos -Average -Minimum -Maximum
+PS C:\dns-m2> $n = $medicoes.Count
+PS C:\dns-m2> $media = $estatisticas.Average
+PS C:\dns-m2> $somaQuadrados = 0
+PS C:\dns-m2> foreach ($medicao in $medicoes) {
+    $somaQuadrados += [math]::Pow(
+        ($medicao.TempoSegundos - $media), 2
+    )
+}
+PS C:\dns-m2> $desvioPadrao = [math]::Sqrt(
+    $somaQuadrados / ($n - 1)
+)
+PS C:\dns-m2> # Exportar dados
+PS C:\dns-m2> $arquivoCSV = "$pastaE7\e7-medicoes-consolidadas-$carimbo.csv"
+PS C:\dns-m2> $arquivoResumo = "$pastaE7\e7-resumo-estatistico-$carimbo.txt"
+PS C:\dns-m2> $medicoes |
+    Export-Csv $arquivoCSV -NoTypeInformation -Delimiter ";" -Encoding UTF8
+PS C:\dns-m2> # Montar resumo
+PS C:\dns-m2> $resumo = @(
+    "E7 - RECUPERACAO E REINTEGRACAO"
+    "Data: $(Get-Date -Format o)"
+    ""
+    "METODOLOGIA"
+    "Particao curta do NS3, alteracao da zona no NS1,"
+    "reconexao do NS3 e NOTIFY explicito pelo primario."
+    "Tempo medido ate a primeira consulta que confirmou"
+    "o mesmo serial SOA no NS3 e no NS1."
+    ""
+    "RESULTADOS"
+)
+PS C:\dns-m2> foreach ($medicao in $medicoes) {
+    $resumo += "Rodada $($medicao.Rodada): $($medicao.TempoSegundos) segundos"
+}
+PS C:\dns-m2> $resumo += @(
+    ""
+    "ESTATISTICAS"
+    "Quantidade de amostras: $n"
+    "Media: $([math]::Round($media, 4)) segundos"
+    "Desvio-padrao amostral: $([math]::Round($desvioPadrao, 4)) segundos"
+    "Minimo: $($estatisticas.Minimum) segundos"
+    "Maximo: $($estatisticas.Maximum) segundos"
+    ""
+    "OBSERVACOES"
+    "As rodadas 01 e 02 foram analisadas separadamente."
+    "Essas rodadas apresentaram recuperacao tardia e"
+    "condicoes diferentes das cinco medicoes controladas."
+    ""
+    "O tempo observado inclui reconexao, envio de NOTIFY"
+    "e verificacao do serial SOA via PowerShell."
+    "Nao representa exclusivamente o tempo de AXFR."
+    ""
+    "As evidencias originais foram preservadas nas"
+    "pastas individuais das rodadas."
+)
+PS C:\dns-m2> $resumo | Out-File $arquivoResumo -Encoding UTF8
+PS C:\dns-m2> # Exibir resultado
+PS C:\dns-m2> $medicoes | Format-Table Rodada, TempoSegundos, Sincronizado -AutoSize
+
+Rodada TempoSegundos Sincronizado
+------ ------------- ------------
+03             1,536 Sim
+04             0,374 Sim
+05             1,541 Sim
+06             1,671 Sim
+07             0,377 Sim
+
+
+PS C:\dns-m2> Write-Host ""
+
+PS C:\dns-m2> Write-Host "Media: $([math]::Round($media, 4)) segundos"
+Media: 1.0998 segundos
+PS C:\dns-m2> Write-Host "Desvio-padrao: $([math]::Round($desvioPadrao, 4)) segundos"
+Desvio-padrao: 0.6634 segundos
+PS C:\dns-m2> Write-Host ""
+
+PS C:\dns-m2> Write-Host "CSV: $arquivoCSV"
+CSV: C:\dns-m2\evidencias\E7\e7-20261025-165631\e7-medicoes-consolidadas-20261025-182410.csv
+PS C:\dns-m2> Write-Host "Resumo: $arquivoResumo"
+Resumo: C:\dns-m2\evidencias\E7\e7-20261025-165631\e7-resumo-estatistico-20261025-182410.txt
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaE8 -ErrorAction Stop | Out-Null
+PS C:\dns-m2> @"
+E8 - COORDENACAO E ORDEM
+
+Objetivo:
+Investigar a coordenacao estatica do NS1 e a
+ordenacao das atualizacoes pelo serial SOA.
+
+Previsoes antes dos testes:
+
+1. NS1 atua como primario da zona sd.lab.
+
+2. Os secundarios utilizam o serial SOA para
+identificar versoes mais recentes da zona.
+
+3. Se NS1 publicar uma versao com serial menor,
+esperamos que NS2 e NS3 mantenham suas versoes
+anteriores, sem realizar uma transferencia
+de atualizacao para a versao mais antiga.
+
+4. Dois primarios independentes poderiam produzir
+versoes conflitantes, pois o DNS convencional
+nao implementa consenso distribuido entre eles.
+
+Data: $(Get-Date -Format o)
+"@ | Out-File "$pastaE8\e8-previsoes.txt" -Encoding UTF8
+PS C:\dns-m2> Write-Host "Pasta E8: $pastaE8"
+Pasta E8: C:\dns-m2\evidencias\E8\e8-20261025-182950
+PS C:\dns-m2> $arquivoInicial = "$pastaE8\e8-estado-inicial.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoInicial -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoInicial -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoInicial -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+PS C:\dns-m2> 
+ : O termo '' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa operável. Verifique a 
+grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está correto e tente novamente.
+No linha:1 caractere:1
++ 
++ ~
+    + CategoryInfo          : ObjectNotFound: (:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ : O termo '' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa
+operável. Verifique a grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está
+correto e tente novamente.
+No linha:1 caractere:1
++ 
++ ~
+    + CategoryInfo          : ObjectNotFound: (:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\dns-m2> Get-Content .\scripts\02-alterar-ip.ps1 |
+    Tee-Object -FilePath "$pastaE8\e8-script-alteracao-original.txt"
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$NovoIP,
+    [switch]$SemReload
+)
+$ErrorActionPreference = 'Stop'
+if ($NovoIP -notmatch '^(?:\d{1,3}\.){3}\d{1,3}$' -or
+    @($NovoIP.Split('.') | Where-Object { [int]$_ -gt 255 }).Count -gt 0) {
+    throw "IP IPv4 invalido: $NovoIP"
+}
+$zona = Join-Path $PSScriptRoot '..\zones\db.sd.lab'
+$texto = [System.IO.File]::ReadAllText((Resolve-Path $zona))
+$padraoApp = '(?m)^(app\s+IN\s+A\s+)(\d{1,3}(?:\.\d{1,3}){3})(\s*)$'
+$m = [regex]::Match($texto, $padraoApp)
+if (-not $m.Success) { throw "Nao foi encontrado o registro app IN A no arquivo da zona." }
+$antigo = $m.Groups[2].Value
+$texto = $texto.Substring(0, $m.Groups[2].Index) + $NovoIP + $texto.Substring($m.Groups[2].Index + $m.Groups[2].Length)
+$padraoSerial = '(?m)(\d{10})(\s*;\s*serial\b)'
+$s = [regex]::Match($texto, $padraoSerial)
+if (-not $s.Success) { throw "Serial da zona nao encontrado." }
+$serialAntigo = [long]$s.Groups[1].Value
+$serialNovo = $serialAntigo + 1
+$texto = $texto.Substring(0, $s.Groups[1].Index) + $serialNovo.ToString() + $texto.Substring($s.Groups[1].Index + $s.Groups[1].Length)
+[System.IO.File]::WriteAllText((Resolve-Path $zona), $texto, [System.Text.Encoding]::ASCII)
+Write-Host "app.sd.lab: $antigo -> $NovoIP | serial $serialAntigo -> $serialNovo" -ForegroundColor Green
+if (-not $SemReload) {
+    docker exec ns1 rndc -k /etc/bind/rndc.key reload sd.lab
+    if ($LASTEXITCODE -ne 0) { throw "Falha ao recarregar a zona do NS1." }
+    Write-Host "Verifique os secundaries: .\scripts\01-diagnostico.ps1"
+}
+PS C:\dns-m2> V
+V : O termo 'V' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa operável. Verifique a 
+grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está correto e tente novamente.
+No linha:1 caractere:1
++ V
++ ~
+    + CategoryInfo          : ObjectNotFound: (V:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+V : O termo 'V' não é reconhecido como nome de cmdlet, função, arquivo de script ou programa
+operável. Verifique a grafia do nome ou, se um caminho tiver sido incluído, veja se o caminho está
+correto e tente novamente.
+No linha:1 caractere:1
++ V
++ ~
+    + CategoryInfo          : ObjectNotFound: (V:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\dns-m2> docker inspect ns1 --format '{{json .Mounts}}' |
+    ConvertFrom-Json |
+    Select-Object Type, Source, Destination |
+    Format-Table -AutoSize
+
+Type Source Destination
+---- ------ -----------
+
+
+
+PS C:\dns-m2> Get-Content .\scripts\02-alterar-ip.ps1 |
+    Tee-Object -FilePath "$pastaE8\e8-script-alteracao-original.txt"
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$NovoIP,
+    [switch]$SemReload
+)
+$ErrorActionPreference = 'Stop'
+if ($NovoIP -notmatch '^(?:\d{1,3}\.){3}\d{1,3}$' -or
+    @($NovoIP.Split('.') | Where-Object { [int]$_ -gt 255 }).Count -gt 0) {
+    throw "IP IPv4 invalido: $NovoIP"
+}
+$zona = Join-Path $PSScriptRoot '..\zones\db.sd.lab'
+$texto = [System.IO.File]::ReadAllText((Resolve-Path $zona))
+$padraoApp = '(?m)^(app\s+IN\s+A\s+)(\d{1,3}(?:\.\d{1,3}){3})(\s*)$'
+$m = [regex]::Match($texto, $padraoApp)
+if (-not $m.Success) { throw "Nao foi encontrado o registro app IN A no arquivo da zona." }
+$antigo = $m.Groups[2].Value
+$texto = $texto.Substring(0, $m.Groups[2].Index) + $NovoIP + $texto.Substring($m.Groups[2].Index + $m.Groups[2].Length)
+$padraoSerial = '(?m)(\d{10})(\s*;\s*serial\b)'
+$s = [regex]::Match($texto, $padraoSerial)
+if (-not $s.Success) { throw "Serial da zona nao encontrado." }
+$serialAntigo = [long]$s.Groups[1].Value
+$serialNovo = $serialAntigo + 1
+$texto = $texto.Substring(0, $s.Groups[1].Index) + $serialNovo.ToString() + $texto.Substring($s.Groups[1].Index + $s.Groups[1].Length)
+[System.IO.File]::WriteAllText((Resolve-Path $zona), $texto, [System.Text.Encoding]::ASCII)
+Write-Host "app.sd.lab: $antigo -> $NovoIP | serial $serialAntigo -> $serialNovo" -ForegroundColor Green
+if (-not $SemReload) {
+    docker exec ns1 rndc -k /etc/bind/rndc.key reload sd.lab
+    if ($LASTEXITCODE -ne 0) { throw "Falha ao recarregar a zona do NS1." }
+    Write-Host "Verifique os secundaries: .\scripts\01-diagnostico.ps1"
+}
+PS C:\dns-m2> docker inspect ns1 --format '{{json .Mounts}}' |
+    ConvertFrom-Json |
+    Select-Object Type, Source, Destination |
+    Format-Table -AutoSize
+
+Type Source Destination
+---- ------ -----------
+
+
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> docker inspect ns1 --format '{{json .Mounts}}' |
+    Tee-Object -FilePath "$pastaE8\e8-volumes-ns1.txt"
+[{"Type":"bind","Source":"C:\\dns-m2\\configs\\ns1\\named.conf","Destination":"/etc/bind/named.conf","Mode":"ro","RW":false,"Propagation":"rprivate"},{"Type":"bind","Source":"C:\\dns-m2\\zones\\db.sd.lab","Destination":"/var/lib/bind/db.sd.lab","Mode":"ro","RW":false,"Propagation":"rprivate"},{"Type":"volume","Name":"dns-m2_ns1_keys","Source":"/var/lib/docker/volumes/dns-m2_ns1_keys/_data","Destination":"/var/lib/bind/keys","Driver":"local","Mode":"rw","RW":true,"Propagation":""}]
+PS C:\dns-m2> Get-Content .\zones\db.sd.lab |
+    Select-String -Pattern 'serial','^app\s+IN\s+A'
+
+        2026102323 ; serial (AAAAMMDDnn; aumentar a cada mudanca)
+app IN A 10.0.0.2
+
+
+PS C:\dns-m2> docker exec ns1 rndc zonestatus sd.lab
+
+PS C:\dns-m2> docker exec ns1 cat /var/lib/bind/db.sd.lab |
+    Select-String -Pattern 'serial','^app\s+IN\s+A'
+
+        2026102323 ; serial (AAAAMMDDnn; aumentar a cada mudanca)
+app IN A 10.0.0.2
+
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> $arquivoZona = "C:\dns-m2\zones\db.sd.lab"
+PS C:\dns-m2> $carimboBackup = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $backupZona = "$pastaE8\e8-backup-zona-$carimboBackup.bak"
+PS C:\dns-m2> Copy-Item -LiteralPath $arquivoZona -Destination $backupZona -ErrorAction Stop
+PS C:\dns-m2> Write-Host "Backup criado: $backupZona"
+Backup criado: C:\dns-m2\evidencias\E8\e8-20261025-182950\e8-backup-zona-20261025-184159.bak
+PS C:\dns-m2> Get-FileHash -LiteralPath $arquivoZona, $backupZona -Algorithm SHA256 |
+    Tee-Object -FilePath "$pastaE8\e8-hash-backup-$carimboBackup.txt"
+
+Algorithm       Hash                                                                   Path
+---------       ----                                                                   ----
+SHA256          02C3EF0D05F0D75032BC0C45094CD11EB4DF9E2DA70DBC846FF8CEA4532CF298       C:\dns-m2\z...
+SHA256          02C3EF0D05F0D75032BC0C45094CD11EB4DF9E2DA70DBC846FF8CEA4532CF298       C:\dns-m2\e...
+
+
+PS C:\dns-m2> $textoOriginal = [System.IO.File]::ReadAllText($arquivoZona)
+PS C:\dns-m2> $padraoSerial = '(\d{10})(\s*;\s*serial\b)'
+PS C:\dns-m2> $padraoApp = '(?m)^(app\s+IN\s+A\s+)(\d{1,3}(?:\.\d{1,3}){3})(\s*)$'
+PS C:\dns-m2> $serialAtual = [regex]::Match(
+    $textoOriginal,
+    $padraoSerial
+).Groups[1].Value
+PS C:\dns-m2> $ipAtual = [regex]::Match(
+    $textoOriginal,
+    $padraoApp
+).Groups[2].Value
+PS C:\dns-m2> if ($serialAtual -ne "2026102323" -or $ipAtual -ne "10.0.0.2") {
+    throw "Estado diferente do esperado. Alteracao cancelada."
+}
+PS C:\dns-m2> $textoNovo = [regex]::Replace(
+    $textoOriginal,
+    $padraoSerial,
+    '${1}2026102322${2}'
+)
+PS C:\dns-m2> $textoNovo = [regex]::Replace(
+    $textoNovo,
+    $padraoApp,
+    '${1}10.0.0.3${3}'
+)
+PS C:\dns-m2> [System.IO.File]::WriteAllText(
+    $arquivoZona,
+    $textoNovo,
+    [System.Text.Encoding]::ASCII
+)
+PS C:\dns-m2> Write-Host "Zona alterada no Windows."
+Zona alterada no Windows.
+PS C:\dns-m2> Write-Host "Serial: 2026102323 -> 2026102322"
+Serial: 2026102323 -> 2026102322
+PS C:\dns-m2> Write-Host "IP: 10.0.0.2 -> 10.0.0.3"
+IP: 10.0.0.2 -> 10.0.0.3
+PS C:\dns-m2> docker exec ns1 named-checkzone sd.lab /var/lib/bind/db.sd.lab
+
+PS C:\dns-m2> docker exec ns1 named-checkzone sd.lab /var/lib/bind/db.sd.lab
+
+PS C:\dns-m2> $inicioTeste = Get-Date
+PS C:\dns-m2> "Inicio do teste: $($inicioTeste.ToString('o'))" |
+    Tee-Object -FilePath "$pastaE8\e8-inicio-teste-serial-menor.txt"
+Inicio do teste: 2026-10-25T18:42:40.5207438-03:00
+PS C:\dns-m2> docker exec ns1 rndc -k /etc/bind/rndc.key reload sd.lab
+
+PS C:\dns-m2> Start-Sleep -Seconds 10
+PS C:\dns-m2> $arquivoComparacao = "$pastaE8\e8-comparacao-serial-menor.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoComparacao -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoComparacao -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoComparacao -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> $arquivoZona = "C:\dns-m2\zones\db.sd.lab"
+PS C:\dns-m2> $backupZona = "$pastaE8\e8-backup-zona-20261025-184159.bak"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> # Preservar o arquivo invalido
+PS C:\dns-m2> Copy-Item -LiteralPath $arquivoZona `
+    -Destination "$pastaE8\e8-zona-invalida-$carimbo.txt" `
+    -ErrorAction Stop
+PS C:\dns-m2> # Ler o backup original
+PS C:\dns-m2> $textoOriginal = [System.IO.File]::ReadAllText($backupZona)
+PS C:\dns-m2> $padraoSerial = '(\d{10})(\s*;\s*serial\b)'
+PS C:\dns-m2> $padraoApp = '(?m)^(app\s+IN\s+A\s+)(\d{1,3}(?:\.\d{1,3}){3})(\s*)$'
+PS C:\dns-m2> $serialBackup = [regex]::Match($textoOriginal, $padraoSerial)
+PS C:\dns-m2> $appBackup = [regex]::Match($textoOriginal, $padraoApp)
+PS C:\dns-m2> if (
+    $serialBackup.Groups[1].Value -ne "2026102323" -or
+    $appBackup.Groups[2].Value -ne "10.0.0.2"
+) {
+    throw "Backup inesperado. Alteracao cancelada."
+}
+PS C:\dns-m2> # Substituir o serial, sem concatenar
+PS C:\dns-m2> $textoNovo = [regex]::Replace(
+    $textoOriginal,
+    $padraoSerial,
+    '2026102322${2}'
+)
+PS C:\dns-m2> # Alterar o endereco IP
+PS C:\dns-m2> $textoNovo = [regex]::Replace(
+    $textoNovo,
+    $padraoApp,
+    '${1}10.0.0.3${3}'
+)
+PS C:\dns-m2> # Gravar a zona corrigida
+PS C:\dns-m2> [System.IO.File]::WriteAllText(
+    $arquivoZona,
+    $textoNovo,
+    [System.Text.Encoding]::ASCII
+)
+PS C:\dns-m2> Write-Host "Zona corrigida a partir do backup."
+Zona corrigida a partir do backup.
+PS C:\dns-m2> Get-Content $arquivoZona |
+    Select-String -Pattern 'serial','^app\s+IN\s+A'
+
+        2026102322 ; serial (AAAAMMDDnn; aumentar a cada mudanca)
+app IN A 10.0.0.3
+
+
+PS C:\dns-m2> docker exec ns1 named-checkzone sd.lab /var/lib/bind/db.sd.lab
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Zona invalida! Nao executar o reload."
+}
+PS C:\dns-m2> $inicioTesteCorrigido = Get-Date
+PS C:\dns-m2> "Inicio do teste corrigido: $($inicioTesteCorrigido.ToString('o'))" |
+    Tee-Object -FilePath "$pastaE8\e8-inicio-teste-corrigido-$carimbo.txt"
+Inicio do teste corrigido: 2026-10-25T18:46:30.7349847-03:00
+PS C:\dns-m2> docker exec ns1 rndc -k /etc/bind/rndc.key reload sd.lab
+
+PS C:\dns-m2> Start-Sleep -Seconds 3
+PS C:\dns-m2> docker exec ns1 rndc zonestatus sd.lab
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.11" sd.lab SOA +norecurse +short
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +short
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> $carimboE8 = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $arquivoAntes = "$pastaE8\e8-serial-menor-antes-refresh-$carimboE8.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    "=== NS$s ===" | Tee-Object -FilePath $arquivoAntes -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoAntes -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoAntes -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102322 30 10 300 20
+10.0.0.3
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+PS C:\dns-m2> $inicioRefresh = Get-Date
+PS C:\dns-m2> "Inicio refresh: $($inicioRefresh.ToString('o'))" |
+    Tee-Object -FilePath "$pastaE8\e8-inicio-refresh-$carimboE8.txt"
+Inicio refresh: 2026-10-25T18:48:26.6441470-03:00
+PS C:\dns-m2> docker exec ns2 rndc refresh sd.lab
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Falha no refresh do NS2."
+}
+PS C:\dns-m2> docker exec ns3 rndc refresh sd.lab
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Falha no refresh do NS3."
+}
+PS C:\dns-m2> Start-Sleep -Seconds 10
+PS C:\dns-m2> $arquivoDepois = "$pastaE8\e8-serial-menor-depois-refresh-$carimboE8.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    "=== NS$s ===" | Tee-Object -FilePath $arquivoDepois -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoDepois -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoDepois -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102322 30 10 300 20
+10.0.0.3
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102323 30 10 300 20
+10.0.0.2
+PS C:\dns-m2> $desde = $inicioRefresh.ToString("o")
+PS C:\dns-m2> docker logs --since "$desde" --timestamps ns2 2>&1 |
+    Out-File "$pastaE8\e8-refresh-ns2-$carimboE8.txt" -Encoding UTF8
+PS C:\dns-m2> docker logs --since "$desde" --timestamps ns3 2>&1 |
+    Out-File "$pastaE8\e8-refresh-ns3-$carimboE8.txt" -Encoding UTF8
+PS C:\dns-m2> docker exec ns2 rndc zonestatus sd.lab
+
+PS C:\dns-m2> docker exec ns3 rndc zonestatus sd.lab
+
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> $arquivoZona = "C:\dns-m2\zones\db.sd.lab"
+PS C:\dns-m2> $backupZona = "$pastaE8\e8-backup-zona-20261025-184159.bak"
+PS C:\dns-m2> $carimboRestauracao = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> if (-not (Test-Path -LiteralPath $backupZona)) {
+    throw "Backup original nao encontrado."
+}
+PS C:\dns-m2> # Preservar a zona com serial menor como evidencia
+PS C:\dns-m2> Copy-Item -LiteralPath $arquivoZona `
+    -Destination "$pastaE8\e8-zona-serial-menor-$carimboRestauracao.txt" `
+    -ErrorAction Stop
+PS C:\dns-m2> # Ler o backup original
+PS C:\dns-m2> $textoBase = [System.IO.File]::ReadAllText($backupZona)
+PS C:\dns-m2> # Identificar exatamente os digitos do serial
+PS C:\dns-m2> $m = [regex]::Match(
+    $textoBase,
+    '(?m)^(\s*)(\d{10})(\s*;\s*serial\b)'
+)
+PS C:\dns-m2> if (-not $m.Success -or $m.Groups[2].Value -ne "2026102323") {
+    throw "Serial do backup diferente do esperado."
+}
+PS C:\dns-m2> # Substituir apenas os digitos do serial
+PS C:\dns-m2> $textoRestaurado = $textoBase.Substring(0, $m.Groups[2].Index) +
+    "2026102324" +
+    $textoBase.Substring($m.Groups[2].Index + $m.Groups[2].Length)
+PS C:\dns-m2> [System.IO.File]::WriteAllText(
+    $arquivoZona,
+    $textoRestaurado,
+    [System.Text.Encoding]::ASCII
+)
+PS C:\dns-m2> # Verificar e salvar evidencias
+PS C:\dns-m2> Get-Content $arquivoZona |
+    Select-String -Pattern 'serial','^app\s+IN\s+A' |
+    Tee-Object -FilePath "$pastaE8\e8-zona-restaurada-$carimboRestauracao.txt"
+
+        2026102324 ; serial (AAAAMMDDnn; aumentar a cada mudanca)
+app IN A 10.0.0.2
+
+
+PS C:\dns-m2> docker exec ns1 named-checkzone sd.lab /var/lib/bind/db.sd.lab
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Zona invalida. Nao executar reload."
+}
+PS C:\dns-m2> $inicioRestauracao = Get-Date
+PS C:\dns-m2> "Inicio restauracao: $($inicioRestauracao.ToString('o'))" |
+    Tee-Object -FilePath "$pastaE8\e8-inicio-restauracao-$carimboRestauracao.txt"
+Inicio restauracao: 2026-10-25T18:52:26.6719257-03:00
+PS C:\dns-m2> docker exec ns1 rndc -k /etc/bind/rndc.key reload sd.lab
+
+PS C:\dns-m2> if ($LASTEXITCODE -ne 0) {
+    throw "Falha ao solicitar reload."
+}
+PS C:\dns-m2> Start-Sleep -Seconds 2
+PS C:\dns-m2> docker exec ns1 rndc zonestatus sd.lab
+
+PS C:\dns-m2> # Solicitar notificacao aos secundarios
+PS C:\dns-m2> docker exec ns1 rndc notify sd.lab
+
+PS C:\dns-m2> Start-Sleep -Seconds 5
+PS C:\dns-m2> $arquivoRestauracao = "$pastaE8\e8-validacao-restauracao-$carimboRestauracao.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoRestauracao -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivoRestauracao -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +short |
+        Tee-Object -FilePath $arquivoRestauracao -Append
+}
+=== NS11 ===
+ns1.sd.lab. admin.sd.lab. 2026102324 30 10 300 20
+10.0.0.2
+=== NS12 ===
+ns1.sd.lab. admin.sd.lab. 2026102324 30 10 300 20
+10.0.0.2
+=== NS13 ===
+ns1.sd.lab. admin.sd.lab. 2026102324 30 10 300 20
+10.0.0.2
+PS C:\dns-m2> $desdeRestauracao = $inicioRestauracao.ToString("o")
+PS C:\dns-m2> foreach ($servidor in @("ns1","ns2","ns3")) {
+
+    docker logs --since "$desdeRestauracao" --timestamps $servidor 2>&1 |
+        Out-File "$pastaE8\e8-restauracao-$servidor-$carimboRestauracao.txt" -Encoding UTF8
+}
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $pastaE8 = "C:\dns-m2\evidencias\E8\e8-20261025-182950"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $resumoE8 = @"
+E8 - COORDENACAO E ORDEM
+Data: $(Get-Date -Format o)
+
+OBJETIVO
+Demonstrar a coordenacao estatica do NS1 e o
+versionamento da zona DNS pelo serial SOA.
+
+PREVISAO
+Os secundarios nao devem adotar uma versao cujo
+serial SOA seja anterior ao serial armazenado.
+
+TESTE 1 - SERIAL MENOR
+NS1: serial 2026102322, IP 10.0.0.3
+NS2: serial 2026102323, IP 10.0.0.2
+NS3: serial 2026102323, IP 10.0.0.2
+
+Apos rndc refresh nos secundarios, os valores
+permaneceram inalterados.
+
+Resultado: previsao confirmada.
+
+TESTE 2 - RESTAURACAO COM SERIAL MAIOR
+NS1: serial 2026102324, IP 10.0.0.2
+NS2: serial 2026102324, IP 10.0.0.2
+NS3: serial 2026102324, IP 10.0.0.2
+
+Resultado: sincronizacao restaurada.
+
+ANALISE
+O NS1 atua como primario estatico.
+Os secundarios utilizam o serial SOA para
+identificar versoes mais recentes.
+
+Um serial inferior nao foi adotado pelos
+secundarios no procedimento observado.
+
+Em um cenario com dois primarios independentes,
+atualizacoes conflitantes poderiam comprometer
+a ordenacao e consistencia da zona.
+
+LIMITACOES
+O comportamento de dois primarios conflitantes
+foi discutido teoricamente, nao reproduzido
+em um experimento separado.
+
+O primeiro arquivo com serial menor estava
+invalido por erro na substituicao do texto.
+Foi corrigido antes do teste valido.
+
+ESTADO FINAL
+Cluster sincronizado no serial 2026102324.
+"@
+PS C:\dns-m2> $resumoE8 |
+    Out-File "$pastaE8\e8-resumo-final-$carimbo.txt" -Encoding UTF8
+PS C:\dns-m2> Write-Host "Resumo E8 salvo com sucesso."
+Resumo E8 salvo com sucesso.
+PS C:\dns-m2> cd C:\dns-m2
+PS C:\dns-m2> $origem = "C:\dns-m2\evidencias"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $pastaAuditoria = "$origem\AUDITORIA\auditoria-$carimbo"
+PS C:\dns-m2> New-Item -ItemType Directory -Path $pastaAuditoria -Force |
+    Out-Null
+PS C:\dns-m2> $arquivos = @(
+    Get-ChildItem -LiteralPath $origem -File -Recurse |
+    Where-Object {
+        $_.FullName -notlike "$origem\AUDITORIA\*"
+    }
+)
+PS C:\dns-m2> $inventario = @(
+    foreach ($arquivo in $arquivos) {
+
+        $relativo = $arquivo.FullName.Substring(
+            $origem.Length
+        ).TrimStart("\")
+
+        $experimento = "GERAL"
+
+        if ($relativo -match '(?i)^E([1-8])\\') {
+            $experimento = "E$($Matches[1])"
+        }
+        elseif ($arquivo.Name -match '(?i)^e([1-8])[-_.]') {
+            $experimento = "E$($Matches[1])"
+        }
+
+        [PSCustomObject]@{
+            Experimento = $experimento
+            Arquivo = $relativo
+            Bytes = $arquivo.Length
+            Vazio = ($arquivo.Length -eq 0)
+            Modificado = $arquivo.LastWriteTime
+        }
+    }
+)
+PS C:\dns-m2> $inventario |
+    Sort-Object Experimento, Arquivo |
+    Export-Csv "$pastaAuditoria\inventario-completo.csv" `
+        -Delimiter ";" -NoTypeInformation -Encoding UTF8
+PS C:\dns-m2> $resumo = @(
+    foreach ($numero in 1..8) {
+
+        $e = "E$numero"
+
+        $itens = @(
+            $inventario | Where-Object {
+                $_.Experimento -eq $e
+            }
+        )
+
+        [PSCustomObject]@{
+            Experimento = $e
+            Arquivos = $itens.Count
+            Logs = @(
+                $itens | Where-Object {
+                    $_.Arquivo -match '(?i)log'
+                }
+            ).Count
+            CSVs = @(
+                $itens | Where-Object {
+                    $_.Arquivo -match '(?i)\.csv$'
+                }
+            ).Count
+            Vazios = @(
+                $itens | Where-Object {
+                    $_.Vazio
+                }
+            ).Count
+            TotalKB = [math]::Round(
+                (@(
+                    $itens | Measure-Object Bytes -Sum
+                )[0].Sum / 1KB), 2
+            )
+        }
+    }
+)
+PS C:\dns-m2> $resumo |
+    Format-Table -AutoSize |
+    Out-String |
+    Tee-Object -FilePath "$pastaAuditoria\resumo-auditoria.txt"
+
+Experimento Arquivos Logs CSVs Vazios TotalKB
+----------- -------- ---- ---- ------ -------
+E1                 5    1    0      0   61,68
+E2                 5    4    0      0   33,69
+E3                 5    0    5      0    0,93
+E4                 4    0    0      0    5,65
+E5                 3    0    0      0    8,34
+E6                19    4    1      0  403,95
+E7                72   14    8      0 2583,92
+E8                23    0    0      0   22,28
+PS C:\dns-m2> $arquivosVazios = @(
+    $inventario | Where-Object { $_.Vazio }
+)
+PS C:\dns-m2> $arquivosVazios |
+    Export-Csv "$pastaAuditoria\arquivos-vazios.csv" `
+        -Delimiter ";" -NoTypeInformation -Encoding UTF8
+PS C:\dns-m2> Write-Host ""
+
+PS C:\dns-m2> Write-Host "Total de arquivos: $($inventario.Count)"
+Total de arquivos: 146
+PS C:\dns-m2> Write-Host "Arquivos vazios: $($arquivosVazios.Count)"
+Arquivos vazios: 1
+PS C:\dns-m2> Write-Host "Auditoria salva em: $pastaAuditoria"
+Auditoria salva em: C:\dns-m2\evidencias\AUDITORIA\auditoria-20261025-190058
+PS C:\dns-m2> $padroes = @(
+    "Transfer status: success",
+    "transferred serial",
+    "Transfer completed",
+    "zone not loaded",
+    "expired",
+    "unreachable",
+    "SERVFAIL",
+    "notify from",
+    "zone reload",
+    "zone refresh"
+)
+PS C:\dns-m2> $arquivosTexto = @(
+    $arquivos | Where-Object {
+        $_.Extension -in @(".txt", ".log", ".out")
+    }
+)
+PS C:\dns-m2> $eventos = @(
+    foreach ($arquivo in $arquivosTexto) {
+
+        Select-String -LiteralPath $arquivo.FullName `
+            -Pattern $padroes `
+            -ErrorAction SilentlyContinue |
+        ForEach-Object {
+
+            [PSCustomObject]@{
+                Arquivo = $arquivo.FullName
+                Linha = $_.LineNumber
+                Evento = $_.Line.Trim()
+            }
+        }
+    }
+)
+PS C:\dns-m2> $eventos |
+    Export-Csv "$pastaAuditoria\eventos-dns.csv" `
+        -Delimiter ";" -NoTypeInformation -Encoding UTF8
+PS C:\dns-m2> Write-Host "Eventos DNS encontrados: $($eventos.Count)"
+Eventos DNS encontrados: 7443
+PS C:\dns-m2> $zipAuditoria = "$origem\AUDITORIA\auditoria-$carimbo.zip"
+PS C:\dns-m2> Compress-Archive `
+    -Path "$pastaAuditoria\*" `
+    -DestinationPath $zipAuditoria `
+    -ErrorAction Stop
+PS C:\dns-m2> Write-Host "Arquivo gerado: $zipAuditoria"
+Arquivo gerado: C:\dns-m2\evidencias\AUDITORIA\auditoria-20261025-190058.zip
+PS C:\dns-m2> Stop-Transcript
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261025190539
+**********************

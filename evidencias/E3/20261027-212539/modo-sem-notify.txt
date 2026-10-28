@@ -1,0 +1,2 @@
+﻿notify no aplicado por rndc reconfig, sem reiniciar ns1.
+SOA primario: 2026102306

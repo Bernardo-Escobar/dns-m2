@@ -1,0 +1,51 @@
+﻿E8 - COORDENACAO E ORDEM
+Data: 2026-10-25T18:54:15.7078303-03:00
+
+OBJETIVO
+Demonstrar a coordenacao estatica do NS1 e o
+versionamento da zona DNS pelo serial SOA.
+
+PREVISAO
+Os secundarios nao devem adotar uma versao cujo
+serial SOA seja anterior ao serial armazenado.
+
+TESTE 1 - SERIAL MENOR
+NS1: serial 2026102322, IP 10.0.0.3
+NS2: serial 2026102323, IP 10.0.0.2
+NS3: serial 2026102323, IP 10.0.0.2
+
+Apos rndc refresh nos secundarios, os valores
+permaneceram inalterados.
+
+Resultado: previsao confirmada.
+
+TESTE 2 - RESTAURACAO COM SERIAL MAIOR
+NS1: serial 2026102324, IP 10.0.0.2
+NS2: serial 2026102324, IP 10.0.0.2
+NS3: serial 2026102324, IP 10.0.0.2
+
+Resultado: sincronizacao restaurada.
+
+ANALISE
+O NS1 atua como primario estatico.
+Os secundarios utilizam o serial SOA para
+identificar versoes mais recentes.
+
+Um serial inferior nao foi adotado pelos
+secundarios no procedimento observado.
+
+Em um cenario com dois primarios independentes,
+atualizacoes conflitantes poderiam comprometer
+a ordenacao e consistencia da zona.
+
+LIMITACOES
+O comportamento de dois primarios conflitantes
+foi discutido teoricamente, nao reproduzido
+em um experimento separado.
+
+O primeiro arquivo com serial menor estava
+invalido por erro na substituicao do texto.
+Foi corrigido antes do teste valido.
+
+ESTADO FINAL
+Cluster sincronizado no serial 2026102324.

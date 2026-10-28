@@ -1,0 +1,45 @@
+﻿docker : 23-Oct-2026 23:32:08.935 zone sd.lab/IN: refresh: retry limit for primary 172.30.0.11#53 
+exceeded (source 0.0.0.0#0)
+No linha:2 caractere:5
++     docker logs --since 10m $servidor 2>&1 |
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (23-Oct-2026 23:...urce 0.0.0.0#0):String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+23-Oct-2026 23:32:39.466 zone sd.lab/IN: refresh: retry limit for primary 172.30.0.11#53 exceeded 
+(source 0.0.0.0#0)
+23-Oct-2026 23:33:10.000 zone sd.lab/IN: refresh: retry limit for primary 172.30.0.11#53 exceeded 
+(source 0.0.0.0#0)
+23-Oct-2026 23:33:40.526 zone sd.lab/IN: refresh: retry limit for primary 172.30.0.11#53 exceeded 
+(source 0.0.0.0#0)
+23-Oct-2026 23:34:05.105 client @0x74bbc9735410 172.31.0.12#44708: received notify for zone 'sd.lab'
+23-Oct-2026 23:34:05.105 zone sd.lab/IN: refused notify from non-primary: 172.31.0.12#44708
+23-Oct-2026 23:34:05.145 client @0x74bbc36d11a0 172.31.0.11#54107: received notify for zone 'sd.lab'
+23-Oct-2026 23:34:05.145 zone sd.lab/IN: refused notify from non-primary: 172.31.0.11#54107
+23-Oct-2026 23:34:05.145 client @0x74bbc36a9280 172.30.0.11#45184: received notify for zone 'sd.lab'
+23-Oct-2026 23:34:05.145 zone sd.lab/IN: notify from 172.30.0.11#45184: zone is up to date
+23-Oct-2026 23:36:09.067 received control channel command 'querylog on'
+23-Oct-2026 23:36:09.067 query logging is now on
+23-Oct-2026 23:36:24.841 client @0x74bbc9735410 172.31.0.53#47991 (app.sd.lab): query: app.sd.lab IN 
+A +E(0)DCV (172.31.0.13)
+23-Oct-2026 23:40:49.651 received control channel command 'querylog on'
+23-Oct-2026 23:40:50.567 client @0x74bbc36e32e0 172.31.0.53#49450 (app.sd.lab): query: app.sd.lab IN 
+A +E(0)DCV (172.31.0.13)
+23-Oct-2026 23:41:00.433 client @0x74bbc36e5250 172.31.0.12#57674: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.433 zone sd.lab/IN: refused notify from non-primary: 172.31.0.12#57674
+23-Oct-2026 23:41:00.921 client @0x74bbc36d9180 172.30.0.11#60497: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.921 zone sd.lab/IN: notify from 172.30.0.11#60497: serial 2026102315
+23-Oct-2026 23:41:00.921 client @0x74bbc36e5250 172.31.0.11#37447: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.921 zone sd.lab/IN: refused notify from non-primary: 172.31.0.11#37447
+23-Oct-2026 23:41:00.921 zone sd.lab/IN: Transfer started.
+23-Oct-2026 23:41:00.921 transfer of 'sd.lab/IN' from 172.30.0.11#53: connected using 172.30.0.11#53
+23-Oct-2026 23:41:00.925 zone sd.lab/IN: transferred serial 2026102315
+23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer status: success
+23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer completed: 1 
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial 2026102315)
+23-Oct-2026 23:41:00.925 zone sd.lab/IN: sending notifies (serial 2026102315)
+23-Oct-2026 23:41:26.846 client @0x74bbc36b7360 172.31.0.100#55142 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.13)
+23-Oct-2026 23:41:27.415 client @0x74bbc97382e0 172.31.0.100#33092 (sd.lab): query: sd.lab IN SOA 
++E(0)K (172.31.0.13)

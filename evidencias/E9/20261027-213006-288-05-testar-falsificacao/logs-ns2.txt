@@ -1,0 +1,8 @@
+﻿docker.exe : 28-Oct-2026 00:30:06.923 client @0x7f216b004290 172.31.0.66#47473: received notify for zone 'sd.lab'
+No C:\Users\berna\Desktop\dns-m2-novo\scripts\_registrar-evidencias.ps1:55 caractere:21
++                     & docker logs --since $desde $servico 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (28-Oct-2026 00:...r zone 'sd.lab':String)     [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+28-Oct-2026 00:30:06.923 zone sd.lab/IN: refused notify from non-primary: 172.31.0.66#47473

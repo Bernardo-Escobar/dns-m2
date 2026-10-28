@@ -1,0 +1,29 @@
+﻿docker : 2026-10-25T21:48:26.878538828Z 25-Oct-2026 21:48:26.874 received control channel command 
+'refresh sd.lab'
+No linha:1 caractere:1
++ docker logs --since "$desde" --timestamps ns2 2>&1 |
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T21:4...refresh sd.lab':String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T21:48:26.879470576Z 25-Oct-2026 21:48:26.874 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:35.877958553Z 25-Oct-2026 21:48:35.875 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:45.878414167Z 25-Oct-2026 21:48:45.876 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:55.882238385Z 25-Oct-2026 21:48:55.877 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:05.884890628Z 25-Oct-2026 21:49:05.881 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:14.884027382Z 25-Oct-2026 21:49:14.882 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:23.890425713Z 25-Oct-2026 21:49:23.887 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:32.889452376Z 25-Oct-2026 21:49:32.887 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:41.894404687Z 25-Oct-2026 21:49:41.888 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:50.894807127Z 25-Oct-2026 21:49:50.889 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)

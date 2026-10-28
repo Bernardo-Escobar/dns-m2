@@ -1,0 +1,104 @@
+﻿docker.exe : 28-Oct-2026 00:29:57.212 no longer listening on 127.0.0.1#53
+No C:\Users\berna\Desktop\dns-m2-novo\scripts\_registrar-evidencias.ps1:55 caractere:21
++                     & docker logs --since $desde $servico 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (28-Oct-2026 00:...on 127.0.0.1#53:String)     [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+28-Oct-2026 00:29:57.212 no longer listening on 172.31.0.11#53
+28-Oct-2026 00:29:57.212 no longer listening on 172.30.0.11#53
+28-Oct-2026 00:29:57.212 shutting down
+28-Oct-2026 00:29:57.212 stopping command channel on 127.0.0.1#953
+28-Oct-2026 00:29:57.232 exiting
+28-Oct-2026 00:29:58.052 starting BIND 9.18.49 (Extended Support Version) <id:cd4a53b>
+28-Oct-2026 00:29:58.052 running on Linux x86_64 5.15.167.4-microsoft-standard-WSL2 #1 SMP Tue Nov 5 00:21:55 UTC 2024
+28-Oct-2026 00:29:58.052 built with  '--build=x86_64-alpine-linux-musl' '--host=x86_64-alpine-linux-musl' '--prefix=/usr' '--sysconfdir=/etc/bind' '--localstatedir=/var' '--mandir=/usr/share/man' '--infodir=/usr/share/info' '--with-gssapi=yes' '--with-libxml2' '--with-json-c' '--with-openssl=yes' '--enable-dnstap' '--enable-largefile' '--enable-linux-caps' '--enable-shared' '--disable-static' 
+'build_alias=x86_64-alpine-linux-musl' 'host_alias=x86_64-alpine-linux-musl' 'CC=gcc' 'CFLAGS=-Os -fstack-clash-protection -Wformat -Werror=format-security -fno-plt -g -D_GNU_SOURCE' 'LDFLAGS=-Wl,--as-needed,-O1,--sort-common -Wl,-z,pack-relative-relocs'
+28-Oct-2026 00:29:58.052 running as: named -g -u named -c /etc/bind/named.conf
+28-Oct-2026 00:29:58.052 compiled by GCC 13.2.1 20240309
+28-Oct-2026 00:29:58.052 compiled with OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+28-Oct-2026 00:29:58.052 linked to OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+28-Oct-2026 00:29:58.052 compiled with libuv version: 1.48.0
+28-Oct-2026 00:29:58.052 linked to libuv version: 1.48.0
+28-Oct-2026 00:29:58.052 compiled with libxml2 version: 2.12.10
+28-Oct-2026 00:29:58.052 linked to libxml2 version: 21210
+28-Oct-2026 00:29:58.052 compiled with json-c version: 0.17
+28-Oct-2026 00:29:58.052 linked to json-c version: 0.17
+28-Oct-2026 00:29:58.052 compiled with zlib version: 1.3.2
+28-Oct-2026 00:29:58.052 linked to zlib version: 1.3.2
+28-Oct-2026 00:29:58.052 ----------------------------------------------------
+28-Oct-2026 00:29:58.052 BIND 9 is maintained by Internet Systems Consortium,
+28-Oct-2026 00:29:58.052 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+28-Oct-2026 00:29:58.052 corporation.  Support and training for BIND 9 are 
+28-Oct-2026 00:29:58.052 available at https://www.isc.org/support
+28-Oct-2026 00:29:58.052 ----------------------------------------------------
+28-Oct-2026 00:29:58.052 found 8 CPUs, using 8 worker threads
+28-Oct-2026 00:29:58.052 using 8 UDP listeners per interface
+28-Oct-2026 00:29:58.142 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+28-Oct-2026 00:29:58.142 DS algorithms: SHA-1 SHA-256 SHA-384
+28-Oct-2026 00:29:58.142 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+28-Oct-2026 00:29:58.142 TKEY mode 2 support (Diffie-Hellman): yes
+28-Oct-2026 00:29:58.142 TKEY mode 3 support (GSS-API): yes
+28-Oct-2026 00:29:58.142 the initial working directory is '/'
+28-Oct-2026 00:29:58.142 loading configuration from '/etc/bind/named.conf'
+28-Oct-2026 00:29:58.142 the working directory is now '/var/lib/bind'
+28-Oct-2026 00:29:58.142 reading built-in trust anchors from file '/etc/bind/bind.keys'
+28-Oct-2026 00:29:58.142 using default UDP/IPv4 port range: [32768, 60999]
+28-Oct-2026 00:29:58.142 using default UDP/IPv6 port range: [32768, 60999]
+28-Oct-2026 00:29:58.142 listening on IPv4 interface lo, 127.0.0.1#53
+28-Oct-2026 00:29:58.142 listening on IPv4 interface eth0, 172.31.0.11#53
+28-Oct-2026 00:29:58.142 listening on IPv4 interface eth1, 172.30.0.11#53
+28-Oct-2026 00:29:58.222 generating session key for dynamic DNS
+28-Oct-2026 00:29:58.222 sizing zone task pool based on 1 zones
+28-Oct-2026 00:29:58.222 obtaining root key for view _default from '/etc/bind/bind.keys'
+28-Oct-2026 00:29:58.222 set up managed keys zone for view _default, file 'managed-keys.bind'
+28-Oct-2026 00:29:58.232 command channel listening on 127.0.0.1#953
+28-Oct-2026 00:29:58.232 not using config file logging statement for logging due to -g option
+28-Oct-2026 00:29:58.232 managed-keys-zone: loaded serial 4
+28-Oct-2026 00:29:58.232 zone sd.lab/IN (unsigned): loaded serial 2026102312
+28-Oct-2026 00:29:58.232 all zones loaded
+28-Oct-2026 00:29:58.232 running
+28-Oct-2026 00:29:58.232 zone sd.lab/IN (signed): loaded serial 2026102312
+28-Oct-2026 00:29:58.232 zone sd.lab/IN (signed): receive_secure_serial: unchanged
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:503:c27::2:30#53
+28-Oct-2026 00:29:58.232 zone sd.lab/IN (signed): sending notifies (serial 2026102312)
+28-Oct-2026 00:29:58.232 zone sd.lab/IN (signed): reconfiguring zone keys
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:2d::d#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:2d::d#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2801:1b8:10::b#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2801:1b8:10::b#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:2f::f#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:2f::f#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:503:ba3e::2:30#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:503:ba3e::2:30#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:9f::42#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:12::d0d#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:12::d0d#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:1::53#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:7fe::53#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:dc3::35#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:dc3::35#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:2::c#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:500:a8::e#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:500:a8::e#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './DNSKEY/IN': 2001:7fd::1#53
+28-Oct-2026 00:29:58.232 network unreachable resolving './NS/IN': 2001:7fd::1#53
+28-Oct-2026 00:29:58.242 Fetching sd.lab/ECDSAP256SHA256/29528 (CSK) from key repository.
+28-Oct-2026 00:29:58.242 DNSKEY sd.lab/ECDSAP256SHA256/29528 (CSK) is now published
+28-Oct-2026 00:29:58.242 DNSKEY sd.lab/ECDSAP256SHA256/29528 (CSK) is now active
+28-Oct-2026 00:29:58.242 zone sd.lab/IN (signed): next key event: 28-Oct-2026 21:00:25.232
+28-Oct-2026 00:29:58.242 client @0x7fb373888330 172.30.0.12#45929 (sd.lab): transfer of 'sd.lab/IN': IXFR started (serial 2026102312 -> 2026102313)
+28-Oct-2026 00:29:58.242 client @0x7fb373888330 172.30.0.12#45929 (sd.lab): transfer of 'sd.lab/IN': IXFR ended: 1 messages, 9 records, 581 bytes, 0.001 secs (581000 bytes/sec) (serial 2026102313)
+28-Oct-2026 00:29:58.372 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+28-Oct-2026 00:29:58.372 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+28-Oct-2026 00:29:58.372 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+28-Oct-2026 00:29:58.372 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+28-Oct-2026 00:29:58.372 managed-keys-zone: Key 20326 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:29:58.372 managed-keys-zone: Key 38696 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:29:58.732 client @0x7fb3738a0190 172.30.0.13#46827 (sd.lab): transfer of 'sd.lab/IN': IXFR delta size (2860 bytes) exceeds the maximum ratio to database size (1965 bytes), falling back to AXFR
+28-Oct-2026 00:29:58.732 client @0x7fb3738a0190 172.30.0.13#46827 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102315)
+28-Oct-2026 00:29:58.732 client @0x7fb3738a0190 172.30.0.13#46827 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 29 records, 1834 bytes, 0.001 secs (1834000 bytes/sec) (serial 2026102315)

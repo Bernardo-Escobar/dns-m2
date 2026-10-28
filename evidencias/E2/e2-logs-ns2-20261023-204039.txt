@@ -1,0 +1,116 @@
+﻿docker : 23-Oct-2026 23:34:04.973 starting BIND 9.18.49 (Extended Support Version) <id:cd4a53b>
+No linha:2 caractere:5
++     docker logs --since 10m $servidor 2>&1 |
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (23-Oct-2026 23:...n) <id:cd4a53b>:String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+23-Oct-2026 23:34:04.973 running on Linux x86_64 6.18.54.1-microsoft-standard-WSL2 #1 SMP 
+PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026
+23-Oct-2026 23:34:04.973 built with  '--build=x86_64-alpine-linux-musl' 
+'--host=x86_64-alpine-linux-musl' '--prefix=/usr' '--sysconfdir=/etc/bind' '--localstatedir=/var' 
+'--mandir=/usr/share/man' '--infodir=/usr/share/info' '--with-gssapi=yes' '--with-libxml2' 
+'--with-json-c' '--with-openssl=yes' '--enable-dnstap' '--enable-largefile' '--enable-linux-caps' 
+'--enable-shared' '--disable-static' 'build_alias=x86_64-alpine-linux-musl' 
+'host_alias=x86_64-alpine-linux-musl' 'CC=gcc' 'CFLAGS=-Os -fstack-clash-protection -Wformat 
+-Werror=format-security -fno-plt -g -D_GNU_SOURCE' 'LDFLAGS=-Wl,--as-needed,-O1,--sort-common 
+-Wl,-z,pack-relative-relocs'
+23-Oct-2026 23:34:04.973 running as: named -g -u named -c /etc/bind/named.conf
+23-Oct-2026 23:34:04.973 compiled by GCC 13.2.1 20240309
+23-Oct-2026 23:34:04.973 compiled with OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+23-Oct-2026 23:34:04.973 linked to OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+23-Oct-2026 23:34:04.973 compiled with libuv version: 1.48.0
+23-Oct-2026 23:34:04.973 linked to libuv version: 1.48.0
+23-Oct-2026 23:34:04.973 compiled with libxml2 version: 2.12.10
+23-Oct-2026 23:34:04.973 linked to libxml2 version: 21210
+23-Oct-2026 23:34:04.973 compiled with json-c version: 0.17
+23-Oct-2026 23:34:04.973 linked to json-c version: 0.17
+23-Oct-2026 23:34:04.973 compiled with zlib version: 1.3.2
+23-Oct-2026 23:34:04.973 linked to zlib version: 1.3.2
+23-Oct-2026 23:34:04.973 ----------------------------------------------------
+23-Oct-2026 23:34:04.973 BIND 9 is maintained by Internet Systems Consortium,
+23-Oct-2026 23:34:04.973 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+23-Oct-2026 23:34:04.973 corporation.  Support and training for BIND 9 are 
+23-Oct-2026 23:34:04.973 available at https://www.isc.org/support
+23-Oct-2026 23:34:04.973 ----------------------------------------------------
+23-Oct-2026 23:34:04.973 found 12 CPUs, using 12 worker threads
+23-Oct-2026 23:34:04.973 using 12 UDP listeners per interface
+23-Oct-2026 23:34:05.001 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 
+ECDSAP384SHA384 ED25519 ED448
+23-Oct-2026 23:34:05.001 DS algorithms: SHA-1 SHA-256 SHA-384
+23-Oct-2026 23:34:05.001 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 
+HMAC-SHA512
+23-Oct-2026 23:34:05.001 TKEY mode 2 support (Diffie-Hellman): yes
+23-Oct-2026 23:34:05.001 TKEY mode 3 support (GSS-API): yes
+23-Oct-2026 23:34:05.009 the initial working directory is '/'
+23-Oct-2026 23:34:05.009 loading configuration from '/etc/bind/named.conf'
+23-Oct-2026 23:34:05.021 the working directory is now '/var/lib/bind'
+23-Oct-2026 23:34:05.025 reading built-in trust anchors from file '/etc/bind/bind.keys'
+23-Oct-2026 23:34:05.029 using default UDP/IPv4 port range: [32768, 60999]
+23-Oct-2026 23:34:05.029 using default UDP/IPv6 port range: [32768, 60999]
+23-Oct-2026 23:34:05.033 listening on IPv4 interface lo, 127.0.0.1#53
+23-Oct-2026 23:34:05.053 listening on IPv4 interface eth0, 172.30.0.12#53
+23-Oct-2026 23:34:05.061 listening on IPv4 interface eth1, 172.31.0.12#53
+23-Oct-2026 23:34:05.065 generating session key for dynamic DNS
+23-Oct-2026 23:34:05.065 sizing zone task pool based on 1 zones
+23-Oct-2026 23:34:05.077 obtaining root key for view _default from '/etc/bind/bind.keys'
+23-Oct-2026 23:34:05.077 set up managed keys zone for view _default, file 'managed-keys.bind'
+23-Oct-2026 23:34:05.093 command channel listening on 127.0.0.1#953
+23-Oct-2026 23:34:05.093 not using config file logging statement for logging due to -g option
+23-Oct-2026 23:34:05.097 managed-keys-zone: loaded serial 2
+23-Oct-2026 23:34:05.101 zone sd.lab/IN: loaded serial 2026102314
+23-Oct-2026 23:34:05.101 all zones loaded
+23-Oct-2026 23:34:05.105 running
+23-Oct-2026 23:34:05.105 zone sd.lab/IN: sending notifies (serial 2026102314)
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:500:a8::e#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:500:12::d0d#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:500:12::d0d#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:503:c27::2:30#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:503:c27::2:30#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:500:9f::42#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:500:1::53#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:7fe::53#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:dc3::35#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './NS/IN': 2001:dc3::35#53
+23-Oct-2026 23:34:05.105 network unreachable resolving './DNSKEY/IN': 2001:503:ba3e::2:30#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2001:503:ba3e::2:30#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './DNSKEY/IN': 2001:7fd::1#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2001:7fd::1#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2001:500:2::c#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './DNSKEY/IN': 2001:500:2f::f#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2001:500:2f::f#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './DNSKEY/IN': 2801:1b8:10::b#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2801:1b8:10::b#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './DNSKEY/IN': 2001:500:2d::d#53
+23-Oct-2026 23:34:05.109 network unreachable resolving './NS/IN': 2001:500:2d::d#53
+23-Oct-2026 23:34:05.145 client @0x70417357d0e0 172.31.0.11#60352: received notify for zone 'sd.lab'
+23-Oct-2026 23:34:05.145 zone sd.lab/IN: refused notify from non-primary: 172.31.0.11#60352
+23-Oct-2026 23:34:05.289 managed-keys-zone: Key 20326 for zone . is now trusted (acceptance timer 
+complete)
+23-Oct-2026 23:34:05.293 managed-keys-zone: Key 38696 for zone . is now trusted (acceptance timer 
+complete)
+23-Oct-2026 23:36:06.739 received control channel command 'querylog on'
+23-Oct-2026 23:36:06.739 query logging is now on
+23-Oct-2026 23:40:49.135 received control channel command 'querylog on'
+23-Oct-2026 23:41:00.421 client @0x70417358d1d0 172.30.0.11#53280: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.421 zone sd.lab/IN: notify from 172.30.0.11#53280: serial 2026102315
+23-Oct-2026 23:41:00.425 zone sd.lab/IN: Transfer started.
+23-Oct-2026 23:41:00.425 transfer of 'sd.lab/IN' from 172.30.0.11#53: connected using 172.30.0.11#53
+23-Oct-2026 23:41:00.429 zone sd.lab/IN: transferred serial 2026102315
+23-Oct-2026 23:41:00.429 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer status: success
+23-Oct-2026 23:41:00.429 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer completed: 1 
+messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial 2026102315)
+23-Oct-2026 23:41:00.433 zone sd.lab/IN: sending notifies (serial 2026102315)
+23-Oct-2026 23:41:00.921 client @0x70417357d0e0 172.31.0.11#60017: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.921 zone sd.lab/IN: refused notify from non-primary: 172.31.0.11#60017
+23-Oct-2026 23:41:00.925 client @0x70417357a2c0 172.31.0.13#53692: received notify for zone 'sd.lab'
+23-Oct-2026 23:41:00.925 zone sd.lab/IN: refused notify from non-primary: 172.31.0.13#53692
+23-Oct-2026 23:41:26.178 client @0x70416d53b310 172.31.0.100#58357 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.12)
+23-Oct-2026 23:41:26.530 client @0x70416d539330 172.31.0.100#51394 (sd.lab): query: sd.lab IN SOA 
++E(0)K (172.31.0.12)

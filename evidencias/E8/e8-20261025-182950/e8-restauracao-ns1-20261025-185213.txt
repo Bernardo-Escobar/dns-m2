@@ -1,0 +1,32 @@
+﻿docker : 2026-10-25T21:52:26.823894379Z 25-Oct-2026 21:52:26.820 received control channel command 
+'reload sd.lab'
+No linha:3 caractere:5
++     docker logs --since "$desdeRestauracao" --timestamps $servidor 2> ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T21:5...'reload sd.lab':String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T21:52:26.827836537Z 25-Oct-2026 21:52:26.820 zone sd.lab/IN: loaded serial 2026102324
+2026-10-25T21:52:26.827892944Z 25-Oct-2026 21:52:26.820 zone sd.lab/IN: sending notifies (serial 
+2026102324)
+2026-10-25T21:52:26.830939549Z 25-Oct-2026 21:52:26.824 client @0x700dcfbf3350 172.30.0.12#36153 
+(sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+2026-10-25T21:52:26.830958267Z 25-Oct-2026 21:52:26.824 client @0x700dcfbf3350 172.30.0.12#36153 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102324)
+2026-10-25T21:52:26.831181542Z 25-Oct-2026 21:52:26.824 client @0x700dcfbf3350 172.30.0.12#36153 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.001 
+secs (245000 bytes/sec) (serial 2026102324)
+2026-10-25T21:52:27.326430732Z 25-Oct-2026 21:52:27.320 client @0x700dcfbf3360 172.30.0.13#35839 
+(sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+2026-10-25T21:52:27.326446011Z 25-Oct-2026 21:52:27.320 client @0x700dcfbf3360 172.30.0.13#35839 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102324)
+2026-10-25T21:52:27.326713131Z 25-Oct-2026 21:52:27.320 client @0x700dcfbf3360 172.30.0.13#35839 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.001 
+secs (245000 bytes/sec) (serial 2026102324)
+2026-10-25T21:52:29.116651853Z 25-Oct-2026 21:52:29.112 received control channel command 'zonestatus 
+sd.lab'
+2026-10-25T21:52:29.375046224Z 25-Oct-2026 21:52:29.368 received control channel command 'notify 
+sd.lab'
+2026-10-25T21:52:31.823874698Z 25-Oct-2026 21:52:31.820 zone sd.lab/IN: sending notifies (serial 
+2026102324)

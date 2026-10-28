@@ -1,0 +1,1516 @@
+﻿docker : 2026-10-25T20:24:50.157073063Z 25-Oct-2026 20:24:50.154 client @0x74bbc36c5240 
+172.31.0.100#35910 (sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+No linha:1 caractere:1
++ docker logs --since 20m --timestamps ns3 2>&1 |
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T20:2...K (172.31.0.13):String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T20:24:50.157097861Z 25-Oct-2026 20:24:50.154 client @0x74bbc36c5240 172.31.0.100#35910 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:50.446498981Z 25-Oct-2026 20:24:50.442 client @0x74bbc97382e0 172.31.0.100#54201 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:50.446524522Z 25-Oct-2026 20:24:50.442 client @0x74bbc97382e0 172.31.0.100#54201 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:50.687246852Z 25-Oct-2026 20:24:50.682 client @0x74bbc36d11a0 172.31.0.100#48948 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:50.687261876Z 25-Oct-2026 20:24:50.682 client @0x74bbc36d11a0 172.31.0.100#48948 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:50.917338733Z 25-Oct-2026 20:24:50.914 client @0x74bbc9735410 172.31.0.100#52376 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:50.917389483Z 25-Oct-2026 20:24:50.914 client @0x74bbc9735410 172.31.0.100#52376 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:51.135472948Z 25-Oct-2026 20:24:51.130 client @0x74bbc36b7360 172.31.0.100#48530 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:51.135489887Z 25-Oct-2026 20:24:51.130 client @0x74bbc36b7360 172.31.0.100#48530 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:51.365570644Z 25-Oct-2026 20:24:51.362 client @0x74bbc36d7170 172.31.0.100#46085 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:51.365594384Z 25-Oct-2026 20:24:51.362 client @0x74bbc36d7170 172.31.0.100#46085 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:51.696836510Z 25-Oct-2026 20:24:51.694 client @0x74bbc97382e0 172.31.0.100#59797 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:51.696860544Z 25-Oct-2026 20:24:51.694 client @0x74bbc97382e0 172.31.0.100#59797 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:51.949277171Z 25-Oct-2026 20:24:51.946 client @0x74bbc973c2b0 172.31.0.100#45944 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:51.949308256Z 25-Oct-2026 20:24:51.946 client @0x74bbc973c2b0 172.31.0.100#45944 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:52.175183244Z 25-Oct-2026 20:24:52.170 client @0x74bbc973c2b0 172.31.0.100#51238 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:52.175203015Z 25-Oct-2026 20:24:52.170 client @0x74bbc973c2b0 172.31.0.100#51238 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:52.426530361Z 25-Oct-2026 20:24:52.422 client @0x74bbc36d11a0 172.31.0.100#51222 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:52.426548977Z 25-Oct-2026 20:24:52.422 client @0x74bbc36d11a0 172.31.0.100#51222 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:52.710604424Z 25-Oct-2026 20:24:52.706 client @0x74bbc36d7170 172.31.0.100#36008 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:52.710629563Z 25-Oct-2026 20:24:52.706 client @0x74bbc36d7170 172.31.0.100#36008 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:53.114523027Z 25-Oct-2026 20:24:53.110 client @0x74bbc36e32e0 172.31.0.100#35061 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:53.114544447Z 25-Oct-2026 20:24:53.110 client @0x74bbc36e32e0 172.31.0.100#35061 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:53.375730935Z 25-Oct-2026 20:24:53.370 client @0x74bbc36d11a0 172.31.0.100#40758 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:53.375762803Z 25-Oct-2026 20:24:53.370 client @0x74bbc36d11a0 172.31.0.100#40758 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:53.609860976Z 25-Oct-2026 20:24:53.606 client @0x74bbc36c5240 172.31.0.100#52118 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:53.609874759Z 25-Oct-2026 20:24:53.606 client @0x74bbc36c5240 172.31.0.100#52118 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:53.857680529Z 25-Oct-2026 20:24:53.854 client @0x74bbc36c5240 172.31.0.100#60184 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:53.857695762Z 25-Oct-2026 20:24:53.854 client @0x74bbc36c5240 172.31.0.100#60184 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:54.114236803Z 25-Oct-2026 20:24:54.110 client @0x74bbc9735410 172.31.0.100#54169 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:54.114253413Z 25-Oct-2026 20:24:54.110 client @0x74bbc9735410 172.31.0.100#54169 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:54.405099882Z 25-Oct-2026 20:24:54.402 client @0x74bbc9735410 172.31.0.100#52361 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:54.405128166Z 25-Oct-2026 20:24:54.402 client @0x74bbc9735410 172.31.0.100#52361 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:54.699695929Z 25-Oct-2026 20:24:54.694 client @0x74bbc36e5250 172.31.0.100#36709 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:54.699733866Z 25-Oct-2026 20:24:54.694 client @0x74bbc36e5250 172.31.0.100#36709 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:54.960512636Z 25-Oct-2026 20:24:54.958 client @0x74bbc9735410 172.31.0.100#52518 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:54.960534804Z 25-Oct-2026 20:24:54.958 client @0x74bbc9735410 172.31.0.100#52518 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:55.209069994Z 25-Oct-2026 20:24:55.206 client @0x74bbc36e32e0 172.31.0.100#45534 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:55.209091248Z 25-Oct-2026 20:24:55.206 client @0x74bbc36e32e0 172.31.0.100#45534 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:55.433745600Z 25-Oct-2026 20:24:55.430 client @0x74bbc36d3220 172.31.0.100#34160 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:55.433770585Z 25-Oct-2026 20:24:55.430 client @0x74bbc36d3220 172.31.0.100#34160 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:55.652006455Z 25-Oct-2026 20:24:55.650 client @0x74bbc36d3220 172.31.0.100#53548 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:55.652022488Z 25-Oct-2026 20:24:55.650 client @0x74bbc36d3220 172.31.0.100#53548 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:55.929289656Z 25-Oct-2026 20:24:55.927 client @0x74bbc36e5250 172.31.0.100#57189 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:55.929322484Z 25-Oct-2026 20:24:55.927 client @0x74bbc36e5250 172.31.0.100#57189 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:56.192829940Z 25-Oct-2026 20:24:56.191 client @0x74bbc36d11a0 172.31.0.100#42113 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:56.192861320Z 25-Oct-2026 20:24:56.191 client @0x74bbc36d11a0 172.31.0.100#42113 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:56.438656161Z 25-Oct-2026 20:24:56.436 client @0x74bbc36c5240 172.31.0.100#37125 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:56.438678709Z 25-Oct-2026 20:24:56.436 client @0x74bbc36c5240 172.31.0.100#37125 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:56.665083398Z 25-Oct-2026 20:24:56.660 client @0x74bbc36c5240 172.31.0.100#44297 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:56.665098049Z 25-Oct-2026 20:24:56.660 client @0x74bbc36c5240 172.31.0.100#44297 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:56.908561518Z 25-Oct-2026 20:24:56.904 client @0x74bbc36b7360 172.31.0.100#47332 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:56.908590447Z 25-Oct-2026 20:24:56.904 client @0x74bbc36b7360 172.31.0.100#47332 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:57.183891035Z 25-Oct-2026 20:24:57.176 client @0x74bbc36eb280 172.31.0.100#34008 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:57.183910560Z 25-Oct-2026 20:24:57.176 client @0x74bbc36eb280 172.31.0.100#34008 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:57.479262380Z 25-Oct-2026 20:24:57.472 client @0x74bbc36c5240 172.31.0.100#44149 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:57.479279889Z 25-Oct-2026 20:24:57.472 client @0x74bbc36c5240 172.31.0.100#44149 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:57.725944635Z 25-Oct-2026 20:24:57.720 client @0x74bbc36b7360 172.31.0.100#44212 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:57.725968981Z 25-Oct-2026 20:24:57.720 client @0x74bbc36b7360 172.31.0.100#44212 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:57.949840068Z 25-Oct-2026 20:24:57.944 client @0x74bbc36d3220 172.31.0.100#34379 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:57.949866424Z 25-Oct-2026 20:24:57.944 client @0x74bbc36d3220 172.31.0.100#34379 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:58.166717547Z 25-Oct-2026 20:24:58.160 client @0x74bbc36c5240 172.31.0.100#54422 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:58.166749118Z 25-Oct-2026 20:24:58.160 client @0x74bbc36c5240 172.31.0.100#54422 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:58.392175151Z 25-Oct-2026 20:24:58.384 client @0x74bbc36eb280 172.31.0.100#45379 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:58.392197355Z 25-Oct-2026 20:24:58.384 client @0x74bbc36eb280 172.31.0.100#45379 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:58.677132583Z 25-Oct-2026 20:24:58.672 client @0x74bbc36b52e0 172.31.0.100#48304 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:58.677156415Z 25-Oct-2026 20:24:58.672 client @0x74bbc36b52e0 172.31.0.100#48304 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:58.924360959Z 25-Oct-2026 20:24:58.920 client @0x74bbc36eb280 172.31.0.100#53076 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:58.924377469Z 25-Oct-2026 20:24:58.920 client @0x74bbc36eb280 172.31.0.100#53076 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:59.152727116Z 25-Oct-2026 20:24:59.148 client @0x74bbc9735410 172.31.0.100#53963 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:59.152750343Z 25-Oct-2026 20:24:59.148 client @0x74bbc9735410 172.31.0.100#53963 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:59.377113915Z 25-Oct-2026 20:24:59.372 client @0x74bbc36e5250 172.31.0.100#54145 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:59.377135035Z 25-Oct-2026 20:24:59.372 client @0x74bbc36e5250 172.31.0.100#54145 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:59.619724281Z 25-Oct-2026 20:24:59.612 client @0x74bbc97382e0 172.31.0.100#34923 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:59.619753358Z 25-Oct-2026 20:24:59.612 client @0x74bbc97382e0 172.31.0.100#34923 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:24:59.842146151Z 25-Oct-2026 20:24:59.836 client @0x74bbc36d7170 172.31.0.100#41035 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:24:59.842174713Z 25-Oct-2026 20:24:59.836 client @0x74bbc36d7170 172.31.0.100#41035 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:00.162422128Z 25-Oct-2026 20:25:00.156 client @0x74bbc36b7360 172.31.0.100#38400 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:00.162438705Z 25-Oct-2026 20:25:00.156 client @0x74bbc36b7360 172.31.0.100#38400 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:00.440822156Z 25-Oct-2026 20:25:00.436 client @0x74bbc36b7360 172.31.0.100#52268 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:00.440845358Z 25-Oct-2026 20:25:00.436 client @0x74bbc36b7360 172.31.0.100#52268 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:00.678618893Z 25-Oct-2026 20:25:00.672 client @0x74bbc36eb280 172.31.0.100#49186 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:00.678644427Z 25-Oct-2026 20:25:00.672 client @0x74bbc36eb280 172.31.0.100#49186 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:00.936954701Z 25-Oct-2026 20:25:00.932 client @0x74bbc36e5250 172.31.0.100#33088 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:00.936969512Z 25-Oct-2026 20:25:00.932 client @0x74bbc36e5250 172.31.0.100#33088 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:01.165151853Z 25-Oct-2026 20:25:01.160 client @0x74bbc36eb280 172.31.0.100#36256 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:01.165178605Z 25-Oct-2026 20:25:01.160 client @0x74bbc36eb280 172.31.0.100#36256 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:01.447592319Z 25-Oct-2026 20:25:01.440 client @0x74bbc9735410 172.31.0.100#57435 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:01.447632812Z 25-Oct-2026 20:25:01.440 client @0x74bbc9735410 172.31.0.100#57435 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:01.737812849Z 25-Oct-2026 20:25:01.732 client @0x74bbc973c2b0 172.31.0.100#52570 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:01.737849729Z 25-Oct-2026 20:25:01.732 client @0x74bbc973c2b0 172.31.0.100#52570 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:01.970979172Z 25-Oct-2026 20:25:01.965 client @0x74bbc36eb280 172.31.0.100#52749 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:01.970995227Z 25-Oct-2026 20:25:01.965 client @0x74bbc36eb280 172.31.0.100#52749 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:02.223691845Z 25-Oct-2026 20:25:02.217 client @0x74bbc36d7170 172.31.0.100#58696 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:02.223707731Z 25-Oct-2026 20:25:02.217 client @0x74bbc36d7170 172.31.0.100#58696 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:02.503781139Z 25-Oct-2026 20:25:02.497 client @0x74bbc973c2b0 172.31.0.100#41672 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:02.503798799Z 25-Oct-2026 20:25:02.497 client @0x74bbc973c2b0 172.31.0.100#41672 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:02.829233497Z 25-Oct-2026 20:25:02.825 client @0x74bbc97382e0 172.31.0.100#54095 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:02.829271553Z 25-Oct-2026 20:25:02.825 client @0x74bbc97382e0 172.31.0.100#54095 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:03.079619690Z 25-Oct-2026 20:25:03.073 client @0x74bbc36b52e0 172.31.0.100#54741 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:03.079662364Z 25-Oct-2026 20:25:03.073 client @0x74bbc36b52e0 172.31.0.100#54741 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:03.303982929Z 25-Oct-2026 20:25:03.297 client @0x74bbc97382e0 172.31.0.100#51338 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:03.304004077Z 25-Oct-2026 20:25:03.297 client @0x74bbc97382e0 172.31.0.100#51338 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:03.537976109Z 25-Oct-2026 20:25:03.533 client @0x74bbc36c5240 172.31.0.100#52098 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:03.537991040Z 25-Oct-2026 20:25:03.533 client @0x74bbc36c5240 172.31.0.100#52098 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:03.767547046Z 25-Oct-2026 20:25:03.761 client @0x74bbc36e5250 172.31.0.100#34556 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:03.767562178Z 25-Oct-2026 20:25:03.761 client @0x74bbc36e5250 172.31.0.100#34556 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:03.986613476Z 25-Oct-2026 20:25:03.981 client @0x74bbc36d3220 172.31.0.100#51630 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:03.986637773Z 25-Oct-2026 20:25:03.981 client @0x74bbc36d3220 172.31.0.100#51630 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:04.243006764Z 25-Oct-2026 20:25:04.237 client @0x74bbc36b52e0 172.31.0.100#36041 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:04.243023904Z 25-Oct-2026 20:25:04.237 client @0x74bbc36b52e0 172.31.0.100#36041 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:04.517045423Z 25-Oct-2026 20:25:04.513 client @0x74bbc973c2b0 172.31.0.100#34392 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:04.517067120Z 25-Oct-2026 20:25:04.513 client @0x74bbc973c2b0 172.31.0.100#34392 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:04.755057019Z 25-Oct-2026 20:25:04.749 client @0x74bbc36d3220 172.31.0.100#38026 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:04.755075471Z 25-Oct-2026 20:25:04.749 client @0x74bbc36d3220 172.31.0.100#38026 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:04.973219506Z 25-Oct-2026 20:25:04.969 client @0x74bbc36d3220 172.31.0.100#54520 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:04.973241442Z 25-Oct-2026 20:25:04.969 client @0x74bbc36d3220 172.31.0.100#54520 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:05.225014951Z 25-Oct-2026 20:25:05.221 client @0x74bbc36b7360 172.31.0.100#58760 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:05.225030181Z 25-Oct-2026 20:25:05.221 client @0x74bbc36b7360 172.31.0.100#58760 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:05.451723725Z 25-Oct-2026 20:25:05.445 client @0x74bbc9735410 172.31.0.100#33858 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:05.451741237Z 25-Oct-2026 20:25:05.445 client @0x74bbc9735410 172.31.0.100#33858 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:05.713297705Z 25-Oct-2026 20:25:05.709 client @0x74bbc36b52e0 172.31.0.100#46984 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:05.713314793Z 25-Oct-2026 20:25:05.709 client @0x74bbc36b52e0 172.31.0.100#46984 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:05.941332069Z 25-Oct-2026 20:25:05.937 client @0x74bbc973c2b0 172.31.0.100#52576 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:05.941362177Z 25-Oct-2026 20:25:05.937 client @0x74bbc973c2b0 172.31.0.100#52576 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:06.170944044Z 25-Oct-2026 20:25:06.165 client @0x74bbc36e32e0 172.31.0.100#52915 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:06.170964291Z 25-Oct-2026 20:25:06.165 client @0x74bbc36e32e0 172.31.0.100#52915 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:06.397014241Z 25-Oct-2026 20:25:06.393 client @0x74bbc97382e0 172.31.0.100#35471 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:06.397030923Z 25-Oct-2026 20:25:06.393 client @0x74bbc97382e0 172.31.0.100#35471 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:06.627709937Z 25-Oct-2026 20:25:06.621 client @0x74bbc973c2b0 172.31.0.100#42589 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:06.627726292Z 25-Oct-2026 20:25:06.621 client @0x74bbc973c2b0 172.31.0.100#42589 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:06.900367280Z 25-Oct-2026 20:25:06.897 client @0x74bbc36e5250 172.31.0.100#46766 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:06.900418653Z 25-Oct-2026 20:25:06.897 client @0x74bbc36e5250 172.31.0.100#46766 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:07.184450011Z 25-Oct-2026 20:25:07.181 client @0x74bbc36e5250 172.31.0.100#45191 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:07.184513655Z 25-Oct-2026 20:25:07.181 client @0x74bbc36e5250 172.31.0.100#45191 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:07.430652617Z 25-Oct-2026 20:25:07.425 client @0x74bbc9735410 172.31.0.100#47699 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:07.430673020Z 25-Oct-2026 20:25:07.425 client @0x74bbc9735410 172.31.0.100#47699 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:07.650022727Z 25-Oct-2026 20:25:07.646 client @0x74bbc36e32e0 172.31.0.100#59828 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:07.650037925Z 25-Oct-2026 20:25:07.646 client @0x74bbc36e32e0 172.31.0.100#59828 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:07.884375474Z 25-Oct-2026 20:25:07.882 client @0x74bbc36eb280 172.31.0.100#34969 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:07.884398325Z 25-Oct-2026 20:25:07.882 client @0x74bbc36eb280 172.31.0.100#34969 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:08.134228056Z 25-Oct-2026 20:25:08.130 client @0x74bbc973c2b0 172.31.0.100#50876 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:08.134243935Z 25-Oct-2026 20:25:08.130 client @0x74bbc973c2b0 172.31.0.100#50876 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:08.435337787Z 25-Oct-2026 20:25:08.430 client @0x74bbc36b7360 172.31.0.100#35704 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:08.435364622Z 25-Oct-2026 20:25:08.430 client @0x74bbc36b7360 172.31.0.100#35704 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:08.758013787Z 25-Oct-2026 20:25:08.754 client @0x74bbc36e5250 172.31.0.100#50161 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:08.758034897Z 25-Oct-2026 20:25:08.754 client @0x74bbc36e5250 172.31.0.100#50161 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:08.997614792Z 25-Oct-2026 20:25:08.994 client @0x74bbc36b52e0 172.31.0.100#39556 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:08.997640191Z 25-Oct-2026 20:25:08.994 client @0x74bbc36b52e0 172.31.0.100#39556 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:09.230832112Z 25-Oct-2026 20:25:09.226 client @0x74bbc36b7360 172.31.0.100#35964 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:09.230862369Z 25-Oct-2026 20:25:09.226 client @0x74bbc36b7360 172.31.0.100#35964 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:09.460060387Z 25-Oct-2026 20:25:09.454 client @0x74bbc36e32e0 172.31.0.100#36580 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:09.460080191Z 25-Oct-2026 20:25:09.454 client @0x74bbc36e32e0 172.31.0.100#36580 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:09.683846788Z 25-Oct-2026 20:25:09.678 client @0x74bbc36b52e0 172.31.0.100#51710 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:09.683868450Z 25-Oct-2026 20:25:09.678 client @0x74bbc36b52e0 172.31.0.100#51710 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:09.944983040Z 25-Oct-2026 20:25:09.942 client @0x74bbc36c5240 172.31.0.100#47422 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:09.945003466Z 25-Oct-2026 20:25:09.942 client @0x74bbc36c5240 172.31.0.100#47422 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:10.179094113Z 25-Oct-2026 20:25:10.174 client @0x74bbc36b52e0 172.31.0.100#59789 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:10.179118897Z 25-Oct-2026 20:25:10.174 client @0x74bbc36b52e0 172.31.0.100#59789 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:10.420942702Z 25-Oct-2026 20:25:10.418 client @0x74bbc36d11a0 172.31.0.100#55754 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:10.420958049Z 25-Oct-2026 20:25:10.418 client @0x74bbc36d11a0 172.31.0.100#55754 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:10.638222201Z 25-Oct-2026 20:25:10.634 client @0x74bbc9735410 172.31.0.100#35713 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:10.638246252Z 25-Oct-2026 20:25:10.634 client @0x74bbc9735410 172.31.0.100#35713 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:10.869089223Z 25-Oct-2026 20:25:10.866 client @0x74bbc36e32e0 172.31.0.100#48769 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:10.869105637Z 25-Oct-2026 20:25:10.866 client @0x74bbc36e32e0 172.31.0.100#48769 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:11.214630123Z 25-Oct-2026 20:25:11.210 client @0x74bbc9735410 172.31.0.100#57940 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:11.214647780Z 25-Oct-2026 20:25:11.210 client @0x74bbc9735410 172.31.0.100#57940 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:11.539697282Z 25-Oct-2026 20:25:11.534 client @0x74bbc36b52e0 172.31.0.100#37460 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:11.539720548Z 25-Oct-2026 20:25:11.534 client @0x74bbc36b52e0 172.31.0.100#37460 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:11.774249925Z 25-Oct-2026 20:25:11.770 client @0x74bbc36c5240 172.31.0.100#57290 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:11.774267367Z 25-Oct-2026 20:25:11.770 client @0x74bbc36c5240 172.31.0.100#57290 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:12.065074081Z 25-Oct-2026 20:25:12.062 client @0x74bbc36eb280 172.31.0.100#58091 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:12.065103721Z 25-Oct-2026 20:25:12.062 client @0x74bbc36eb280 172.31.0.100#58091 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:12.322748131Z 25-Oct-2026 20:25:12.318 client @0x74bbc36b52e0 172.31.0.100#35418 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:12.322797611Z 25-Oct-2026 20:25:12.318 client @0x74bbc36b52e0 172.31.0.100#35418 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:12.706742371Z 25-Oct-2026 20:25:12.702 client @0x74bbc36e32e0 172.31.0.100#40847 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:12.706761964Z 25-Oct-2026 20:25:12.702 client @0x74bbc36e32e0 172.31.0.100#40847 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:12.974069326Z 25-Oct-2026 20:25:12.970 client @0x74bbc36eb280 172.31.0.100#56729 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:12.974092404Z 25-Oct-2026 20:25:12.970 client @0x74bbc36eb280 172.31.0.100#56729 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:13.218873516Z 25-Oct-2026 20:25:13.215 client @0x74bbc36d3220 172.31.0.100#39154 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:13.218890575Z 25-Oct-2026 20:25:13.215 client @0x74bbc36d3220 172.31.0.100#39154 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:13.457695063Z 25-Oct-2026 20:25:13.455 client @0x74bbc36d7170 172.31.0.100#55878 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:13.457712039Z 25-Oct-2026 20:25:13.455 client @0x74bbc36d7170 172.31.0.100#55878 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:13.716168524Z 25-Oct-2026 20:25:13.711 client @0x74bbc36e32e0 172.31.0.100#60631 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:13.716189880Z 25-Oct-2026 20:25:13.711 client @0x74bbc36e32e0 172.31.0.100#60631 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:14.005718682Z 25-Oct-2026 20:25:14.003 client @0x74bbc36e5250 172.31.0.100#40216 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:14.005743140Z 25-Oct-2026 20:25:14.003 client @0x74bbc36e5250 172.31.0.100#40216 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:14.283487161Z 25-Oct-2026 20:25:14.279 client @0x74bbc36e5250 172.31.0.100#56532 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:14.283502493Z 25-Oct-2026 20:25:14.279 client @0x74bbc36e5250 172.31.0.100#56532 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:14.538143617Z 25-Oct-2026 20:25:14.535 client @0x74bbc36c5240 172.31.0.100#33102 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:14.538159122Z 25-Oct-2026 20:25:14.535 client @0x74bbc36c5240 172.31.0.100#33102 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:14.789123437Z 25-Oct-2026 20:25:14.787 client @0x74bbc36e32e0 172.31.0.100#44612 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:14.789146925Z 25-Oct-2026 20:25:14.787 client @0x74bbc36e32e0 172.31.0.100#44612 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:15.035661207Z 25-Oct-2026 20:25:15.031 client @0x74bbc36d11a0 172.31.0.100#48038 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:15.035681939Z 25-Oct-2026 20:25:15.031 client @0x74bbc36d11a0 172.31.0.100#48038 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:15.270105966Z 25-Oct-2026 20:25:15.267 client @0x74bbc36d7170 172.31.0.100#32988 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:15.270125416Z 25-Oct-2026 20:25:15.267 client @0x74bbc36d7170 172.31.0.100#32988 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:15.579711559Z 25-Oct-2026 20:25:15.575 client @0x74bbc36e5250 172.31.0.100#40860 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:15.579758923Z 25-Oct-2026 20:25:15.575 client @0x74bbc36e5250 172.31.0.100#40860 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:15.896984685Z 25-Oct-2026 20:25:15.895 client @0x74bbc973c2b0 172.31.0.100#50384 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:15.897010667Z 25-Oct-2026 20:25:15.895 client @0x74bbc973c2b0 172.31.0.100#50384 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:16.178664470Z 25-Oct-2026 20:25:16.175 client @0x74bbc36c5240 172.31.0.100#39580 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:16.178688715Z 25-Oct-2026 20:25:16.175 client @0x74bbc36c5240 172.31.0.100#39580 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:16.403704543Z 25-Oct-2026 20:25:16.399 client @0x74bbc36b52e0 172.31.0.100#53866 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:16.403735245Z 25-Oct-2026 20:25:16.399 client @0x74bbc36b52e0 172.31.0.100#53866 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:16.619216227Z 25-Oct-2026 20:25:16.615 client @0x74bbc36e5250 172.31.0.100#59671 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:16.619232149Z 25-Oct-2026 20:25:16.615 client @0x74bbc36e5250 172.31.0.100#59671 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:16.933360849Z 25-Oct-2026 20:25:16.931 client @0x74bbc36eb280 172.31.0.100#38215 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:16.933377546Z 25-Oct-2026 20:25:16.931 client @0x74bbc36eb280 172.31.0.100#38215 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:17.195249347Z 25-Oct-2026 20:25:17.191 client @0x74bbc97382e0 172.31.0.100#50155 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:17.195268058Z 25-Oct-2026 20:25:17.191 client @0x74bbc97382e0 172.31.0.100#50155 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:17.430576430Z 25-Oct-2026 20:25:17.427 client @0x74bbc36e5250 172.31.0.100#60116 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:17.430593022Z 25-Oct-2026 20:25:17.427 client @0x74bbc36e5250 172.31.0.100#60116 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:17.669980685Z 25-Oct-2026 20:25:17.667 client @0x74bbc36c5240 172.31.0.100#56288 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:17.670002353Z 25-Oct-2026 20:25:17.667 client @0x74bbc36c5240 172.31.0.100#56288 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:17.903261844Z 25-Oct-2026 20:25:17.899 client @0x74bbc97382e0 172.31.0.100#42205 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:17.903290481Z 25-Oct-2026 20:25:17.899 client @0x74bbc97382e0 172.31.0.100#42205 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:18.117732241Z 25-Oct-2026 20:25:18.115 client @0x74bbc36e5250 172.31.0.100#44355 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:18.117752296Z 25-Oct-2026 20:25:18.115 client @0x74bbc36e5250 172.31.0.100#44355 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:18.404273636Z 25-Oct-2026 20:25:18.399 client @0x74bbc973c2b0 172.31.0.100#45828 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:18.404307561Z 25-Oct-2026 20:25:18.399 client @0x74bbc973c2b0 172.31.0.100#45828 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:18.625004513Z 25-Oct-2026 20:25:18.624 client @0x74bbc36b7360 172.31.0.100#54732 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:18.625052080Z 25-Oct-2026 20:25:18.624 client @0x74bbc36b7360 172.31.0.100#54732 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:18.846000388Z 25-Oct-2026 20:25:18.840 client @0x74bbc36b7360 172.31.0.100#38851 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:18.846034429Z 25-Oct-2026 20:25:18.840 client @0x74bbc36b7360 172.31.0.100#38851 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:19.073200458Z 25-Oct-2026 20:25:19.068 client @0x74bbc973c2b0 172.31.0.100#56458 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:19.073221133Z 25-Oct-2026 20:25:19.068 client @0x74bbc973c2b0 172.31.0.100#56458 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:19.303331144Z 25-Oct-2026 20:25:19.296 client @0x74bbc36d3220 172.31.0.100#59946 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:19.303349584Z 25-Oct-2026 20:25:19.296 client @0x74bbc36d3220 172.31.0.100#59946 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:19.671455401Z 25-Oct-2026 20:25:19.664 client @0x74bbc36d7170 172.31.0.100#50073 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:19.671475330Z 25-Oct-2026 20:25:19.664 client @0x74bbc36d7170 172.31.0.100#50073 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:19.953206296Z 25-Oct-2026 20:25:19.948 client @0x74bbc36e5250 172.31.0.100#42409 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:19.953222345Z 25-Oct-2026 20:25:19.948 client @0x74bbc36e5250 172.31.0.100#42409 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:20.223868340Z 25-Oct-2026 20:25:20.216 client @0x74bbc36d11a0 172.31.0.100#52024 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:20.223893614Z 25-Oct-2026 20:25:20.216 client @0x74bbc36d11a0 172.31.0.100#52024 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:20.490369411Z 25-Oct-2026 20:25:20.484 client @0x74bbc36b52e0 172.31.0.100#39226 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:20.490389318Z 25-Oct-2026 20:25:20.484 client @0x74bbc36b52e0 172.31.0.100#39226 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:20.753024138Z 25-Oct-2026 20:25:20.748 client @0x74bbc36d11a0 172.31.0.100#51827 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:20.753039118Z 25-Oct-2026 20:25:20.748 client @0x74bbc36d11a0 172.31.0.100#51827 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:21.080833927Z 25-Oct-2026 20:25:21.076 client @0x74bbc9735410 172.31.0.100#47982 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:21.080862173Z 25-Oct-2026 20:25:21.076 client @0x74bbc9735410 172.31.0.100#47982 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:21.381102838Z 25-Oct-2026 20:25:21.376 client @0x74bbc36e32e0 172.31.0.100#52405 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:21.381133142Z 25-Oct-2026 20:25:21.376 client @0x74bbc36e32e0 172.31.0.100#52405 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:21.659472938Z 25-Oct-2026 20:25:21.652 client @0x74bbc36b7360 172.31.0.100#45939 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:21.659499947Z 25-Oct-2026 20:25:21.652 client @0x74bbc36b7360 172.31.0.100#45939 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:21.907903142Z 25-Oct-2026 20:25:21.900 client @0x74bbc36d11a0 172.31.0.100#42905 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:21.907918054Z 25-Oct-2026 20:25:21.900 client @0x74bbc36d11a0 172.31.0.100#42905 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:22.174503298Z 25-Oct-2026 20:25:22.168 client @0x74bbc9735410 172.31.0.100#44838 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:22.174523418Z 25-Oct-2026 20:25:22.168 client @0x74bbc9735410 172.31.0.100#44838 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:22.435708380Z 25-Oct-2026 20:25:22.428 client @0x74bbc973c2b0 172.31.0.100#45818 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:22.435740028Z 25-Oct-2026 20:25:22.428 client @0x74bbc973c2b0 172.31.0.100#45818 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:22.695246906Z 25-Oct-2026 20:25:22.688 client @0x74bbc973c2b0 172.31.0.100#60309 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:22.695275178Z 25-Oct-2026 20:25:22.688 client @0x74bbc973c2b0 172.31.0.100#60309 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:22.963629538Z 25-Oct-2026 20:25:22.956 client @0x74bbc36e32e0 172.31.0.100#48190 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:22.963651018Z 25-Oct-2026 20:25:22.956 client @0x74bbc36e32e0 172.31.0.100#48190 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:23.213570980Z 25-Oct-2026 20:25:23.208 client @0x74bbc36d11a0 172.31.0.100#36051 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:23.213606139Z 25-Oct-2026 20:25:23.208 client @0x74bbc36d11a0 172.31.0.100#36051 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:23.454274478Z 25-Oct-2026 20:25:23.448 client @0x74bbc36c5240 172.31.0.100#35963 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:23.454298692Z 25-Oct-2026 20:25:23.448 client @0x74bbc36c5240 172.31.0.100#35963 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:23.687357901Z 25-Oct-2026 20:25:23.680 client @0x74bbc36c5240 172.31.0.100#34236 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:23.687387285Z 25-Oct-2026 20:25:23.680 client @0x74bbc36c5240 172.31.0.100#34236 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:23.936607921Z 25-Oct-2026 20:25:23.932 client @0x74bbc36b7360 172.31.0.100#42276 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:23.936625760Z 25-Oct-2026 20:25:23.932 client @0x74bbc36b7360 172.31.0.100#42276 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:24.202918439Z 25-Oct-2026 20:25:24.197 client @0x74bbc9735410 172.31.0.100#43016 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:24.202943038Z 25-Oct-2026 20:25:24.197 client @0x74bbc9735410 172.31.0.100#43016 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:24.420856689Z 25-Oct-2026 20:25:24.417 client @0x74bbc36d7170 172.31.0.100#51861 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:24.420872764Z 25-Oct-2026 20:25:24.417 client @0x74bbc36d7170 172.31.0.100#51861 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:24.647781683Z 25-Oct-2026 20:25:24.641 client @0x74bbc36d11a0 172.31.0.100#36904 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:24.647806200Z 25-Oct-2026 20:25:24.641 client @0x74bbc36d11a0 172.31.0.100#36904 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:24.887985852Z 25-Oct-2026 20:25:24.881 client @0x74bbc973c2b0 172.31.0.100#54220 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:24.888009355Z 25-Oct-2026 20:25:24.881 client @0x74bbc973c2b0 172.31.0.100#54220 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:25.133733372Z 25-Oct-2026 20:25:25.129 client @0x74bbc36e5250 172.31.0.100#39818 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:25.133761785Z 25-Oct-2026 20:25:25.129 client @0x74bbc36e5250 172.31.0.100#39818 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:25.448175383Z 25-Oct-2026 20:25:25.441 client @0x74bbc36d3220 172.31.0.100#35802 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:25.448198006Z 25-Oct-2026 20:25:25.441 client @0x74bbc36d3220 172.31.0.100#35802 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:25.685123923Z 25-Oct-2026 20:25:25.681 client @0x74bbc9735410 172.31.0.100#49860 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:25.685147833Z 25-Oct-2026 20:25:25.681 client @0x74bbc9735410 172.31.0.100#49860 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:25.938360921Z 25-Oct-2026 20:25:25.935 client @0x74bbc9735410 172.31.0.100#58990 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:25.938382285Z 25-Oct-2026 20:25:25.935 client @0x74bbc9735410 172.31.0.100#58990 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:26.182754722Z 25-Oct-2026 20:25:26.179 client @0x74bbc36d3220 172.31.0.100#50305 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:26.182768724Z 25-Oct-2026 20:25:26.179 client @0x74bbc36d3220 172.31.0.100#50305 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:26.420471232Z 25-Oct-2026 20:25:26.415 client @0x74bbc97382e0 172.31.0.100#59459 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:26.420502321Z 25-Oct-2026 20:25:26.415 client @0x74bbc97382e0 172.31.0.100#59459 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:26.715591231Z 25-Oct-2026 20:25:26.711 client @0x74bbc36d7170 172.31.0.100#59253 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:26.715613214Z 25-Oct-2026 20:25:26.711 client @0x74bbc36d7170 172.31.0.100#59253 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:26.960393517Z 25-Oct-2026 20:25:26.955 client @0x74bbc36b52e0 172.31.0.100#45394 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:26.960410200Z 25-Oct-2026 20:25:26.955 client @0x74bbc36b52e0 172.31.0.100#45394 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:27.201326999Z 25-Oct-2026 20:25:27.195 client @0x74bbc36e5250 172.31.0.100#44614 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:27.201343636Z 25-Oct-2026 20:25:27.195 client @0x74bbc36e5250 172.31.0.100#44614 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:27.459087078Z 25-Oct-2026 20:25:27.455 client @0x74bbc36b52e0 172.31.0.100#40763 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:27.459106279Z 25-Oct-2026 20:25:27.455 client @0x74bbc36b52e0 172.31.0.100#40763 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:27.686970246Z 25-Oct-2026 20:25:27.683 client @0x74bbc973c2b0 172.31.0.100#56576 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:27.686990818Z 25-Oct-2026 20:25:27.683 client @0x74bbc973c2b0 172.31.0.100#56576 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:27.903469952Z 25-Oct-2026 20:25:27.899 client @0x74bbc97382e0 172.31.0.100#42349 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:27.903491543Z 25-Oct-2026 20:25:27.899 client @0x74bbc97382e0 172.31.0.100#42349 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:28.175689529Z 25-Oct-2026 20:25:28.171 client @0x74bbc36d7170 172.31.0.100#43943 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:28.175720996Z 25-Oct-2026 20:25:28.171 client @0x74bbc36d7170 172.31.0.100#43943 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:28.406926352Z 25-Oct-2026 20:25:28.403 client @0x74bbc36d7170 172.31.0.100#39236 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:28.406950557Z 25-Oct-2026 20:25:28.403 client @0x74bbc36d7170 172.31.0.100#39236 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:28.668671211Z 25-Oct-2026 20:25:28.663 client @0x74bbc36c5240 172.31.0.100#57535 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:28.668728393Z 25-Oct-2026 20:25:28.663 client @0x74bbc36c5240 172.31.0.100#57535 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:28.890284334Z 25-Oct-2026 20:25:28.887 client @0x74bbc36d11a0 172.31.0.100#41645 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:28.890321065Z 25-Oct-2026 20:25:28.887 client @0x74bbc36d11a0 172.31.0.100#41645 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:29.124731525Z 25-Oct-2026 20:25:29.119 client @0x74bbc36b52e0 172.31.0.100#34451 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:29.124753217Z 25-Oct-2026 20:25:29.119 client @0x74bbc36b52e0 172.31.0.100#34451 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:29.392421746Z 25-Oct-2026 20:25:29.387 client @0x74bbc36e32e0 172.31.0.100#40723 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:29.392458002Z 25-Oct-2026 20:25:29.387 client @0x74bbc36e32e0 172.31.0.100#40723 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:29.660931281Z 25-Oct-2026 20:25:29.655 client @0x74bbc36b7360 172.31.0.100#56975 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:29.660955171Z 25-Oct-2026 20:25:29.655 client @0x74bbc36b7360 172.31.0.100#56975 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:29.892242594Z 25-Oct-2026 20:25:29.887 client @0x74bbc36b7360 172.31.0.100#56150 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:29.892268226Z 25-Oct-2026 20:25:29.887 client @0x74bbc36b7360 172.31.0.100#56150 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:30.130688950Z 25-Oct-2026 20:25:30.127 client @0x74bbc973c2b0 172.31.0.100#43046 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:30.130704080Z 25-Oct-2026 20:25:30.127 client @0x74bbc973c2b0 172.31.0.100#43046 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:30.359080126Z 25-Oct-2026 20:25:30.355 client @0x74bbc36d11a0 172.31.0.100#54328 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:30.359097495Z 25-Oct-2026 20:25:30.355 client @0x74bbc36d11a0 172.31.0.100#54328 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:30.615696007Z 25-Oct-2026 20:25:30.611 client @0x74bbc36e5250 172.31.0.100#35894 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:30.615717543Z 25-Oct-2026 20:25:30.611 client @0x74bbc36e5250 172.31.0.100#35894 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:30.904115125Z 25-Oct-2026 20:25:30.899 client @0x74bbc36c5240 172.31.0.100#33828 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:30.904131321Z 25-Oct-2026 20:25:30.899 client @0x74bbc36c5240 172.31.0.100#33828 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:31.135955976Z 25-Oct-2026 20:25:31.132 client @0x74bbc36e5250 172.31.0.100#48670 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:31.135987009Z 25-Oct-2026 20:25:31.132 client @0x74bbc36e5250 172.31.0.100#48670 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:31.365892876Z 25-Oct-2026 20:25:31.364 client @0x74bbc36b52e0 172.31.0.100#42389 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:31.365909887Z 25-Oct-2026 20:25:31.364 client @0x74bbc36b52e0 172.31.0.100#42389 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:31.613976964Z 25-Oct-2026 20:25:31.612 client @0x74bbc36b7360 172.31.0.100#59704 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:31.613991522Z 25-Oct-2026 20:25:31.612 client @0x74bbc36b7360 172.31.0.100#59704 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:31.850246185Z 25-Oct-2026 20:25:31.848 client @0x74bbc36d11a0 172.31.0.100#53479 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:31.850262177Z 25-Oct-2026 20:25:31.848 client @0x74bbc36d11a0 172.31.0.100#53479 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:32.101732497Z 25-Oct-2026 20:25:32.100 client @0x74bbc36c5240 172.31.0.100#36774 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:32.101758273Z 25-Oct-2026 20:25:32.100 client @0x74bbc36c5240 172.31.0.100#36774 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:32.384080242Z 25-Oct-2026 20:25:32.380 client @0x74bbc36eb280 172.31.0.100#55464 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:32.384095727Z 25-Oct-2026 20:25:32.380 client @0x74bbc36eb280 172.31.0.100#55464 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:32.615126345Z 25-Oct-2026 20:25:32.612 client @0x74bbc36d3220 172.31.0.100#35139 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:32.615164020Z 25-Oct-2026 20:25:32.612 client @0x74bbc36d3220 172.31.0.100#35139 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:32.858487804Z 25-Oct-2026 20:25:32.856 client @0x74bbc36e32e0 172.31.0.100#46733 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:32.858508211Z 25-Oct-2026 20:25:32.856 client @0x74bbc36e32e0 172.31.0.100#46733 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:33.090069867Z 25-Oct-2026 20:25:33.088 client @0x74bbc973c2b0 172.31.0.100#34250 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:33.090090090Z 25-Oct-2026 20:25:33.088 client @0x74bbc973c2b0 172.31.0.100#34250 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:33.324730899Z 25-Oct-2026 20:25:33.320 client @0x74bbc9735410 172.31.0.100#46965 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:33.324754413Z 25-Oct-2026 20:25:33.320 client @0x74bbc9735410 172.31.0.100#46965 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:33.589743671Z 25-Oct-2026 20:25:33.588 client @0x74bbc36c5240 172.31.0.100#44629 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:33.589761611Z 25-Oct-2026 20:25:33.588 client @0x74bbc36c5240 172.31.0.100#44629 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:33.853485281Z 25-Oct-2026 20:25:33.852 client @0x74bbc36b52e0 172.31.0.100#53752 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:33.853663864Z 25-Oct-2026 20:25:33.852 client @0x74bbc36b52e0 172.31.0.100#53752 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:34.090004447Z 25-Oct-2026 20:25:34.088 client @0x74bbc973c2b0 172.31.0.100#43907 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:34.090029081Z 25-Oct-2026 20:25:34.088 client @0x74bbc973c2b0 172.31.0.100#43907 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:34.329981273Z 25-Oct-2026 20:25:34.328 client @0x74bbc36b7360 172.31.0.100#53753 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:34.330003996Z 25-Oct-2026 20:25:34.328 client @0x74bbc36b7360 172.31.0.100#53753 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:34.566882323Z 25-Oct-2026 20:25:34.564 client @0x74bbc97382e0 172.31.0.100#50619 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:34.566899630Z 25-Oct-2026 20:25:34.564 client @0x74bbc97382e0 172.31.0.100#50619 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:34.807221983Z 25-Oct-2026 20:25:34.804 client @0x74bbc9735410 172.31.0.100#56795 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:34.807255108Z 25-Oct-2026 20:25:34.804 client @0x74bbc9735410 172.31.0.100#56795 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:35.092127893Z 25-Oct-2026 20:25:35.088 client @0x74bbc36eb280 172.31.0.100#38046 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:35.092150074Z 25-Oct-2026 20:25:35.088 client @0x74bbc36eb280 172.31.0.100#38046 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:35.315609690Z 25-Oct-2026 20:25:35.312 client @0x74bbc36b7360 172.31.0.100#42761 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:35.315642099Z 25-Oct-2026 20:25:35.312 client @0x74bbc36b7360 172.31.0.100#42761 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:35.544635183Z 25-Oct-2026 20:25:35.540 client @0x74bbc9735410 172.31.0.100#47175 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:35.544651064Z 25-Oct-2026 20:25:35.540 client @0x74bbc9735410 172.31.0.100#47175 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:35.781385570Z 25-Oct-2026 20:25:35.776 client @0x74bbc36d7170 172.31.0.100#56972 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:35.781401261Z 25-Oct-2026 20:25:35.780 client @0x74bbc36d7170 172.31.0.100#56972 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:36.003673634Z 25-Oct-2026 20:25:36.000 client @0x74bbc36d11a0 172.31.0.100#59757 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:36.003700793Z 25-Oct-2026 20:25:36.000 client @0x74bbc36d11a0 172.31.0.100#59757 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:36.240290433Z 25-Oct-2026 20:25:36.236 client @0x74bbc36e32e0 172.31.0.100#41364 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:36.240308228Z 25-Oct-2026 20:25:36.236 client @0x74bbc36e32e0 172.31.0.100#41364 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:36.608367027Z 25-Oct-2026 20:25:36.604 client @0x74bbc36c5240 172.31.0.100#39702 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:36.608384319Z 25-Oct-2026 20:25:36.604 client @0x74bbc36c5240 172.31.0.100#39702 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:36.833405215Z 25-Oct-2026 20:25:36.833 client @0x74bbc36eb280 172.31.0.100#45131 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:36.833422968Z 25-Oct-2026 20:25:36.833 client @0x74bbc36eb280 172.31.0.100#45131 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:37.084950601Z 25-Oct-2026 20:25:37.081 client @0x74bbc36c5240 172.31.0.100#38719 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:37.084965066Z 25-Oct-2026 20:25:37.081 client @0x74bbc36c5240 172.31.0.100#38719 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:37.315044561Z 25-Oct-2026 20:25:37.309 client @0x74bbc36b52e0 172.31.0.100#52949 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:37.315060630Z 25-Oct-2026 20:25:37.309 client @0x74bbc36b52e0 172.31.0.100#52949 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:37.535338762Z 25-Oct-2026 20:25:37.529 client @0x74bbc36d11a0 172.31.0.100#35197 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:37.535353520Z 25-Oct-2026 20:25:37.529 client @0x74bbc36d11a0 172.31.0.100#35197 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:37.828280556Z 25-Oct-2026 20:25:37.821 client @0x74bbc36e5250 172.31.0.100#42487 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:37.828310672Z 25-Oct-2026 20:25:37.821 client @0x74bbc36e5250 172.31.0.100#42487 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:38.073539257Z 25-Oct-2026 20:25:38.069 client @0x74bbc36d7170 172.31.0.100#50799 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:38.073560803Z 25-Oct-2026 20:25:38.069 client @0x74bbc36d7170 172.31.0.100#50799 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:38.290295275Z 25-Oct-2026 20:25:38.285 client @0x74bbc36b7360 172.31.0.100#35519 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:38.290322707Z 25-Oct-2026 20:25:38.285 client @0x74bbc36b7360 172.31.0.100#35519 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:38.523107863Z 25-Oct-2026 20:25:38.517 client @0x74bbc36e32e0 172.31.0.100#54346 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:38.523142066Z 25-Oct-2026 20:25:38.517 client @0x74bbc36e32e0 172.31.0.100#54346 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:38.780024754Z 25-Oct-2026 20:25:38.773 client @0x74bbc36c5240 172.31.0.100#34351 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:38.780057050Z 25-Oct-2026 20:25:38.773 client @0x74bbc36c5240 172.31.0.100#34351 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:39.003476779Z 25-Oct-2026 20:25:38.997 client @0x74bbc36eb280 172.31.0.100#57709 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:39.003494114Z 25-Oct-2026 20:25:38.997 client @0x74bbc36eb280 172.31.0.100#57709 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:39.265443933Z 25-Oct-2026 20:25:39.261 client @0x74bbc36e5250 172.31.0.100#34283 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:39.265467807Z 25-Oct-2026 20:25:39.261 client @0x74bbc36e5250 172.31.0.100#34283 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:39.533432500Z 25-Oct-2026 20:25:39.529 client @0x74bbc36d11a0 172.31.0.100#44717 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:39.533459196Z 25-Oct-2026 20:25:39.529 client @0x74bbc36d11a0 172.31.0.100#44717 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:39.792747371Z 25-Oct-2026 20:25:39.785 client @0x74bbc97382e0 172.31.0.100#60753 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:39.792768726Z 25-Oct-2026 20:25:39.785 client @0x74bbc97382e0 172.31.0.100#60753 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:40.028512827Z 25-Oct-2026 20:25:40.021 client @0x74bbc36eb280 172.31.0.100#57426 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:40.028528676Z 25-Oct-2026 20:25:40.021 client @0x74bbc36eb280 172.31.0.100#57426 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:40.255599663Z 25-Oct-2026 20:25:40.249 client @0x74bbc36b7360 172.31.0.100#33759 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:40.255621578Z 25-Oct-2026 20:25:40.249 client @0x74bbc36b7360 172.31.0.100#33759 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:40.611706345Z 25-Oct-2026 20:25:40.605 client @0x74bbc9735410 172.31.0.100#40977 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:40.611730909Z 25-Oct-2026 20:25:40.605 client @0x74bbc9735410 172.31.0.100#40977 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:40.865306371Z 25-Oct-2026 20:25:40.857 client @0x74bbc36c5240 172.31.0.100#57603 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:40.865320569Z 25-Oct-2026 20:25:40.857 client @0x74bbc36c5240 172.31.0.100#57603 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:41.126517881Z 25-Oct-2026 20:25:41.121 client @0x74bbc36d3220 172.31.0.100#56910 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:41.126544245Z 25-Oct-2026 20:25:41.121 client @0x74bbc36d3220 172.31.0.100#56910 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:41.400748604Z 25-Oct-2026 20:25:41.393 client @0x74bbc36e32e0 172.31.0.100#46295 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:41.400765778Z 25-Oct-2026 20:25:41.393 client @0x74bbc36e32e0 172.31.0.100#46295 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:41.667685717Z 25-Oct-2026 20:25:41.661 client @0x74bbc36b7360 172.31.0.100#59704 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:41.667707814Z 25-Oct-2026 20:25:41.661 client @0x74bbc36b7360 172.31.0.100#59704 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:41.983477809Z 25-Oct-2026 20:25:41.977 client @0x74bbc36d7170 172.31.0.100#40782 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:41.983503276Z 25-Oct-2026 20:25:41.977 client @0x74bbc36d7170 172.31.0.100#40782 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:42.255036615Z 25-Oct-2026 20:25:42.249 client @0x74bbc36eb280 172.31.0.100#48568 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:42.255055281Z 25-Oct-2026 20:25:42.249 client @0x74bbc36eb280 172.31.0.100#48568 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:42.513866060Z 25-Oct-2026 20:25:42.510 client @0x74bbc36e5250 172.31.0.100#48674 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:42.513890060Z 25-Oct-2026 20:25:42.510 client @0x74bbc36e5250 172.31.0.100#48674 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:42.771003414Z 25-Oct-2026 20:25:42.766 client @0x74bbc36b52e0 172.31.0.100#51463 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:42.771024657Z 25-Oct-2026 20:25:42.766 client @0x74bbc36b52e0 172.31.0.100#51463 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:43.061643408Z 25-Oct-2026 20:25:43.058 client @0x74bbc36c5240 172.31.0.100#41944 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:43.061668194Z 25-Oct-2026 20:25:43.058 client @0x74bbc36c5240 172.31.0.100#41944 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:43.405976096Z 25-Oct-2026 20:25:43.402 client @0x74bbc36e32e0 172.31.0.100#33214 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:43.405991303Z 25-Oct-2026 20:25:43.402 client @0x74bbc36e32e0 172.31.0.100#33214 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:43.684887449Z 25-Oct-2026 20:25:43.678 client @0x74bbc36b7360 172.31.0.100#35611 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:43.684908003Z 25-Oct-2026 20:25:43.678 client @0x74bbc36b7360 172.31.0.100#35611 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:43.919962054Z 25-Oct-2026 20:25:43.914 client @0x74bbc36d11a0 172.31.0.100#45808 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:43.919978650Z 25-Oct-2026 20:25:43.914 client @0x74bbc36d11a0 172.31.0.100#45808 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:44.187621182Z 25-Oct-2026 20:25:44.182 client @0x74bbc36e5250 172.31.0.100#36436 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:44.187636595Z 25-Oct-2026 20:25:44.182 client @0x74bbc36e5250 172.31.0.100#36436 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:44.422704586Z 25-Oct-2026 20:25:44.418 client @0x74bbc36d11a0 172.31.0.100#37933 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:44.422725864Z 25-Oct-2026 20:25:44.418 client @0x74bbc36d11a0 172.31.0.100#37933 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:44.690191245Z 25-Oct-2026 20:25:44.686 client @0x74bbc36b52e0 172.31.0.100#47147 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:44.690220562Z 25-Oct-2026 20:25:44.686 client @0x74bbc36b52e0 172.31.0.100#47147 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:44.976939778Z 25-Oct-2026 20:25:44.970 client @0x74bbc36d7170 172.31.0.100#55344 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:44.976979303Z 25-Oct-2026 20:25:44.970 client @0x74bbc36d7170 172.31.0.100#55344 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:45.269935576Z 25-Oct-2026 20:25:45.266 client @0x74bbc9735410 172.31.0.100#53317 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:45.269956893Z 25-Oct-2026 20:25:45.266 client @0x74bbc9735410 172.31.0.100#53317 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:45.529641583Z 25-Oct-2026 20:25:45.526 client @0x74bbc36eb280 172.31.0.100#59692 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:45.529668746Z 25-Oct-2026 20:25:45.526 client @0x74bbc36eb280 172.31.0.100#59692 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:45.789351002Z 25-Oct-2026 20:25:45.782 client @0x74bbc97382e0 172.31.0.100#49953 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:45.789371158Z 25-Oct-2026 20:25:45.786 client @0x74bbc97382e0 172.31.0.100#49953 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:46.062394013Z 25-Oct-2026 20:25:46.058 client @0x74bbc36eb280 172.31.0.100#48152 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:46.062416766Z 25-Oct-2026 20:25:46.058 client @0x74bbc36eb280 172.31.0.100#48152 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:46.400741457Z 25-Oct-2026 20:25:46.394 client @0x74bbc36c5240 172.31.0.100#42034 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:46.400762319Z 25-Oct-2026 20:25:46.394 client @0x74bbc36c5240 172.31.0.100#42034 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:46.673123787Z 25-Oct-2026 20:25:46.666 client @0x74bbc9735410 172.31.0.100#49847 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:46.673140534Z 25-Oct-2026 20:25:46.666 client @0x74bbc9735410 172.31.0.100#49847 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:46.925582445Z 25-Oct-2026 20:25:46.922 client @0x74bbc9735410 172.31.0.100#45555 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:46.925607072Z 25-Oct-2026 20:25:46.922 client @0x74bbc9735410 172.31.0.100#45555 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:47.190996252Z 25-Oct-2026 20:25:47.186 client @0x74bbc36b52e0 172.31.0.100#51795 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:47.191010707Z 25-Oct-2026 20:25:47.186 client @0x74bbc36b52e0 172.31.0.100#51795 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:47.455244462Z 25-Oct-2026 20:25:47.450 client @0x74bbc36d11a0 172.31.0.100#56794 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:47.455260934Z 25-Oct-2026 20:25:47.450 client @0x74bbc36d11a0 172.31.0.100#56794 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:47.750062682Z 25-Oct-2026 20:25:47.746 client @0x74bbc36d3220 172.31.0.100#55412 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:47.750086300Z 25-Oct-2026 20:25:47.746 client @0x74bbc36d3220 172.31.0.100#55412 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:48.018888476Z 25-Oct-2026 20:25:48.015 client @0x74bbc36e32e0 172.31.0.100#41100 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:48.018904692Z 25-Oct-2026 20:25:48.015 client @0x74bbc36e32e0 172.31.0.100#41100 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:48.287321944Z 25-Oct-2026 20:25:48.283 client @0x74bbc36d11a0 172.31.0.100#59790 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:48.287347262Z 25-Oct-2026 20:25:48.283 client @0x74bbc36d11a0 172.31.0.100#59790 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:48.540276086Z 25-Oct-2026 20:25:48.535 client @0x74bbc36b52e0 172.31.0.100#55979 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:48.540291384Z 25-Oct-2026 20:25:48.535 client @0x74bbc36b52e0 172.31.0.100#55979 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:48.777535832Z 25-Oct-2026 20:25:48.775 client @0x74bbc36eb280 172.31.0.100#42296 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:48.777568214Z 25-Oct-2026 20:25:48.775 client @0x74bbc36eb280 172.31.0.100#42296 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:49.113811714Z 25-Oct-2026 20:25:49.111 client @0x74bbc36b7360 172.31.0.100#57031 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:49.113864530Z 25-Oct-2026 20:25:49.111 client @0x74bbc36b7360 172.31.0.100#57031 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:49.365703833Z 25-Oct-2026 20:25:49.363 client @0x74bbc36d3220 172.31.0.100#54881 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:49.365729617Z 25-Oct-2026 20:25:49.363 client @0x74bbc36d3220 172.31.0.100#54881 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:49.622017244Z 25-Oct-2026 20:25:49.619 client @0x74bbc36d7170 172.31.0.100#43255 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:49.622037194Z 25-Oct-2026 20:25:49.619 client @0x74bbc36d7170 172.31.0.100#43255 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:49.855754197Z 25-Oct-2026 20:25:49.851 client @0x74bbc36d3220 172.31.0.100#42510 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:49.855768205Z 25-Oct-2026 20:25:49.851 client @0x74bbc36d3220 172.31.0.100#42510 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:50.072264434Z 25-Oct-2026 20:25:50.067 client @0x74bbc97382e0 172.31.0.100#44500 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:50.072293784Z 25-Oct-2026 20:25:50.067 client @0x74bbc97382e0 172.31.0.100#44500 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:50.310972516Z 25-Oct-2026 20:25:50.307 client @0x74bbc973c2b0 172.31.0.100#35422 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:50.311004266Z 25-Oct-2026 20:25:50.307 client @0x74bbc973c2b0 172.31.0.100#35422 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:50.620037703Z 25-Oct-2026 20:25:50.615 client @0x74bbc36b7360 172.31.0.100#59488 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:50.620061265Z 25-Oct-2026 20:25:50.615 client @0x74bbc36b7360 172.31.0.100#59488 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:50.844303754Z 25-Oct-2026 20:25:50.839 client @0x74bbc36e32e0 172.31.0.100#59902 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:50.844320848Z 25-Oct-2026 20:25:50.839 client @0x74bbc36e32e0 172.31.0.100#59902 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:51.054463787Z 25-Oct-2026 20:25:51.051 client @0x74bbc973c2b0 172.31.0.100#35608 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:51.054483194Z 25-Oct-2026 20:25:51.051 client @0x74bbc973c2b0 172.31.0.100#35608 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:51.279566073Z 25-Oct-2026 20:25:51.275 client @0x74bbc973c2b0 172.31.0.100#59875 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:51.279581671Z 25-Oct-2026 20:25:51.275 client @0x74bbc973c2b0 172.31.0.100#59875 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:51.515152482Z 25-Oct-2026 20:25:51.511 client @0x74bbc36d7170 172.31.0.100#41573 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:51.515175893Z 25-Oct-2026 20:25:51.511 client @0x74bbc36d7170 172.31.0.100#41573 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:51.828634014Z 25-Oct-2026 20:25:51.823 client @0x74bbc36eb280 172.31.0.100#59966 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:51.828652109Z 25-Oct-2026 20:25:51.823 client @0x74bbc36eb280 172.31.0.100#59966 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:52.086255368Z 25-Oct-2026 20:25:52.083 client @0x74bbc36e5250 172.31.0.100#49165 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:52.086276903Z 25-Oct-2026 20:25:52.083 client @0x74bbc36e5250 172.31.0.100#49165 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:52.330664310Z 25-Oct-2026 20:25:52.327 client @0x74bbc97382e0 172.31.0.100#60144 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:52.330693587Z 25-Oct-2026 20:25:52.327 client @0x74bbc97382e0 172.31.0.100#60144 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:52.555235610Z 25-Oct-2026 20:25:52.551 client @0x74bbc36b7360 172.31.0.100#40789 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:52.555251348Z 25-Oct-2026 20:25:52.551 client @0x74bbc36b7360 172.31.0.100#40789 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:52.795924845Z 25-Oct-2026 20:25:52.791 client @0x74bbc36d7170 172.31.0.100#57100 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:52.795941946Z 25-Oct-2026 20:25:52.791 client @0x74bbc36d7170 172.31.0.100#57100 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:53.031988542Z 25-Oct-2026 20:25:53.027 client @0x74bbc36d11a0 172.31.0.100#53518 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:53.032015926Z 25-Oct-2026 20:25:53.027 client @0x74bbc36d11a0 172.31.0.100#53518 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:53.327448523Z 25-Oct-2026 20:25:53.323 client @0x74bbc973c2b0 172.31.0.100#41821 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:53.327474977Z 25-Oct-2026 20:25:53.323 client @0x74bbc973c2b0 172.31.0.100#41821 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:53.549435387Z 25-Oct-2026 20:25:53.547 client @0x74bbc9735410 172.31.0.100#44793 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:53.549451176Z 25-Oct-2026 20:25:53.547 client @0x74bbc9735410 172.31.0.100#44793 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:53.765990591Z 25-Oct-2026 20:25:53.764 client @0x74bbc36c5240 172.31.0.100#45425 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:53.766006749Z 25-Oct-2026 20:25:53.764 client @0x74bbc36c5240 172.31.0.100#45425 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:53.996890543Z 25-Oct-2026 20:25:53.992 client @0x74bbc9735410 172.31.0.100#54916 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:53.996915152Z 25-Oct-2026 20:25:53.992 client @0x74bbc9735410 172.31.0.100#54916 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:54.237667568Z 25-Oct-2026 20:25:54.236 client @0x74bbc36c5240 172.31.0.100#53762 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:54.237688277Z 25-Oct-2026 20:25:54.236 client @0x74bbc36c5240 172.31.0.100#53762 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:54.458161301Z 25-Oct-2026 20:25:54.456 client @0x74bbc36b7360 172.31.0.100#43098 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:54.458181187Z 25-Oct-2026 20:25:54.456 client @0x74bbc36b7360 172.31.0.100#43098 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:54.739124822Z 25-Oct-2026 20:25:54.736 client @0x74bbc36c5240 172.31.0.100#38450 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:54.739141607Z 25-Oct-2026 20:25:54.736 client @0x74bbc36c5240 172.31.0.100#38450 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:54.972617729Z 25-Oct-2026 20:25:54.968 client @0x74bbc36d3220 172.31.0.100#33746 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:54.972632864Z 25-Oct-2026 20:25:54.968 client @0x74bbc36d3220 172.31.0.100#33746 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:55.190843285Z 25-Oct-2026 20:25:55.188 client @0x74bbc36d7170 172.31.0.100#58236 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:55.190858502Z 25-Oct-2026 20:25:55.188 client @0x74bbc36d7170 172.31.0.100#58236 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:55.430461862Z 25-Oct-2026 20:25:55.428 client @0x74bbc97382e0 172.31.0.100#54044 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:55.430511192Z 25-Oct-2026 20:25:55.428 client @0x74bbc97382e0 172.31.0.100#54044 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:55.653624192Z 25-Oct-2026 20:25:55.652 client @0x74bbc36e5250 172.31.0.100#41449 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:55.653640855Z 25-Oct-2026 20:25:55.652 client @0x74bbc36e5250 172.31.0.100#41449 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:55.906278510Z 25-Oct-2026 20:25:55.903 client @0x74bbc36e5250 172.31.0.100#36470 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:55.906299642Z 25-Oct-2026 20:25:55.903 client @0x74bbc36e5250 172.31.0.100#36470 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:56.212875527Z 25-Oct-2026 20:25:56.207 client @0x74bbc36d7170 172.31.0.100#55688 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:56.212891936Z 25-Oct-2026 20:25:56.207 client @0x74bbc36d7170 172.31.0.100#55688 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:56.479548055Z 25-Oct-2026 20:25:56.475 client @0x74bbc36b52e0 172.31.0.100#50540 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:56.479562671Z 25-Oct-2026 20:25:56.475 client @0x74bbc36b52e0 172.31.0.100#50540 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:56.713285894Z 25-Oct-2026 20:25:56.707 client @0x74bbc36b7360 172.31.0.100#56216 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:56.713301048Z 25-Oct-2026 20:25:56.707 client @0x74bbc36b7360 172.31.0.100#56216 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:57.009651380Z 25-Oct-2026 20:25:57.003 client @0x74bbc9735410 172.31.0.100#37435 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:57.009676703Z 25-Oct-2026 20:25:57.003 client @0x74bbc9735410 172.31.0.100#37435 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:57.327843475Z 25-Oct-2026 20:25:57.323 client @0x74bbc36b7360 172.31.0.100#53761 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:57.327867954Z 25-Oct-2026 20:25:57.323 client @0x74bbc36b7360 172.31.0.100#53761 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:57.646221477Z 25-Oct-2026 20:25:57.643 client @0x74bbc36b7360 172.31.0.100#59806 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:57.646244410Z 25-Oct-2026 20:25:57.643 client @0x74bbc36b7360 172.31.0.100#59806 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:57.884942038Z 25-Oct-2026 20:25:57.879 client @0x74bbc36b52e0 172.31.0.100#44102 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:57.884957830Z 25-Oct-2026 20:25:57.879 client @0x74bbc36b52e0 172.31.0.100#44102 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:58.118803184Z 25-Oct-2026 20:25:58.115 client @0x74bbc36c5240 172.31.0.100#46475 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:58.118824432Z 25-Oct-2026 20:25:58.115 client @0x74bbc36c5240 172.31.0.100#46475 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:58.357014281Z 25-Oct-2026 20:25:58.351 client @0x74bbc36eb280 172.31.0.100#36282 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:58.357046703Z 25-Oct-2026 20:25:58.351 client @0x74bbc36eb280 172.31.0.100#36282 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:58.616795588Z 25-Oct-2026 20:25:58.611 client @0x74bbc9735410 172.31.0.100#44768 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:58.616810574Z 25-Oct-2026 20:25:58.611 client @0x74bbc9735410 172.31.0.100#44768 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:58.979684444Z 25-Oct-2026 20:25:58.975 client @0x74bbc36d11a0 172.31.0.100#37861 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:58.979709130Z 25-Oct-2026 20:25:58.975 client @0x74bbc36d11a0 172.31.0.100#37861 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:59.229976634Z 25-Oct-2026 20:25:59.227 client @0x74bbc36eb280 172.31.0.100#40188 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:59.229991699Z 25-Oct-2026 20:25:59.227 client @0x74bbc36eb280 172.31.0.100#40188 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:59.456665207Z 25-Oct-2026 20:25:59.451 client @0x74bbc36b52e0 172.31.0.100#58514 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:59.456693574Z 25-Oct-2026 20:25:59.451 client @0x74bbc36b52e0 172.31.0.100#58514 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:59.699577524Z 25-Oct-2026 20:25:59.695 client @0x74bbc36d3220 172.31.0.100#60105 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:59.699600004Z 25-Oct-2026 20:25:59.695 client @0x74bbc36d3220 172.31.0.100#60105 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:25:59.933518726Z 25-Oct-2026 20:25:59.927 client @0x74bbc97382e0 172.31.0.100#51384 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:25:59.933601625Z 25-Oct-2026 20:25:59.927 client @0x74bbc97382e0 172.31.0.100#51384 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:00.251840428Z 25-Oct-2026 20:26:00.247 client @0x74bbc36d3220 172.31.0.100#35139 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:00.251859557Z 25-Oct-2026 20:26:00.247 client @0x74bbc36d3220 172.31.0.100#35139 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:00.543928860Z 25-Oct-2026 20:26:00.539 client @0x74bbc97382e0 172.31.0.100#51319 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:00.543950900Z 25-Oct-2026 20:26:00.539 client @0x74bbc97382e0 172.31.0.100#51319 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:00.795147599Z 25-Oct-2026 20:26:00.791 client @0x74bbc36c5240 172.31.0.100#41561 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:00.795172977Z 25-Oct-2026 20:26:00.791 client @0x74bbc36c5240 172.31.0.100#41561 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:01.058205266Z 25-Oct-2026 20:26:01.056 client @0x74bbc36e32e0 172.31.0.100#55562 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:01.058230246Z 25-Oct-2026 20:26:01.056 client @0x74bbc36e32e0 172.31.0.100#55562 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:01.320361636Z 25-Oct-2026 20:26:01.316 client @0x74bbc36d3220 172.31.0.100#48865 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:01.320384668Z 25-Oct-2026 20:26:01.316 client @0x74bbc36d3220 172.31.0.100#48865 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:01.602512730Z 25-Oct-2026 20:26:01.600 client @0x74bbc36b7360 172.31.0.100#57812 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:01.602537311Z 25-Oct-2026 20:26:01.600 client @0x74bbc36b7360 172.31.0.100#57812 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:01.949424586Z 25-Oct-2026 20:26:01.944 client @0x74bbc36b52e0 172.31.0.100#50997 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:01.949447474Z 25-Oct-2026 20:26:01.944 client @0x74bbc36b52e0 172.31.0.100#50997 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:02.217221672Z 25-Oct-2026 20:26:02.212 client @0x74bbc36d3220 172.31.0.100#54684 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:02.217246699Z 25-Oct-2026 20:26:02.212 client @0x74bbc36d3220 172.31.0.100#54684 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:02.450260909Z 25-Oct-2026 20:26:02.448 client @0x74bbc36e5250 172.31.0.100#57308 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:02.450276212Z 25-Oct-2026 20:26:02.448 client @0x74bbc36e5250 172.31.0.100#57308 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:02.719846900Z 25-Oct-2026 20:26:02.716 client @0x74bbc36c5240 172.31.0.100#42817 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:02.719864015Z 25-Oct-2026 20:26:02.716 client @0x74bbc36c5240 172.31.0.100#42817 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:02.970957758Z 25-Oct-2026 20:26:02.968 client @0x74bbc36b7360 172.31.0.100#36134 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:02.970983045Z 25-Oct-2026 20:26:02.968 client @0x74bbc36b7360 172.31.0.100#36134 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:03.330055714Z 25-Oct-2026 20:26:03.328 client @0x74bbc36c5240 172.31.0.100#37506 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:03.330072362Z 25-Oct-2026 20:26:03.328 client @0x74bbc36c5240 172.31.0.100#37506 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:03.572997090Z 25-Oct-2026 20:26:03.568 client @0x74bbc97382e0 172.31.0.100#34108 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:03.573015273Z 25-Oct-2026 20:26:03.568 client @0x74bbc97382e0 172.31.0.100#34108 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:03.799120410Z 25-Oct-2026 20:26:03.796 client @0x74bbc36e32e0 172.31.0.100#49686 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:03.799136669Z 25-Oct-2026 20:26:03.796 client @0x74bbc36e32e0 172.31.0.100#49686 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:04.055592272Z 25-Oct-2026 20:26:04.052 client @0x74bbc9735410 172.31.0.100#49336 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:04.055621613Z 25-Oct-2026 20:26:04.052 client @0x74bbc9735410 172.31.0.100#49336 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:04.297851945Z 25-Oct-2026 20:26:04.292 client @0x74bbc36e5250 172.31.0.100#54182 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:04.297894899Z 25-Oct-2026 20:26:04.296 client @0x74bbc36e5250 172.31.0.100#54182 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:04.595740646Z 25-Oct-2026 20:26:04.592 client @0x74bbc973c2b0 172.31.0.100#45770 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:04.595758873Z 25-Oct-2026 20:26:04.592 client @0x74bbc973c2b0 172.31.0.100#45770 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:04.836016171Z 25-Oct-2026 20:26:04.832 client @0x74bbc36eb280 172.31.0.100#51473 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:04.836055844Z 25-Oct-2026 20:26:04.832 client @0x74bbc36eb280 172.31.0.100#51473 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:05.087366666Z 25-Oct-2026 20:26:05.084 client @0x74bbc9735410 172.31.0.100#45067 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:05.087382233Z 25-Oct-2026 20:26:05.084 client @0x74bbc9735410 172.31.0.100#45067 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:05.319131377Z 25-Oct-2026 20:26:05.316 client @0x74bbc9735410 172.31.0.100#35243 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:05.319151125Z 25-Oct-2026 20:26:05.316 client @0x74bbc9735410 172.31.0.100#35243 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:05.549477220Z 25-Oct-2026 20:26:05.544 client @0x74bbc36b7360 172.31.0.100#58482 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:05.549496902Z 25-Oct-2026 20:26:05.544 client @0x74bbc36b7360 172.31.0.100#58482 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:05.786358212Z 25-Oct-2026 20:26:05.784 client @0x74bbc36d7170 172.31.0.100#40571 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:05.786382799Z 25-Oct-2026 20:26:05.784 client @0x74bbc36d7170 172.31.0.100#40571 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:06.062966117Z 25-Oct-2026 20:26:06.060 client @0x74bbc36d7170 172.31.0.100#49278 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:06.062992394Z 25-Oct-2026 20:26:06.060 client @0x74bbc36d7170 172.31.0.100#49278 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:06.312619359Z 25-Oct-2026 20:26:06.308 client @0x74bbc36e5250 172.31.0.100#48430 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:06.312641368Z 25-Oct-2026 20:26:06.308 client @0x74bbc36e5250 172.31.0.100#48430 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:06.552273623Z 25-Oct-2026 20:26:06.548 client @0x74bbc36c5240 172.31.0.100#48517 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:06.552288679Z 25-Oct-2026 20:26:06.548 client @0x74bbc36c5240 172.31.0.100#48517 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:06.783017850Z 25-Oct-2026 20:26:06.781 client @0x74bbc36d11a0 172.31.0.100#40633 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:06.783033543Z 25-Oct-2026 20:26:06.781 client @0x74bbc36d11a0 172.31.0.100#40633 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:07.041003610Z 25-Oct-2026 20:26:07.037 client @0x74bbc36e32e0 172.31.0.100#49789 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:07.041020532Z 25-Oct-2026 20:26:07.037 client @0x74bbc36e32e0 172.31.0.100#49789 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:07.333554522Z 25-Oct-2026 20:26:07.329 client @0x74bbc36b7360 172.31.0.100#42466 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:07.333597445Z 25-Oct-2026 20:26:07.329 client @0x74bbc36b7360 172.31.0.100#42466 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:07.579967415Z 25-Oct-2026 20:26:07.577 client @0x74bbc36d11a0 172.31.0.100#36871 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:07.579983889Z 25-Oct-2026 20:26:07.577 client @0x74bbc36d11a0 172.31.0.100#36871 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:07.804221009Z 25-Oct-2026 20:26:07.801 client @0x74bbc9735410 172.31.0.100#39171 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:07.804236283Z 25-Oct-2026 20:26:07.801 client @0x74bbc9735410 172.31.0.100#39171 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:08.061113456Z 25-Oct-2026 20:26:08.057 client @0x74bbc36d7170 172.31.0.100#44801 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:08.061137877Z 25-Oct-2026 20:26:08.057 client @0x74bbc36d7170 172.31.0.100#44801 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:08.300391632Z 25-Oct-2026 20:26:08.297 client @0x74bbc36c5240 172.31.0.100#50237 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:08.300411558Z 25-Oct-2026 20:26:08.297 client @0x74bbc36c5240 172.31.0.100#50237 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:08.531647233Z 25-Oct-2026 20:26:08.529 client @0x74bbc36d3220 172.31.0.100#46253 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:08.531661311Z 25-Oct-2026 20:26:08.529 client @0x74bbc36d3220 172.31.0.100#46253 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:08.786923600Z 25-Oct-2026 20:26:08.785 client @0x74bbc36e32e0 172.31.0.100#40258 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:08.786947067Z 25-Oct-2026 20:26:08.785 client @0x74bbc36e32e0 172.31.0.100#40258 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:09.043224595Z 25-Oct-2026 20:26:09.041 client @0x74bbc36c5240 172.31.0.100#41545 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:09.043285031Z 25-Oct-2026 20:26:09.041 client @0x74bbc36c5240 172.31.0.100#41545 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:09.270528317Z 25-Oct-2026 20:26:09.269 client @0x74bbc36c5240 172.31.0.100#46469 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:09.270554536Z 25-Oct-2026 20:26:09.269 client @0x74bbc36c5240 172.31.0.100#46469 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:09.511786081Z 25-Oct-2026 20:26:09.509 client @0x74bbc36eb280 172.31.0.100#47367 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:09.511801861Z 25-Oct-2026 20:26:09.509 client @0x74bbc36eb280 172.31.0.100#47367 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:09.745292617Z 25-Oct-2026 20:26:09.741 client @0x74bbc36c5240 172.31.0.100#39501 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:09.745323717Z 25-Oct-2026 20:26:09.741 client @0x74bbc36c5240 172.31.0.100#39501 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:09.986583503Z 25-Oct-2026 20:26:09.985 client @0x74bbc9735410 172.31.0.100#45296 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:09.986606296Z 25-Oct-2026 20:26:09.985 client @0x74bbc9735410 172.31.0.100#45296 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:10.255879004Z 25-Oct-2026 20:26:10.249 client @0x74bbc36eb280 172.31.0.100#56223 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:10.255897650Z 25-Oct-2026 20:26:10.249 client @0x74bbc36eb280 172.31.0.100#56223 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:10.489292010Z 25-Oct-2026 20:26:10.481 client @0x74bbc36d3220 172.31.0.100#45218 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:10.489310264Z 25-Oct-2026 20:26:10.481 client @0x74bbc36d3220 172.31.0.100#45218 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:10.730264977Z 25-Oct-2026 20:26:10.725 client @0x74bbc36e32e0 172.31.0.100#58446 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:10.730280488Z 25-Oct-2026 20:26:10.725 client @0x74bbc36e32e0 172.31.0.100#58446 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:10.969187744Z 25-Oct-2026 20:26:10.961 client @0x74bbc36d7170 172.31.0.100#43624 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:10.969203127Z 25-Oct-2026 20:26:10.961 client @0x74bbc36d7170 172.31.0.100#43624 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:11.207136270Z 25-Oct-2026 20:26:11.205 client @0x74bbc36b7360 172.31.0.100#42742 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:11.207161958Z 25-Oct-2026 20:26:11.205 client @0x74bbc36b7360 172.31.0.100#42742 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:11.552098301Z 25-Oct-2026 20:26:11.545 client @0x74bbc36eb280 172.31.0.100#38885 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:11.552167713Z 25-Oct-2026 20:26:11.545 client @0x74bbc36eb280 172.31.0.100#38885 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:11.841713377Z 25-Oct-2026 20:26:11.833 client @0x74bbc97382e0 172.31.0.100#40728 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:11.841733574Z 25-Oct-2026 20:26:11.833 client @0x74bbc97382e0 172.31.0.100#40728 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:12.074017359Z 25-Oct-2026 20:26:12.069 client @0x74bbc36c5240 172.31.0.100#47465 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:12.074044637Z 25-Oct-2026 20:26:12.069 client @0x74bbc36c5240 172.31.0.100#47465 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:12.338991441Z 25-Oct-2026 20:26:12.334 client @0x74bbc36b52e0 172.31.0.100#35484 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:12.339023367Z 25-Oct-2026 20:26:12.334 client @0x74bbc36b52e0 172.31.0.100#35484 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:12.592040838Z 25-Oct-2026 20:26:12.586 client @0x74bbc36e5250 172.31.0.100#40697 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:12.592067002Z 25-Oct-2026 20:26:12.586 client @0x74bbc36e5250 172.31.0.100#40697 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:12.901257692Z 25-Oct-2026 20:26:12.894 client @0x74bbc36b7360 172.31.0.100#46207 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:12.901289989Z 25-Oct-2026 20:26:12.894 client @0x74bbc36b7360 172.31.0.100#46207 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:13.214437647Z 25-Oct-2026 20:26:13.210 client @0x74bbc36b7360 172.31.0.100#36016 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:13.214455697Z 25-Oct-2026 20:26:13.210 client @0x74bbc36b7360 172.31.0.100#36016 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:13.513982285Z 25-Oct-2026 20:26:13.510 client @0x74bbc36e5250 172.31.0.100#54025 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:13.514008881Z 25-Oct-2026 20:26:13.510 client @0x74bbc36e5250 172.31.0.100#54025 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:13.767389183Z 25-Oct-2026 20:26:13.762 client @0x74bbc36c5240 172.31.0.100#36774 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:13.767415926Z 25-Oct-2026 20:26:13.762 client @0x74bbc36c5240 172.31.0.100#36774 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:14.015642084Z 25-Oct-2026 20:26:14.010 client @0x74bbc36d7170 172.31.0.100#58561 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:14.015668857Z 25-Oct-2026 20:26:14.010 client @0x74bbc36d7170 172.31.0.100#58561 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:14.263354727Z 25-Oct-2026 20:26:14.258 client @0x74bbc36d3220 172.31.0.100#49259 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:14.263371760Z 25-Oct-2026 20:26:14.258 client @0x74bbc36d3220 172.31.0.100#49259 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:14.519383044Z 25-Oct-2026 20:26:14.514 client @0x74bbc36d3220 172.31.0.100#44780 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:14.519409836Z 25-Oct-2026 20:26:14.514 client @0x74bbc36d3220 172.31.0.100#44780 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:14.750548649Z 25-Oct-2026 20:26:14.746 client @0x74bbc36e32e0 172.31.0.100#33579 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:14.750569878Z 25-Oct-2026 20:26:14.746 client @0x74bbc36e32e0 172.31.0.100#33579 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:14.991636210Z 25-Oct-2026 20:26:14.986 client @0x74bbc36b52e0 172.31.0.100#60928 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:14.991662484Z 25-Oct-2026 20:26:14.986 client @0x74bbc36b52e0 172.31.0.100#60928 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:15.259273031Z 25-Oct-2026 20:26:15.254 client @0x74bbc36eb280 172.31.0.100#48108 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:15.259306016Z 25-Oct-2026 20:26:15.254 client @0x74bbc36eb280 172.31.0.100#48108 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:15.506411645Z 25-Oct-2026 20:26:15.502 client @0x74bbc973c2b0 172.31.0.100#52430 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:15.506438763Z 25-Oct-2026 20:26:15.502 client @0x74bbc973c2b0 172.31.0.100#52430 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:15.798395783Z 25-Oct-2026 20:26:15.794 client @0x74bbc97382e0 172.31.0.100#38877 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:15.798413268Z 25-Oct-2026 20:26:15.794 client @0x74bbc97382e0 172.31.0.100#38877 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:16.055149066Z 25-Oct-2026 20:26:16.050 client @0x74bbc36d3220 172.31.0.100#40901 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:16.055166678Z 25-Oct-2026 20:26:16.050 client @0x74bbc36d3220 172.31.0.100#40901 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:16.296180143Z 25-Oct-2026 20:26:16.290 client @0x74bbc36b52e0 172.31.0.100#36764 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:16.296197708Z 25-Oct-2026 20:26:16.290 client @0x74bbc36b52e0 172.31.0.100#36764 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:16.533425241Z 25-Oct-2026 20:26:16.526 client @0x74bbc36d3220 172.31.0.100#37731 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:16.533450260Z 25-Oct-2026 20:26:16.526 client @0x74bbc36d3220 172.31.0.100#37731 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:16.775417603Z 25-Oct-2026 20:26:16.770 client @0x74bbc973c2b0 172.31.0.100#45475 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:16.775441643Z 25-Oct-2026 20:26:16.770 client @0x74bbc973c2b0 172.31.0.100#45475 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:17.021073331Z 25-Oct-2026 20:26:17.014 client @0x74bbc36e32e0 172.31.0.100#39872 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:17.021137673Z 25-Oct-2026 20:26:17.014 client @0x74bbc36e32e0 172.31.0.100#39872 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:17.315688269Z 25-Oct-2026 20:26:17.310 client @0x74bbc36e32e0 172.31.0.100#36114 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:17.315712812Z 25-Oct-2026 20:26:17.310 client @0x74bbc36e32e0 172.31.0.100#36114 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:17.558389731Z 25-Oct-2026 20:26:17.554 client @0x74bbc973c2b0 172.31.0.100#46137 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:17.558408277Z 25-Oct-2026 20:26:17.554 client @0x74bbc973c2b0 172.31.0.100#46137 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:17.794035070Z 25-Oct-2026 20:26:17.790 client @0x74bbc36d7170 172.31.0.100#51837 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:17.794052699Z 25-Oct-2026 20:26:17.790 client @0x74bbc36d7170 172.31.0.100#51837 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:18.032994724Z 25-Oct-2026 20:26:18.027 client @0x74bbc36e32e0 172.31.0.100#48200 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:18.033020515Z 25-Oct-2026 20:26:18.027 client @0x74bbc36e32e0 172.31.0.100#48200 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:18.283963207Z 25-Oct-2026 20:26:18.279 client @0x74bbc36eb280 172.31.0.100#50949 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:18.283979114Z 25-Oct-2026 20:26:18.279 client @0x74bbc36eb280 172.31.0.100#50949 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:18.534978162Z 25-Oct-2026 20:26:18.531 client @0x74bbc36d11a0 172.31.0.100#43698 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:18.534995082Z 25-Oct-2026 20:26:18.531 client @0x74bbc36d11a0 172.31.0.100#43698 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:18.785638027Z 25-Oct-2026 20:26:18.779 client @0x74bbc36b52e0 172.31.0.100#56640 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:18.785654400Z 25-Oct-2026 20:26:18.779 client @0x74bbc36b52e0 172.31.0.100#56640 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:19.036122834Z 25-Oct-2026 20:26:19.031 client @0x74bbc36d11a0 172.31.0.100#52670 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:19.036154578Z 25-Oct-2026 20:26:19.031 client @0x74bbc36d11a0 172.31.0.100#52670 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:19.268482574Z 25-Oct-2026 20:26:19.263 client @0x74bbc973c2b0 172.31.0.100#57919 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:19.268501003Z 25-Oct-2026 20:26:19.263 client @0x74bbc973c2b0 172.31.0.100#57919 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:19.500238316Z 25-Oct-2026 20:26:19.495 client @0x74bbc36d11a0 172.31.0.100#49229 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:19.500272683Z 25-Oct-2026 20:26:19.495 client @0x74bbc36d11a0 172.31.0.100#49229 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:19.729268256Z 25-Oct-2026 20:26:19.723 client @0x74bbc973c2b0 172.31.0.100#36492 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:19.729286054Z 25-Oct-2026 20:26:19.723 client @0x74bbc973c2b0 172.31.0.100#36492 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:20.008016382Z 25-Oct-2026 20:26:20.003 client @0x74bbc9735410 172.31.0.100#42204 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:20.008036011Z 25-Oct-2026 20:26:20.003 client @0x74bbc9735410 172.31.0.100#42204 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:20.282271014Z 25-Oct-2026 20:26:20.279 client @0x74bbc36e5250 172.31.0.100#41243 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:20.282294924Z 25-Oct-2026 20:26:20.279 client @0x74bbc36e5250 172.31.0.100#41243 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:20.515090692Z 25-Oct-2026 20:26:20.511 client @0x74bbc36d7170 172.31.0.100#38287 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:20.515126670Z 25-Oct-2026 20:26:20.511 client @0x74bbc36d7170 172.31.0.100#38287 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:20.740354221Z 25-Oct-2026 20:26:20.735 client @0x74bbc36d11a0 172.31.0.100#57094 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:20.740385663Z 25-Oct-2026 20:26:20.735 client @0x74bbc36d11a0 172.31.0.100#57094 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:20.979012925Z 25-Oct-2026 20:26:20.975 client @0x74bbc36b7360 172.31.0.100#52454 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:20.979030730Z 25-Oct-2026 20:26:20.975 client @0x74bbc36b7360 172.31.0.100#52454 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:21.211108840Z 25-Oct-2026 20:26:21.207 client @0x74bbc36b7360 172.31.0.100#58308 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:21.211126557Z 25-Oct-2026 20:26:21.207 client @0x74bbc36b7360 172.31.0.100#58308 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:21.497074212Z 25-Oct-2026 20:26:21.491 client @0x74bbc97382e0 172.31.0.100#39713 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:21.497094675Z 25-Oct-2026 20:26:21.491 client @0x74bbc97382e0 172.31.0.100#39713 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:21.798511622Z 25-Oct-2026 20:26:21.795 client @0x74bbc36e5250 172.31.0.100#48645 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:21.798546457Z 25-Oct-2026 20:26:21.795 client @0x74bbc36e5250 172.31.0.100#48645 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:22.138234425Z 25-Oct-2026 20:26:22.135 client @0x74bbc36b7360 172.31.0.100#57410 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:22.138326949Z 25-Oct-2026 20:26:22.135 client @0x74bbc36b7360 172.31.0.100#57410 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:22.514453010Z 25-Oct-2026 20:26:22.511 client @0x74bbc36b52e0 172.31.0.100#42506 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:22.514494530Z 25-Oct-2026 20:26:22.511 client @0x74bbc36b52e0 172.31.0.100#42506 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:22.914089352Z 25-Oct-2026 20:26:22.911 client @0x74bbc36e5250 172.31.0.100#55527 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:22.914114657Z 25-Oct-2026 20:26:22.911 client @0x74bbc36e5250 172.31.0.100#55527 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:23.251347737Z 25-Oct-2026 20:26:23.247 client @0x74bbc36d7170 172.31.0.100#49222 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:26:23.251381885Z 25-Oct-2026 20:26:23.247 client @0x74bbc36d7170 172.31.0.100#49222 
+(sd.lab): query failed (zone not loaded) for sd.lab/IN/SOA at query.c:5707
+2026-10-25T20:26:51.975828636Z 25-Oct-2026 20:26:51.973 zone sd.lab/IN: refresh: skipping zone 
+transfer as primary 172.30.0.11#53 (source 0.0.0.0#0) is unreachable (cached)
+2026-10-25T20:27:58.447107520Z 25-Oct-2026 20:27:58.443 received control channel command 'zonestatus 
+sd.lab'
+2026-10-25T20:32:52.980683316Z 25-Oct-2026 20:32:52.976 zone sd.lab/IN: Transfer started.
+2026-10-25T20:32:52.981862256Z 25-Oct-2026 20:32:52.976 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+connected using 172.30.0.11#53
+2026-10-25T20:32:52.985393377Z 25-Oct-2026 20:32:52.980 zone sd.lab/IN: transferred serial 2026102318
+2026-10-25T20:32:52.985454238Z 25-Oct-2026 20:32:52.984 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer status: success
+2026-10-25T20:32:52.985463688Z 25-Oct-2026 20:32:52.984 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer completed: 1 messages, 10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial 
+2026102318)
+2026-10-25T20:32:52.986922223Z 25-Oct-2026 20:32:52.984 zone sd.lab/IN: sending notifies (serial 
+2026102318)
+2026-10-25T20:39:22.476915693Z 25-Oct-2026 20:39:22.470 received control channel command 'zonestatus 
+sd.lab'
+2026-10-25T20:39:28.288035274Z 25-Oct-2026 20:39:28.286 client @0x74bbc9735410 172.31.0.100#37192 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:19.186417145Z 25-Oct-2026 20:44:19.183 client @0x74bbc36b52e0 172.31.0.100#60839 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:32.586320519Z 25-Oct-2026 20:44:32.583 no longer listening on 172.30.0.13#53
+2026-10-25T20:44:32.837431485Z 25-Oct-2026 20:44:32.831 client @0x74bbc36d3220 172.31.0.12#56279: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:32.837457605Z 25-Oct-2026 20:44:32.831 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.12#56279
+2026-10-25T20:44:33.328767397Z 25-Oct-2026 20:44:33.327 client @0x74bbc36d11a0 172.31.0.11#49311: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:33.328789484Z 25-Oct-2026 20:44:33.327 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#49311
+2026-10-25T20:44:38.250033706Z 25-Oct-2026 20:44:38.248 client @0x74bbc973c2b0 172.31.0.100#49106 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:38.379548806Z 25-Oct-2026 20:44:38.376 listening on IPv4 interface eth1, 
+172.30.0.13#53
+2026-10-25T20:44:38.654121770Z 25-Oct-2026 20:44:38.652 client @0x74bbc36d7170 172.31.0.100#55452 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:39.025807378Z 25-Oct-2026 20:44:39.024 client @0x74bbc36d9190 172.30.0.11#49296: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:39.025831918Z 25-Oct-2026 20:44:39.024 client @0x74bbc36b52e0 172.31.0.11#39242: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:39.025833633Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: notify from 
+172.30.0.11#49296: serial 2026102319
+2026-10-25T20:44:39.025841554Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#39242
+2026-10-25T20:44:39.026559928Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: Transfer started.
+2026-10-25T20:44:39.026572723Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+connected using 172.30.0.11#53
+2026-10-25T20:44:39.027569827Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: transferred serial 2026102319
+2026-10-25T20:44:39.027739821Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer status: success
+2026-10-25T20:44:39.027744498Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 
+2026102319)
+2026-10-25T20:44:39.027745919Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: sending notifies (serial 
+2026102319)
+2026-10-25T20:44:39.816722692Z 25-Oct-2026 20:44:39.812 client @0x74bbc97382e0 172.31.0.100#57667 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:43.335529387Z 25-Oct-2026 20:44:43.332 client @0x74bbc36c7250 172.30.0.11#55664: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:43.335553190Z 25-Oct-2026 20:44:43.332 zone sd.lab/IN: notify from 
+172.30.0.11#55664: zone is up to date

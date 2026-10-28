@@ -1,0 +1,20 @@
+﻿docker : 23-Oct-2026 23:36:06.027 received control channel command 'querylog on'
+No linha:2 caractere:5
++     docker logs --since 10m $servidor 2>&1 |
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (23-Oct-2026 23:...d 'querylog on':String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+23-Oct-2026 23:36:06.027 query logging is now on
+23-Oct-2026 23:36:18.637 received control channel command 'flushname app.sd.lab'
+23-Oct-2026 23:36:18.637 flushing name 'app.sd.lab' in all cache views succeeded
+23-Oct-2026 23:36:24.837 client @0x72493a3bf420 172.31.0.100#38633 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.53)
+23-Oct-2026 23:40:48.355 received control channel command 'querylog on'
+23-Oct-2026 23:40:50.087 received control channel command 'flushname app.sd.lab'
+23-Oct-2026 23:40:50.091 flushing name 'app.sd.lab' in all cache views succeeded
+23-Oct-2026 23:40:50.567 client @0x72493a3aa2e0 172.31.0.100#44099 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.53)
+23-Oct-2026 23:41:27.803 client @0x72493a3bc490 172.31.0.100#57957 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.53)

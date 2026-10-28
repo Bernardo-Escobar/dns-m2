@@ -1,0 +1,92 @@
+﻿docker : 2026-10-25T20:44:32.586320519Z 25-Oct-2026 20:44:32.583 no longer listening on 
+172.30.0.13#53
+No linha:1 caractere:1
++ docker logs --since 10m --timestamps ns3 2>&1 |
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T20:4... 172.30.0.13#53:String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T20:44:32.837431485Z 25-Oct-2026 20:44:32.831 client @0x74bbc36d3220 172.31.0.12#56279: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:32.837457605Z 25-Oct-2026 20:44:32.831 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.12#56279
+2026-10-25T20:44:33.328767397Z 25-Oct-2026 20:44:33.327 client @0x74bbc36d11a0 172.31.0.11#49311: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:33.328789484Z 25-Oct-2026 20:44:33.327 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#49311
+2026-10-25T20:44:38.250033706Z 25-Oct-2026 20:44:38.248 client @0x74bbc973c2b0 172.31.0.100#49106 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:38.379548806Z 25-Oct-2026 20:44:38.376 listening on IPv4 interface eth1, 
+172.30.0.13#53
+2026-10-25T20:44:38.654121770Z 25-Oct-2026 20:44:38.652 client @0x74bbc36d7170 172.31.0.100#55452 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:39.025807378Z 25-Oct-2026 20:44:39.024 client @0x74bbc36d9190 172.30.0.11#49296: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:39.025831918Z 25-Oct-2026 20:44:39.024 client @0x74bbc36b52e0 172.31.0.11#39242: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:39.025833633Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: notify from 
+172.30.0.11#49296: serial 2026102319
+2026-10-25T20:44:39.025841554Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#39242
+2026-10-25T20:44:39.026559928Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: Transfer started.
+2026-10-25T20:44:39.026572723Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+connected using 172.30.0.11#53
+2026-10-25T20:44:39.027569827Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: transferred serial 2026102319
+2026-10-25T20:44:39.027739821Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer status: success
+2026-10-25T20:44:39.027744498Z 25-Oct-2026 20:44:39.024 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 
+2026102319)
+2026-10-25T20:44:39.027745919Z 25-Oct-2026 20:44:39.024 zone sd.lab/IN: sending notifies (serial 
+2026102319)
+2026-10-25T20:44:39.816722692Z 25-Oct-2026 20:44:39.812 client @0x74bbc97382e0 172.31.0.100#57667 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:44:43.335529387Z 25-Oct-2026 20:44:43.332 client @0x74bbc36c7250 172.30.0.11#55664: 
+received notify for zone 'sd.lab'
+2026-10-25T20:44:43.335553190Z 25-Oct-2026 20:44:43.332 zone sd.lab/IN: notify from 
+172.30.0.11#55664: zone is up to date
+2026-10-25T20:44:50.746063746Z 25-Oct-2026 20:44:50.742 received control channel command 'zonestatus 
+sd.lab'
+2026-10-25T20:44:51.398258046Z 25-Oct-2026 20:44:51.394 client @0x74bbc36d11a0 172.31.0.100#44292 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:50:39.034251907Z 25-Oct-2026 20:50:39.030 client @0x74bbc36eb280 172.31.0.100#58338 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:50:48.770748663Z 25-Oct-2026 20:50:48.767 no longer listening on 172.30.0.13#53
+2026-10-25T20:50:49.020256917Z 25-Oct-2026 20:50:49.015 client @0x74bbc36c5240 172.31.0.12#50482: 
+received notify for zone 'sd.lab'
+2026-10-25T20:50:49.020275219Z 25-Oct-2026 20:50:49.015 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.12#50482
+2026-10-25T20:50:49.509327950Z 25-Oct-2026 20:50:49.507 client @0x74bbc36e32e0 172.31.0.11#36117: 
+received notify for zone 'sd.lab'
+2026-10-25T20:50:49.509345842Z 25-Oct-2026 20:50:49.507 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#36117
+2026-10-25T20:50:54.403054521Z 25-Oct-2026 20:50:54.399 client @0x74bbc36d3220 172.31.0.100#52483 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:50:54.495757689Z 25-Oct-2026 20:50:54.491 listening on IPv4 interface eth1, 
+172.30.0.13#53
+2026-10-25T20:50:54.514185754Z 25-Oct-2026 20:50:54.511 client @0x74bbc36b9380 172.30.0.11#40972: 
+received notify for zone 'sd.lab'
+2026-10-25T20:50:54.514289310Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: notify from 
+172.30.0.11#40972: serial 2026102320
+2026-10-25T20:50:54.514633271Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: Transfer started.
+2026-10-25T20:50:54.514861992Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+connected using 172.30.0.11#53
+2026-10-25T20:50:54.515511005Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: transferred serial 2026102320
+2026-10-25T20:50:54.515514430Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer status: success
+2026-10-25T20:50:54.515515831Z 25-Oct-2026 20:50:54.511 transfer of 'sd.lab/IN' from 172.30.0.11#53: 
+Transfer completed: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 
+2026102320)
+2026-10-25T20:50:54.515678326Z 25-Oct-2026 20:50:54.511 zone sd.lab/IN: sending notifies (serial 
+2026102320)
+2026-10-25T20:50:54.781219249Z 25-Oct-2026 20:50:54.776 client @0x74bbc36b52e0 172.31.0.100#38536 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T20:50:55.141750045Z 25-Oct-2026 20:50:55.140 client @0x74bbc36bb3e0 172.30.0.11#49621: 
+received notify for zone 'sd.lab'
+2026-10-25T20:50:55.141782821Z 25-Oct-2026 20:50:55.140 zone sd.lab/IN: notify from 
+172.30.0.11#49621: zone is up to date
+2026-10-25T20:50:55.141862395Z 25-Oct-2026 20:50:55.140 client @0x74bbc36c5240 172.31.0.11#50541: 
+received notify for zone 'sd.lab'
+2026-10-25T20:50:55.141874435Z 25-Oct-2026 20:50:55.140 zone sd.lab/IN: refused notify from 
+non-primary: 172.31.0.11#50541

@@ -1,0 +1,156 @@
+﻿docker.exe : 28-Oct-2026 00:25:40.794 received control channel command 'reload sd.lab'
+No C:\Users\berna\Desktop\dns-m2-novo\scripts\_registrar-evidencias.ps1:55 caractere:21
++                     & docker logs --since $desde $servico 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (28-Oct-2026 00:...'reload sd.lab':String)     [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+28-Oct-2026 00:25:40.804 zone sd.lab/IN: loaded serial 2026102302
+28-Oct-2026 00:25:40.804 zone sd.lab/IN: sending notifies (serial 2026102302)
+28-Oct-2026 00:25:40.804 client @0x7f722eb8f200 172.30.0.12#46747 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:40.804 client @0x7f722eb8f200 172.30.0.12#46747 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102302)
+28-Oct-2026 00:25:40.804 client @0x7f722eb8f200 172.30.0.12#46747 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102302)
+28-Oct-2026 00:25:41.304 client @0x7f722eb843a0 172.30.0.13#32831 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:41.304 client @0x7f722eb843a0 172.30.0.13#32831 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102302)
+28-Oct-2026 00:25:41.304 client @0x7f722eb843a0 172.30.0.13#32831 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102302)
+28-Oct-2026 00:25:41.785 received control channel command 'reload sd.lab'
+28-Oct-2026 00:25:41.795 zone sd.lab/IN: loaded serial 2026102303
+28-Oct-2026 00:25:45.813 zone sd.lab/IN: sending notifies (serial 2026102303)
+28-Oct-2026 00:25:45.813 client @0x7f722eb84180 172.30.0.12#43253 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:45.813 client @0x7f722eb84180 172.30.0.12#43253 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102303)
+28-Oct-2026 00:25:45.813 client @0x7f722eb84180 172.30.0.12#43253 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102303)
+28-Oct-2026 00:25:46.313 client @0x7f722eb84280 172.30.0.13#37425 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:46.313 client @0x7f722eb84280 172.30.0.13#37425 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102303)
+28-Oct-2026 00:25:46.313 client @0x7f722eb84280 172.30.0.13#37425 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102303)
+28-Oct-2026 00:25:46.753 received control channel command 'reload sd.lab'
+28-Oct-2026 00:25:46.753 zone sd.lab/IN: loaded serial 2026102304
+28-Oct-2026 00:25:50.814 zone sd.lab/IN: sending notifies (serial 2026102304)
+28-Oct-2026 00:25:50.814 client @0x7f722eb77470 172.30.0.12#38619 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:50.814 client @0x7f722eb77470 172.30.0.12#38619 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102304)
+28-Oct-2026 00:25:50.814 client @0x7f722eb77470 172.30.0.12#38619 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102304)
+28-Oct-2026 00:25:51.314 client @0x7f722eb77510 172.30.0.13#43893 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:51.314 client @0x7f722eb77510 172.30.0.13#43893 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102304)
+28-Oct-2026 00:25:51.314 client @0x7f722eb77510 172.30.0.13#43893 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102304)
+28-Oct-2026 00:25:51.744 received control channel command 'reload sd.lab'
+28-Oct-2026 00:25:51.744 zone sd.lab/IN: loaded serial 2026102305
+28-Oct-2026 00:25:55.814 zone sd.lab/IN: sending notifies (serial 2026102305)
+28-Oct-2026 00:25:55.814 client @0x7f722eb791e0 172.30.0.12#42993 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:55.814 client @0x7f722eb791e0 172.30.0.12#42993 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102305)
+28-Oct-2026 00:25:55.814 client @0x7f722eb791e0 172.30.0.12#42993 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102305)
+28-Oct-2026 00:25:56.314 client @0x7f722eb6d2b0 172.30.0.13#38823 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:25:56.314 client @0x7f722eb6d2b0 172.30.0.13#38823 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102305)
+28-Oct-2026 00:25:56.314 client @0x7f722eb6d2b0 172.30.0.13#38823 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102305)
+28-Oct-2026 00:25:56.904 received control channel command 'reload sd.lab'
+28-Oct-2026 00:25:56.904 zone sd.lab/IN: loaded serial 2026102306
+28-Oct-2026 00:26:00.814 zone sd.lab/IN: sending notifies (serial 2026102306)
+28-Oct-2026 00:26:00.814 client @0x7f722eb68430 172.30.0.12#43743 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:00.814 client @0x7f722eb68430 172.30.0.12#43743 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102306)
+28-Oct-2026 00:26:00.814 client @0x7f722eb68430 172.30.0.12#43743 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102306)
+28-Oct-2026 00:26:01.314 client @0x7f722eb681b0 172.30.0.13#35683 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:01.314 client @0x7f722eb681b0 172.30.0.13#35683 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102306)
+28-Oct-2026 00:26:01.314 client @0x7f722eb681b0 172.30.0.13#35683 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102306)
+28-Oct-2026 00:26:01.794 received control channel command 'reconfig'
+28-Oct-2026 00:26:01.794 loading configuration from '/etc/bind/named.conf'
+28-Oct-2026 00:26:01.794 the working directory is now '/var/lib/bind'
+28-Oct-2026 00:26:01.794 reading built-in trust anchors from file '/etc/bind/bind.keys'
+28-Oct-2026 00:26:01.794 using default UDP/IPv4 port range: [32768, 60999]
+28-Oct-2026 00:26:01.794 using default UDP/IPv6 port range: [32768, 60999]
+28-Oct-2026 00:26:01.794 sizing zone task pool based on 1 zones
+28-Oct-2026 00:26:01.794 obtaining root key for view _default from '/etc/bind/bind.keys'
+28-Oct-2026 00:26:01.804 not using config file logging statement for logging due to -g option
+28-Oct-2026 00:26:01.804 reloading configuration succeeded
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:a8::e#53
+28-Oct-2026 00:26:01.804 scheduled loading new zones
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:7fd::1#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:12::d0d#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:2f::f#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:dc3::35#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:2d::d#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:503:c27::2:30#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:503:ba3e::2:30#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2801:1b8:10::b#53
+28-Oct-2026 00:26:01.804 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+28-Oct-2026 00:26:01.804 any newly configured zones are now loaded
+28-Oct-2026 00:26:01.804 running
+28-Oct-2026 00:26:01.874 managed-keys-zone: Key 20326 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:26:01.874 managed-keys-zone: Key 38696 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:26:02.534 received control channel command 'reload sd.lab'
+28-Oct-2026 00:26:02.544 zone sd.lab/IN: loaded serial 2026102307
+28-Oct-2026 00:26:27.324 client @0x7f723007c0c0 172.30.0.13#37153 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:27.324 client @0x7f723007c0c0 172.30.0.13#37153 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102307)
+28-Oct-2026 00:26:27.324 client @0x7f723007c0c0 172.30.0.13#37153 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102307)
+28-Oct-2026 00:26:29.824 client @0x7f723007e100 172.30.0.12#37343 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:29.824 client @0x7f723007e100 172.30.0.12#37343 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102307)
+28-Oct-2026 00:26:29.824 client @0x7f723007e100 172.30.0.12#37343 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102307)
+28-Oct-2026 00:26:30.414 received control channel command 'reload sd.lab'
+28-Oct-2026 00:26:30.414 zone sd.lab/IN: loaded serial 2026102308
+28-Oct-2026 00:26:52.324 client @0x7f7230080180 172.30.0.13#38791 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:52.324 client @0x7f7230080180 172.30.0.13#38791 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102308)
+28-Oct-2026 00:26:52.324 client @0x7f7230080180 172.30.0.13#38791 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102308)
+28-Oct-2026 00:26:54.824 client @0x7f7230080190 172.30.0.12#45675 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:26:54.824 client @0x7f7230080190 172.30.0.12#45675 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102308)
+28-Oct-2026 00:26:54.824 client @0x7f7230080190 172.30.0.12#45675 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102308)
+28-Oct-2026 00:26:55.335 received control channel command 'reload sd.lab'
+28-Oct-2026 00:26:55.335 zone sd.lab/IN: loaded serial 2026102309
+28-Oct-2026 00:27:16.333 client @0x7f72300801a0 172.30.0.13#38811 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:27:16.333 client @0x7f72300801a0 172.30.0.13#38811 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102309)
+28-Oct-2026 00:27:16.333 client @0x7f72300801a0 172.30.0.13#38811 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102309)
+28-Oct-2026 00:27:20.833 client @0x7f72300801b0 172.30.0.12#42655 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:27:20.833 client @0x7f72300801b0 172.30.0.12#42655 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102309)
+28-Oct-2026 00:27:20.833 client @0x7f72300801b0 172.30.0.12#42655 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102309)
+28-Oct-2026 00:27:21.453 received control channel command 'reload sd.lab'
+28-Oct-2026 00:27:21.453 zone sd.lab/IN: loaded serial 2026102310
+28-Oct-2026 00:27:44.333 client @0x7f72300801c0 172.30.0.13#41883 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:27:44.333 client @0x7f72300801c0 172.30.0.13#41883 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102310)
+28-Oct-2026 00:27:44.333 client @0x7f72300801c0 172.30.0.13#41883 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102310)
+28-Oct-2026 00:27:46.833 client @0x7f72300801d0 172.30.0.12#42571 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:27:46.833 client @0x7f72300801d0 172.30.0.12#42571 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102310)
+28-Oct-2026 00:27:46.833 client @0x7f72300801d0 172.30.0.12#42571 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102310)
+28-Oct-2026 00:27:47.393 received control channel command 'reload sd.lab'
+28-Oct-2026 00:27:47.393 zone sd.lab/IN: loaded serial 2026102311
+28-Oct-2026 00:28:11.335 client @0x7f72300801e0 172.30.0.13#44383 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:28:11.335 client @0x7f72300801e0 172.30.0.13#44383 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102311)
+28-Oct-2026 00:28:11.335 client @0x7f72300801e0 172.30.0.13#44383 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102311)
+28-Oct-2026 00:28:13.835 client @0x7f72300801f0 172.30.0.12#43049 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:28:13.835 client @0x7f72300801f0 172.30.0.12#43049 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102311)
+28-Oct-2026 00:28:13.835 client @0x7f72300801f0 172.30.0.12#43049 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102311)
+28-Oct-2026 00:28:14.783 received control channel command 'reconfig'
+28-Oct-2026 00:28:14.783 loading configuration from '/etc/bind/named.conf'
+28-Oct-2026 00:28:14.783 the working directory is now '/var/lib/bind'
+28-Oct-2026 00:28:14.783 reading built-in trust anchors from file '/etc/bind/bind.keys'
+28-Oct-2026 00:28:14.783 using default UDP/IPv4 port range: [32768, 60999]
+28-Oct-2026 00:28:14.783 using default UDP/IPv6 port range: [32768, 60999]
+28-Oct-2026 00:28:14.783 sizing zone task pool based on 1 zones
+28-Oct-2026 00:28:14.783 obtaining root key for view _default from '/etc/bind/bind.keys'
+28-Oct-2026 00:28:14.793 not using config file logging statement for logging due to -g option
+28-Oct-2026 00:28:14.793 reloading configuration succeeded
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:2d::d#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:7fd::1#53
+28-Oct-2026 00:28:14.793 scheduled loading new zones
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:503:ba3e::2:30#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2801:1b8:10::b#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:503:c27::2:30#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:dc3::35#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:a8::e#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:2f::f#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:12::d0d#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+28-Oct-2026 00:28:14.793 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+28-Oct-2026 00:28:14.803 any newly configured zones are now loaded
+28-Oct-2026 00:28:14.803 running
+28-Oct-2026 00:28:14.933 managed-keys-zone: Key 20326 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:28:14.933 managed-keys-zone: Key 38696 for zone . is now trusted (acceptance timer complete)
+28-Oct-2026 00:28:15.383 received control channel command 'reload sd.lab'
+28-Oct-2026 00:28:15.393 zone sd.lab/IN: loaded serial 2026102312
+28-Oct-2026 00:28:15.393 zone sd.lab/IN: sending notifies (serial 2026102312)
+28-Oct-2026 00:28:15.393 client @0x7f7230080200 172.30.0.12#43925 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:28:15.393 client @0x7f7230080200 172.30.0.12#43925 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102312)
+28-Oct-2026 00:28:15.393 client @0x7f7230080200 172.30.0.12#43925 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102312)
+28-Oct-2026 00:28:15.583 client @0x7f7230080210 172.30.0.13#33675 (sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+28-Oct-2026 00:28:15.583 client @0x7f7230080210 172.30.0.13#33675 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102312)
+28-Oct-2026 00:28:15.583 client @0x7f7230080210 172.30.0.13#33675 (sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 9 records, 224 bytes, 0.001 secs (224000 bytes/sec) (serial 2026102312)

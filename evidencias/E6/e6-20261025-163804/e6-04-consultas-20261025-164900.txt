@@ -1,0 +1,8 @@
+﻿=== CONSULTA 1 - 2026-10-25T16:49:01.1093691-03:00 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 33174
+;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 75ea9e29d784ad4f010000006ade5d2ddbc074a9affd3e15 (good)

@@ -1,0 +1,9 @@
+﻿{
+    "script":  "ativar-dnssec",
+    "experimento":  "E9",
+    "status":  "SUCESSO",
+    "inicio":  "2026-10-27T21:29:56.5492754-03:00",
+    "fim":  "2026-10-27T21:30:01.2213602-03:00",
+    "duracao_segundos":  4.672,
+    "erro":  null
+}

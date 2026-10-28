@@ -1,0 +1,23 @@
+﻿E8 - COORDENACAO E ORDEM
+
+Objetivo:
+Investigar a coordenacao estatica do NS1 e a
+ordenacao das atualizacoes pelo serial SOA.
+
+Previsoes antes dos testes:
+
+1. NS1 atua como primario da zona sd.lab.
+
+2. Os secundarios utilizam o serial SOA para
+identificar versoes mais recentes da zona.
+
+3. Se NS1 publicar uma versao com serial menor,
+esperamos que NS2 e NS3 mantenham suas versoes
+anteriores, sem realizar uma transferencia
+de atualizacao para a versao mais antiga.
+
+4. Dois primarios independentes poderiam produzir
+versoes conflitantes, pois o DNS convencional
+nao implementa consenso distribuido entre eles.
+
+Data: 2026-10-25T18:29:50.5926265-03:00

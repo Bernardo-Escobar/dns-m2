@@ -1,0 +1,18 @@
+﻿docker.exe : 28-Oct-2026 00:29:58.242 client @0x7f216affd2c0 172.30.0.11#40800: received notify for zone 'sd.lab'
+No C:\Users\berna\Desktop\dns-m2-novo\scripts\_registrar-evidencias.ps1:55 caractere:21
++                     & docker logs --since $desde $servico 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (28-Oct-2026 00:...r zone 'sd.lab':String)     [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+28-Oct-2026 00:29:58.242 zone sd.lab/IN: notify from 172.30.0.11#40800: serial 2026102313
+28-Oct-2026 00:29:58.242 zone sd.lab/IN: Transfer started.
+28-Oct-2026 00:29:58.242 transfer of 'sd.lab/IN' from 172.30.0.11#53: connected using 172.30.0.11#53
+28-Oct-2026 00:29:58.252 zone sd.lab/IN: transferred serial 2026102313
+28-Oct-2026 00:29:58.252 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer status: success
+28-Oct-2026 00:29:58.252 transfer of 'sd.lab/IN' from 172.30.0.11#53: Transfer completed: 1 messages, 9 records, 581 bytes, 0.010 secs (58100 bytes/sec) (serial 2026102313)
+28-Oct-2026 00:29:58.252 zone sd.lab/IN: sending notifies (serial 2026102313)
+28-Oct-2026 00:29:58.732 client @0x7f216b00e230 172.31.0.11#50057: received notify for zone 'sd.lab'
+28-Oct-2026 00:29:58.732 zone sd.lab/IN: refused notify from non-primary: 172.31.0.11#50057
+28-Oct-2026 00:29:58.732 client @0x7f216b004290 172.31.0.13#35197: received notify for zone 'sd.lab'
+28-Oct-2026 00:29:58.732 zone sd.lab/IN: refused notify from non-primary: 172.31.0.13#35197

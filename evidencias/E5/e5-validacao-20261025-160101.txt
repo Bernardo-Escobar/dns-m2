@@ -1,0 +1,171 @@
+﻿
+=== STATUS INICIAL ===
+NAME         IMAGE               COMMAND                  SERVICE      CREATED        STATUS        PORTS
+cliente      m2-dns-bind-local   "sleep infinity"         cliente      44 hours ago   Up 44 hours   53/tcp, 53/udp
+ns1          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns1          44 hours ago   Up 43 hours   53/tcp, 53/udp
+ns2          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns2          44 hours ago   Up 43 hours   53/tcp, 53/udp
+ns3          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns3          44 hours ago   Up 44 hours   53/tcp, 53/udp
+resolvedor   m2-dns-bind-local   "named -g -u named -ÔÇª"   resolvedor   44 hours ago   Up 44 hours   53/tcp, 53/udp
+
+
+=== PARANDO NS1 ===
+ns1
+
+
+=== NS2 COM NS1 PARADO ===
+
+; <<>> DiG 9.18.49 <<>> @172.31.0.12 app.sd.lab A +norecurse +time=2 +tries=1
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5958
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 6677863263abe845010000006ade51ee4f6cf2238253e2a4 (good)
+;; QUESTION SECTION:
+;app.sd.lab.			IN	A
+
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+;; AUTHORITY SECTION:
+sd.lab.			60	IN	NS	ns1.sd.lab.
+sd.lab.			60	IN	NS	ns3.sd.lab.
+sd.lab.			60	IN	NS	ns2.sd.lab.
+
+;; ADDITIONAL SECTION:
+ns1.sd.lab.		60	IN	A	172.31.0.11
+ns2.sd.lab.		60	IN	A	172.31.0.12
+ns3.sd.lab.		60	IN	A	172.31.0.13
+
+;; Query time: 0 msec
+;; SERVER: 172.31.0.12#53(172.31.0.12) (UDP)
+;; WHEN: Sun Oct 25 19:01:02 UTC 2026
+;; MSG SIZE  rcvd: 185
+
+
+
+=== NS3 COM NS1 PARADO ===
+
+; <<>> DiG 9.18.49 <<>> @172.31.0.13 app.sd.lab A +norecurse +time=2 +tries=1
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26209
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: fb2740bc817e922e010000006ade51ef6fbbb6c0b00f81e8 (good)
+;; QUESTION SECTION:
+;app.sd.lab.			IN	A
+
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+;; AUTHORITY SECTION:
+sd.lab.			60	IN	NS	ns3.sd.lab.
+sd.lab.			60	IN	NS	ns1.sd.lab.
+sd.lab.			60	IN	NS	ns2.sd.lab.
+
+;; ADDITIONAL SECTION:
+ns1.sd.lab.		60	IN	A	172.31.0.11
+ns2.sd.lab.		60	IN	A	172.31.0.12
+ns3.sd.lab.		60	IN	A	172.31.0.13
+
+;; Query time: 0 msec
+;; SERVER: 172.31.0.13#53(172.31.0.13) (UDP)
+;; WHEN: Sun Oct 25 19:01:03 UTC 2026
+;; MSG SIZE  rcvd: 185
+
+
+
+=== PUBLICACAO COM NS1 PARADO ===
+docker : Error response from daemon: container 5eb2a342f3ef7869baf96169de977c938997a7002a7539be5db9d4a2846d3bf9 is not running
+No linha:19 caractere:9
++         docker exec ns1 rndc reload sd.lab
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ... is not running:String) [], RemoteExc    eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+=== PARANDO NS2 ===
+ns2
+
+
+=== NS3 COM DOIS SERVIDORES PARADOS ===
+
+; <<>> DiG 9.18.49 <<>> @172.31.0.13 app.sd.lab A +norecurse +time=3 +tries=1
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 59717
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 18630d47dcf6fffa010000006ade51ef5b70c9d3f0e28a2c (good)
+;; QUESTION SECTION:
+;app.sd.lab.			IN	A
+
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+;; AUTHORITY SECTION:
+sd.lab.			60	IN	NS	ns2.sd.lab.
+sd.lab.			60	IN	NS	ns3.sd.lab.
+sd.lab.			60	IN	NS	ns1.sd.lab.
+
+;; ADDITIONAL SECTION:
+ns1.sd.lab.		60	IN	A	172.31.0.11
+ns2.sd.lab.		60	IN	A	172.31.0.12
+ns3.sd.lab.		60	IN	A	172.31.0.13
+
+;; Query time: 0 msec
+;; SERVER: 172.31.0.13#53(172.31.0.13) (UDP)
+;; WHEN: Sun Oct 25 19:01:03 UTC 2026
+;; MSG SIZE  rcvd: 185
+
+
+
+=== RESOLVEDOR COM APENAS NS3 ===
+
+; <<>> DiG 9.18.49 <<>> @172.31.0.53 app.sd.lab A +time=10 +tries=1
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 6819
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: a2e7261a831e2b8d010000006ade51ef09539d6b39c8ea6f (good)
+;; QUESTION SECTION:
+;app.sd.lab.			IN	A
+
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+;; Query time: 4 msec
+;; SERVER: 172.31.0.53#53(172.31.0.53) (UDP)
+;; WHEN: Sun Oct 25 19:01:03 UTC 2026
+;; MSG SIZE  rcvd: 83
+
+
+
+=== RESTAURANDO SERVIDORES ===
+ns1
+ns2
+
+
+=== STATUS FINAL ===
+NAME         IMAGE               COMMAND                  SERVICE      CREATED        STATUS                  PORTS
+cliente      m2-dns-bind-local   "sleep infinity"         cliente      44 hours ago   Up 44 hours             53/tcp, 53/udp
+ns1          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns1          44 hours ago   Up Less than a second   53/tcp, 53/udp
+ns2          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns2          44 hours ago   Up Less than a second   53/tcp, 53/udp
+ns3          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns3          44 hours ago   Up 44 hours             53/tcp, 53/udp
+resolvedor   m2-dns-bind-local   "named -g -u named -ÔÇª"   resolvedor   44 hours ago   Up 44 hours             53/tcp, 53/udp
+

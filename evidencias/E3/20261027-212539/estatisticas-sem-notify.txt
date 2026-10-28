@@ -1,0 +1,2 @@
+﻿ns2: n=5; media=25,970s; desvio padrao amostral=1,132s
+ns3: n=5; media=23,009s; desvio padrao amostral=1,575s

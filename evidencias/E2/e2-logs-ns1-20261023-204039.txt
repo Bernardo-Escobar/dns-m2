@@ -1,0 +1,178 @@
+﻿docker : 23-Oct-2026 23:34:04.477 starting BIND 9.18.49 (Extended Support Version) <id:cd4a53b>
+No linha:2 caractere:5
++     docker logs --since 10m $servidor 2>&1 |
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (23-Oct-2026 23:...n) <id:cd4a53b>:String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+23-Oct-2026 23:34:04.477 running on Linux x86_64 6.18.54.1-microsoft-standard-WSL2 #1 SMP 
+PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026
+23-Oct-2026 23:34:04.477 built with  '--build=x86_64-alpine-linux-musl' 
+'--host=x86_64-alpine-linux-musl' '--prefix=/usr' '--sysconfdir=/etc/bind' '--localstatedir=/var' 
+'--mandir=/usr/share/man' '--infodir=/usr/share/info' '--with-gssapi=yes' '--with-libxml2' 
+'--with-json-c' '--with-openssl=yes' '--enable-dnstap' '--enable-largefile' '--enable-linux-caps' 
+'--enable-shared' '--disable-static' 'build_alias=x86_64-alpine-linux-musl' 
+'host_alias=x86_64-alpine-linux-musl' 'CC=gcc' 'CFLAGS=-Os -fstack-clash-protection -Wformat 
+-Werror=format-security -fno-plt -g -D_GNU_SOURCE' 'LDFLAGS=-Wl,--as-needed,-O1,--sort-common 
+-Wl,-z,pack-relative-relocs'
+23-Oct-2026 23:34:04.477 running as: named -g -u named -c /etc/bind/named.conf
+23-Oct-2026 23:34:04.477 compiled by GCC 13.2.1 20240309
+23-Oct-2026 23:34:04.477 compiled with OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+23-Oct-2026 23:34:04.477 linked to OpenSSL version: OpenSSL 3.3.7 7 Apr 2026
+23-Oct-2026 23:34:04.477 compiled with libuv version: 1.48.0
+23-Oct-2026 23:34:04.477 linked to libuv version: 1.48.0
+23-Oct-2026 23:34:04.477 compiled with libxml2 version: 2.12.10
+23-Oct-2026 23:34:04.477 linked to libxml2 version: 21210
+23-Oct-2026 23:34:04.477 compiled with json-c version: 0.17
+23-Oct-2026 23:34:04.477 linked to json-c version: 0.17
+23-Oct-2026 23:34:04.477 compiled with zlib version: 1.3.2
+23-Oct-2026 23:34:04.477 linked to zlib version: 1.3.2
+23-Oct-2026 23:34:04.477 ----------------------------------------------------
+23-Oct-2026 23:34:04.477 BIND 9 is maintained by Internet Systems Consortium,
+23-Oct-2026 23:34:04.477 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+23-Oct-2026 23:34:04.477 corporation.  Support and training for BIND 9 are 
+23-Oct-2026 23:34:04.477 available at https://www.isc.org/support
+23-Oct-2026 23:34:04.477 ----------------------------------------------------
+23-Oct-2026 23:34:04.477 found 12 CPUs, using 12 worker threads
+23-Oct-2026 23:34:04.481 using 12 UDP listeners per interface
+23-Oct-2026 23:34:04.517 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 
+ECDSAP384SHA384 ED25519 ED448
+23-Oct-2026 23:34:04.517 DS algorithms: SHA-1 SHA-256 SHA-384
+23-Oct-2026 23:34:04.517 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 
+HMAC-SHA512
+23-Oct-2026 23:34:04.517 TKEY mode 2 support (Diffie-Hellman): yes
+23-Oct-2026 23:34:04.521 TKEY mode 3 support (GSS-API): yes
+23-Oct-2026 23:34:04.525 the initial working directory is '/'
+23-Oct-2026 23:34:04.525 loading configuration from '/etc/bind/named.conf'
+23-Oct-2026 23:34:04.533 the working directory is now '/var/lib/bind'
+23-Oct-2026 23:34:04.541 reading built-in trust anchors from file '/etc/bind/bind.keys'
+23-Oct-2026 23:34:04.541 using default UDP/IPv4 port range: [32768, 60999]
+23-Oct-2026 23:34:04.541 using default UDP/IPv6 port range: [32768, 60999]
+23-Oct-2026 23:34:04.545 listening on IPv4 interface lo, 127.0.0.1#53
+23-Oct-2026 23:34:04.577 listening on IPv4 interface eth0, 172.31.0.11#53
+23-Oct-2026 23:34:04.581 listening on IPv4 interface eth1, 172.30.0.11#53
+23-Oct-2026 23:34:04.589 generating session key for dynamic DNS
+23-Oct-2026 23:34:04.589 sizing zone task pool based on 1 zones
+23-Oct-2026 23:34:04.605 obtaining root key for view _default from '/etc/bind/bind.keys'
+23-Oct-2026 23:34:04.605 set up managed keys zone for view _default, file 'managed-keys.bind'
+23-Oct-2026 23:34:04.629 command channel listening on 127.0.0.1#953
+23-Oct-2026 23:34:04.629 not using config file logging statement for logging due to -g option
+23-Oct-2026 23:34:04.637 managed-keys-zone: loaded serial 6
+23-Oct-2026 23:34:04.645 zone sd.lab/IN: loaded serial 2026102314
+23-Oct-2026 23:34:04.645 all zones loaded
+23-Oct-2026 23:34:04.645 zone sd.lab/IN: sending notifies (serial 2026102314)
+23-Oct-2026 23:34:04.645 running
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:2d::d#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:12::d0d#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:12::d0d#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:1::53#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:1::53#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:dc3::35#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:dc3::35#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:a8::e#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:a8::e#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:503:c27::2:30#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:503:c27::2:30#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:9f::42#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:9f::42#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:7fd::1#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:7fd::1#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:2::c#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:2::c#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:7fe::53#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:7fe::53#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:500:2f::f#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:500:2f::f#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2001:503:ba3e::2:30#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2001:503:ba3e::2:30#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './DNSKEY/IN': 2801:1b8:10::b#53
+23-Oct-2026 23:34:04.649 network unreachable resolving './NS/IN': 2801:1b8:10::b#53
+23-Oct-2026 23:34:04.709 managed-keys-zone: Key 20326 for zone . is now trusted (acceptance timer 
+complete)
+23-Oct-2026 23:34:04.713 managed-keys-zone: Key 38696 for zone . is now trusted (acceptance timer 
+complete)
+23-Oct-2026 23:36:06.363 received control channel command 'querylog on'
+23-Oct-2026 23:36:06.363 query logging is now on
+23-Oct-2026 23:36:18.060 client @0x713f2c78f1c0 172.30.0.13#33861 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:36:21.113 client @0x713f327fb300 172.30.0.12#38708 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:36:29.574 client @0x713f2c7911d0 172.31.0.100#58175 (app.sd.lab): query: app.sd.lab 
+IN A -E(0)K (172.31.0.11)
+23-Oct-2026 23:36:47.062 client @0x713f327e84e0 172.30.0.13#47642 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:36:50.114 client @0x713f2c78f1c0 172.30.0.12#59459 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:37:11.066 client @0x713f2c782210 172.30.0.13#40724 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:37:20.115 client @0x713f2c78f1c0 172.30.0.12#54107 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:37:40.067 client @0x713f2c784210 172.30.0.13#53691 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:37:49.116 client @0x713f2c77c230 172.30.0.12#44589 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:38:10.069 client @0x713f327d7100 172.30.0.13#39934 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:38:18.118 client @0x713f2c784210 172.30.0.12#57977 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:38:36.072 client @0x713f2c77e240 172.30.0.13#54263 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:38:44.119 client @0x713f2c79a130 172.30.0.12#59571 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:39:05.074 client @0x713f2c77e240 172.30.0.13#36109 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:39:14.121 client @0x713f2c77c230 172.30.0.12#52702 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:39:33.076 client @0x713f327fb300 172.30.0.13#59177 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:39:41.124 client @0x713f327e84e0 172.30.0.12#53992 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:00.078 client @0x713f2c79a130 172.30.0.13#36980 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:08.127 client @0x713f2c77e240 172.30.0.12#37632 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:30.080 client @0x713f2c798120 172.30.0.13#45862 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:33.128 client @0x713f327d7100 172.30.0.12#49197 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:48.787 received control channel command 'querylog on'
+23-Oct-2026 23:40:56.084 client @0x713f2c782210 172.30.0.13#33651 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:40:57.132 client @0x713f2c79a130 172.30.0.12#55276 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:41:00.409 received control channel command 'reload sd.lab'
+23-Oct-2026 23:41:00.421 zone sd.lab/IN: loaded serial 2026102315
+23-Oct-2026 23:41:00.421 zone sd.lab/IN: sending notifies (serial 2026102315)
+23-Oct-2026 23:41:00.425 client @0x713f2c78f1c0 172.30.0.12#49550 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0 172.30.0.12#45595 (sd.lab): query: sd.lab IN IXFR -T 
+(172.30.0.11)
+23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0 172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN': 
+IXFR version not in journal, falling back to AXFR
+23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0 172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN': 
+AXFR-style IXFR started (serial 2026102315)
+23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0 172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN': 
+AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 
+2026102315)
+23-Oct-2026 23:41:00.921 client @0x713f2c77e240 172.30.0.13#44491 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:41:00.925 client @0x713f2c76f100 172.30.0.13#39103 (sd.lab): query: sd.lab IN IXFR -T 
+(172.30.0.11)
+23-Oct-2026 23:41:00.925 client @0x713f2c76f100 172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN': 
+IXFR version not in journal, falling back to AXFR
+23-Oct-2026 23:41:00.925 client @0x713f2c76f100 172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN': 
+AXFR-style IXFR started (serial 2026102315)
+23-Oct-2026 23:41:00.925 client @0x713f2c76f100 172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN': 
+AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.001 secs (245000 bytes/sec) (serial 
+2026102315)
+23-Oct-2026 23:41:25.366 client @0x713f2c76d1a0 172.31.0.100#48992 (app.sd.lab): query: app.sd.lab 
+IN A +E(0)K (172.31.0.11)
+23-Oct-2026 23:41:25.430 client @0x713f2c77e240 172.30.0.12#34891 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:41:25.838 client @0x713f2c76d1a0 172.31.0.100#33498 (sd.lab): query: sd.lab IN SOA 
++E(0)K (172.31.0.11)
+23-Oct-2026 23:41:29.927 client @0x713f2c77e240 172.30.0.13#56896 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)
+23-Oct-2026 23:41:54.433 client @0x713f2c784210 172.30.0.12#47133 (sd.lab): query: sd.lab IN SOA 
+-E(0) (172.30.0.11)

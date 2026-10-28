@@ -1,0 +1,412 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261025163817
+Nome de Usuário: Bortoloci\Gabriel Bortoloci
+Executar como Usuário: Bortoloci\Gabriel Bortoloci
+Nome da Configuração: 
+Computador: BORTOLOCI (Microsoft Windows NT 10.0.26200.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 101592
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcrição iniciada, o arquivo de saída é .\evidencias\E6\e6-20261025-163804\e6-transcricao.txt
+PS C:\dns-m2> @(
+    "EXPERIMENTO E6 - PARTICAO DE REDE"
+    "Previsao registrada antes da execucao:"
+    "NS1 e NS2 permanecerao sincronizados."
+    "NS3 continuara acessivel pela rede de clientes."
+    "NS3 nao recebera a nova versao da zona enquanto estiver isolado."
+    "Apos o expire, espera-se que NS3 deixe de servir a zona."
+    "A analise verificara disponibilidade e consistencia durante a particao."
+) | Set-Content "$pastaE6\e6-previsao.txt" -Encoding UTF8
+PS C:\dns-m2> TerminatingError(TabExpansion2): "Não é possível associar o argumento ao parâmetro 'inputScript' porque ele é uma cadeia de caracteres vazia."
+PS C:\dns-m2> .\scripts\01-diagnostico.ps1 2>&1 |
+    Out-String -Width 240 |
+    Tee-Object -FilePath "$pastaE6\e6-estado-inicial.txt"
+=== STATUS DOS CONTEINERES ===
+
+=== RESPOSTAS AUTORITATIVAS ===
+NS11 - registro A:
+NS11 - SOA:
+NS12 - registro A:
+NS12 - SOA:
+NS13 - registro A:
+NS13 - SOA:
+
+=== RESPOSTA PELO RESOLVEDOR ===
+
+=== CONTROLE DO NS1 ===
+NAME         IMAGE               COMMAND                  SERVICE      CREATED        STATUS          PORTS
+cliente      m2-dns-bind-local   "sleep infinity"         cliente      45 hours ago   Up 45 hours     53/tcp, 53/udp
+ns1          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns1          45 hours ago   Up 37 minutes   53/tcp, 53/udp
+ns2          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns2          45 hours ago   Up 37 minutes   53/tcp, 53/udp
+ns3          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns3          45 hours ago   Up 45 hours     53/tcp, 53/udp
+resolvedor   m2-dns-bind-local   "named -g -u named -ÔÇª"   resolvedor   45 hours ago   Up 45 hours     53/tcp, 53/udp
+10.0.0.3
+ns1.sd.lab. admin.sd.lab. 2026102316 30 10 300 20
+10.0.0.3
+ns1.sd.lab. admin.sd.lab. 2026102316 30 10 300 20
+10.0.0.3
+ns1.sd.lab. admin.sd.lab. 2026102316 30 10 300 20
+10.0.0.3
+version: BIND 9.18.49 (Extended Support Version) <id:cd4a53b>
+running on 5eb2a342f3ef: Linux x86_64 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026
+boot time: Sun, 25 Oct 2026 19:01:04 GMT
+last configured: Sun, 25 Oct 2026 19:01:04 GMT
+configuration file: /etc/bind/named.conf
+CPUs found: 12
+worker threads: 12
+UDP listeners per interface: 12
+number of zones: 2 (0 automatic)
+debug level: 0
+xfers running: 0
+xfers deferred: 0
+soa queries in progress: 0
+query logging is OFF
+recursive clients: 0/900/1000
+tcp clients: 0/150
+TCP high-water: 1
+server is up and running
+PS C:\dns-m2> docker network ls --format "{{.Name}}"
+
+PS C:\dns-m2> docker inspect ns3 --format '{{json .NetworkSettings.Networks}}'
+
+PS C:\dns-m2> docker inspect ns3 |
+    Out-File "$pastaE6\e6-inspect-ns3.txt" -Encoding UTF8
+PS C:\dns-m2> $pastaE6 = "C:\dns-m2\evidencias\E6\e6-20261025-163804"
+PS C:\dns-m2> docker network disconnect m2_dns_interna ns3
+
+PS C:\dns-m2> "Particao iniciada: $(Get-Date -Format o)" |
+    Add-Content "$pastaE6\e6-eventos.txt"
+PS C:\dns-m2> docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    Tee-Object -FilePath "$pastaE6\e6-02-rede-isolada.txt"
+{"m2_dns_clientes":{"IPAMConfig":{"IPv4Address":"172.31.0.13"},"Links":null,"Aliases":["ns3","ns3"],"DriverOpts":null,"GwPriority":0,"NetworkID":"65ca7577c840249764948e7698bbf1fe72ffafca996a66ce487add27b0847b80","EndpointID":"c85a59a04c4bb6f86c7de46a2c160a5e7d29463b20e2e5371bd2f0c6eb27f4b8","Gateway":"172.31.0.1","IPAddress":"172.31.0.13","MacAddress":"06:af:29:f9:2c:37","IPPrefixLen":24,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["ns3","f0098bd52719"]}}
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +noall +comments +answer |
+    Tee-Object -FilePath "$pastaE6\e6-02-ns3-acessivel.txt"
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32712
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 95204637571ba79c010000006ade5bc418ea93936dddd4c5 (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.3
+
+PS C:\dns-m2> .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2 |
+    Tee-Object -FilePath "$pastaE6\e6-03-alteracao-primario.txt"
+app.sd.lab: 10.0.0.3 -> 10.0.0.2 | serial 2026102316 -> 2026102317
+zone reload queued
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+PS C:\dns-m2> Start-Sleep -Seconds 5
+PS C:\dns-m2> $arquivo = "$pastaE6\e6-03-comparacao-servidores.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s - $(Get-Date -Format o) ===" |
+        Tee-Object -FilePath $arquivo -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +noall +comments +answer |
+        Tee-Object -FilePath $arquivo -Append
+
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +norecurse +short |
+        Tee-Object -FilePath $arquivo -Append
+}
+=== NS11 - 2026-10-25T16:43:46.1800796-03:00 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 18758
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 6fbf40102b29fa5b010000006ade5bf2a4df724ba3b37ea5 (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+=== NS12 - 2026-10-25T16:43:46.4585030-03:00 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 37960
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 5c903107c148bb95010000006ade5bf253afe59bfa1afe49 (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+ns1.sd.lab. admin.sd.lab. 2026102317 30 10 300 20
+=== NS13 - 2026-10-25T16:43:46.6877427-03:00 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61976
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 71e8a89ac1917d42010000006ade5bf28a1eec3fb3883537 (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.3
+
+ns1.sd.lab. admin.sd.lab. 2026102316 30 10 300 20
+PS C:\dns-m2> $pastaE6 = "C:\dns-m2\evidencias\E6\e6-20261025-163804"
+PS C:\dns-m2> $carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> $csv = "$pastaE6\e6-04-expiracao-$carimbo.csv"
+PS C:\dns-m2> $log = "$pastaE6\e6-04-consultas-$carimbo.txt"
+PS C:\dns-m2> $inicio = Get-Date
+PS C:\dns-m2> for ($i = 1; $i -le 42; $i++) {
+
+    $instante = Get-Date
+
+    $saida = @(
+        docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +time=2 +tries=1 +noall +comments +answer 2>&1
+    )
+
+    $texto = $saida | Out-String
+
+    $status = if ($texto -match 'status:\s*([A-Z]+)') {
+        $Matches[1]
+    } else {
+        "SEM_RESPOSTA"
+    }
+
+    $ip = if ($texto -match '(?m)^app\.sd\.lab\.\s+\d+\s+IN\s+A\s+([0-9.]+)') {
+        $Matches[1]
+    } else {
+        "-"
+    }
+
+    $aa = [bool]($texto -match '(?m)^;; flags: [^;]*\baa\b')
+
+    $decorridos = [math]::Round(
+        ($instante - $inicio).TotalSeconds, 1
+    )
+
+    [PSCustomObject]@{
+        Horario = $instante.ToString("o")
+        SegundosDesdeInicio = $decorridos
+        Status = $status
+        Autoritativa = $aa
+        IP = $ip
+    } | Export-Csv $csv -NoTypeInformation -Append -Encoding UTF8
+
+    "=== CONSULTA $i - $($instante.ToString('o')) ===" |
+        Out-File $log -Append -Encoding UTF8
+
+    $saida | Out-File $log -Append -Encoding UTF8
+
+    Write-Host "[$($instante.ToString('HH:mm:ss'))] Status: $status | AA: $aa | IP: $ip"
+
+    if ($status -eq "SERVFAIL") {
+        Write-Host "SERVFAIL observado no NS3!" -ForegroundColor Yellow
+        break
+    }
+
+    Start-Sleep -Seconds 10
+}
+[16:49:01] Status: SERVFAIL | AA: False | IP: -
+SERVFAIL observado no NS3!
+PS C:\dns-m2> Write-Host "Evidencias salvas:"
+Evidencias salvas:
+PS C:\dns-m2> Write-Host $csv
+C:\dns-m2\evidencias\E6\e6-20261025-163804\e6-04-expiracao-20261025-164900.csv
+PS C:\dns-m2> Write-Host $log
+C:\dns-m2\evidencias\E6\e6-20261025-163804\e6-04-consultas-20261025-164900.txt
+PS C:\dns-m2> Import-Csv $csv |
+    Select-Object -Last 10 |
+    Format-Table -AutoSize
+
+Horario                           SegundosDesdeInicio Status   Autoritativa IP
+-------                           ------------------- ------   ------------ --
+2026-10-25T16:49:01.1093691-03:00 0,2                 SERVFAIL False        -
+
+
+PS C:\dns-m2> $arquivoFinal = "$pastaE6\e6-05-consultas-finais-$carimbo.txt"
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+
+    "=== NS$s ===" |
+        Tee-Object -FilePath $arquivoFinal -Append
+
+    docker exec cliente dig "@172.31.0.$s" app.sd.lab A +norecurse +noall +comments +answer |
+        Tee-Object -FilePath $arquivoFinal -Append
+}
+=== NS11 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40065
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 3ed226abe39978fe010000006ade5d533860099268d567b9 (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+=== NS12 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 13574
+;; flags: qr aa; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 18e8a950ea022bd8010000006ade5d53ea1b16d34647205b (good)
+;; ANSWER SECTION:
+app.sd.lab.		60	IN	A	10.0.0.2
+
+=== NS13 ===
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 44962
+;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 9a4b113d9cf88b75010000006ade5d5325ff5851afc1d5bb (good)
+PS C:\dns-m2> $pastaE6 = "C:\dns-m2\evidencias\E6\e6-20261025-163804"
+PS C:\dns-m2> $carimboLogs = Get-Date -Format "yyyyMMdd-HHmmss"
+PS C:\dns-m2> foreach ($servidor in @("ns1", "ns2", "ns3", "resolvedor")) {
+
+    docker logs --timestamps $servidor 2>&1 |
+        Out-File "$pastaE6\e6-logs-$servidor-$carimboLogs.txt" -Encoding UTF8
+}
+PS C:\dns-m2> Write-Host "Logs E6 salvos!"
+Logs E6 salvos!
+PS C:\dns-m2> $arquivoNS3 = "$pastaE6\e6-logs-ns3-$carimboLogs.txt"
+PS C:\dns-m2> Select-String -Path $arquivoNS3 `
+    -Pattern "expired|expire|refresh|retry|transfer|unreachable|failed|serial" |
+    Select-Object -Last 40 |
+    Tee-Object -FilePath "$pastaE6\e6-eventos-expiracao.txt"
+
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:577:2026-10-25T18:44:15.096731163Z
+25-Oct-2026 18:44:15.091 zone sd.lab/IN: sending notifies (serial
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:579:2026-10-25T18:44:15.118683233Z
+25-Oct-2026 18:44:15.115 network unreachable resolving
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:581:2026-10-25T18:44:15.118800163Z
+25-Oct-2026 18:44:15.115 network unreachable resolving
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:624:172.30.0.11#57520: serial
+2026102316
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:629:2026-10-25T19:03:30.922096949Z
+25-Oct-2026 19:03:30.917 zone sd.lab/IN: Transfer started.
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:630:2026-10-25T19:03:30.923325706Z
+25-Oct-2026 19:03:30.917 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:632:2026-10-25T19:03:30.925628795Z
+25-Oct-2026 19:03:30.921 zone sd.lab/IN: transferred serial 2026102316
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:633:2026-10-25T19:03:30.925661281Z
+25-Oct-2026 19:03:30.921 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:634:Transfer status: success
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:635:2026-10-25T19:03:30.925667500Z
+25-Oct-2026 19:03:30.921 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:636:Transfer completed: 1 messages,
+10 records, 245 bytes, 0.004 secs (61250 bytes/sec) (serial
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:638:2026-10-25T19:03:30.926058213Z
+25-Oct-2026 19:03:30.921 zone sd.lab/IN: sending notifies (serial
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:651:2026-10-25T19:43:07.132755250Z
+25-Oct-2026 19:43:07.130 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:653:2026-10-25T19:43:07.132806591Z
+25-Oct-2026 19:43:07.130 zone sd.lab/IN: Transfer started.
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:662:2026-10-25T19:43:37.171018723Z
+25-Oct-2026 19:43:37.168 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:663:failed to connect: timed out
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:664:2026-10-25T19:43:37.171128312Z
+25-Oct-2026 19:43:37.168 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:665:Transfer status: timed out
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:666:2026-10-25T19:43:37.171136981Z
+25-Oct-2026 19:43:37.168 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:667:Transfer completed: 0 messages,
+0 records, 0 bytes, 30.038 secs (0 bytes/sec) (serial 0)
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:672:2026-10-25T19:44:07.703012261Z
+25-Oct-2026 19:44:07.698 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:674:2026-10-25T19:44:07.703042834Z
+25-Oct-2026 19:44:07.698 zone sd.lab/IN: Transfer started.
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:675:2026-10-25T19:44:37.733257640Z
+25-Oct-2026 19:44:37.727 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:676:failed to connect: timed out
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:677:2026-10-25T19:44:37.733325846Z
+25-Oct-2026 19:44:37.727 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:678:Transfer status: timed out
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:679:2026-10-25T19:44:37.733330826Z
+25-Oct-2026 19:44:37.727 transfer of 'sd.lab/IN' from 172.30.0.11#53:
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:680:Transfer completed: 0 messages,
+0 records, 0 bytes, 30.029 secs (0 bytes/sec) (serial 0)
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:681:2026-10-25T19:45:08.256782276Z
+25-Oct-2026 19:45:08.254 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:683:2026-10-25T19:45:38.787584664Z
+25-Oct-2026 19:45:38.783 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:685:2026-10-25T19:46:09.319344633Z
+25-Oct-2026 19:46:09.317 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:687:2026-10-25T19:46:39.847380865Z
+25-Oct-2026 19:46:39.842 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:689:2026-10-25T19:47:10.376110772Z
+25-Oct-2026 19:47:10.372 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:691:2026-10-25T19:47:12.102613542Z
+25-Oct-2026 19:47:12.100 zone sd.lab/IN: expired
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:692:2026-10-25T19:47:40.905640781Z
+25-Oct-2026 19:47:40.901 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:694:2026-10-25T19:48:11.433060346Z
+25-Oct-2026 19:48:11.429 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:696:2026-10-25T19:49:00.938634729Z
+25-Oct-2026 19:49:00.933 zone sd.lab/IN: refresh: retry limit for
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:701:(app.sd.lab): query failed
+(zone not loaded) for app.sd.lab/IN/A at query.c:5707
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:705:(app.sd.lab): query failed
+(zone not loaded) for app.sd.lab/IN/A at query.c:5707
+evidencias\E6\e6-20261025-163804\e6-logs-ns3-20261025-165133.txt:706:2026-10-25T19:50:37.943881530Z
+25-Oct-2026 19:50:37.939 zone sd.lab/IN: refresh: retry limit for
+
+
+PS C:\dns-m2> $linhaInicio = Get-Content "$pastaE6\e6-eventos.txt" |
+    Where-Object { $_ -like "Particao iniciada:*" } |
+    Select-Object -First 1
+PS C:\dns-m2> $inicioParticao = [datetimeoffset]::Parse(
+    $linhaInicio.Replace("Particao iniciada: ", "")
+)
+PS C:\dns-m2> $registroServfail = Import-Csv (
+    Get-ChildItem "$pastaE6\e6-04-expiracao-*.csv" |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+).FullName | Where-Object { $_.Status -eq "SERVFAIL" } |
+    Select-Object -First 1
+PS C:\dns-m2> $fimObservado = [datetimeoffset]::Parse($registroServfail.Horario)
+PS C:\dns-m2> $duracao = [math]::Round(
+    ($fimObservado - $inicioParticao).TotalSeconds, 1
+)
+PS C:\dns-m2> "Tempo da particao ate a primeira observacao de SERVFAIL: $duracao segundos" |
+    Tee-Object -FilePath "$pastaE6\e6-tempo-servfail.txt"
+Tempo da particao ate a primeira observacao de SERVFAIL: 394.2 segundos
+PS C:\dns-m2> docker inspect ns3 --format '{{json .NetworkSettings.Networks}}' |
+    Out-File "$pastaE6\e6-rede-final-particao.txt" -Encoding UTF8
+PS C:\dns-m2> Get-ChildItem $pastaE6 |
+    Select-Object Name, Length |
+    Format-Table -AutoSize
+
+Name                                       Length
+----                                       ------
+e6-02-ns3-acessivel.txt                       654
+e6-02-rede-isolada.txt                        986
+e6-03-alteracao-primario.txt                   42
+e6-03-comparacao-servidores.txt              2564
+e6-04-consultas-20261025-164900.txt           330
+e6-04-expiracao-20261025-164900.csv           131
+e6-05-consultas-finais-20261025-164900.txt   1932
+e6-estado-inicial.txt                        3050
+e6-eventos-expiracao.txt                    12604
+e6-eventos.txt                                 54
+e6-inspect-ns3.txt                           9576
+e6-logs-ns1-20261025-165133.txt            232845
+e6-logs-ns2-20261025-165133.txt             60115
+e6-logs-ns3-20261025-165133.txt             49043
+e6-logs-resolvedor-20261025-165133.txt      18838
+e6-previsao.txt                               363
+e6-rede-final-particao.txt                    495
+e6-tempo-servfail.txt                         148
+e6-transcricao.txt                              0
+
+
+PS C:\dns-m2> Stop-Transcript
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261025165218
+**********************

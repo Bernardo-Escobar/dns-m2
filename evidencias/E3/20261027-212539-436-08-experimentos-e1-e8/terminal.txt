@@ -1,0 +1,35 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261027212539
+Nome de Usuário: ESCOBAR\berna
+Executar como Usuário: ESCOBAR\berna
+Nome da Configuração: 
+Computador: ESCOBAR (Microsoft Windows NT 10.0.26300.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 24224
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Evidencias desta execucao: C:\Users\berna\Desktop\dns-m2-novo\evidencias\E3\20261027-212539-436-08-experimentos-e1-e8
+Script: C:\Users\berna\Desktop\dns-m2-novo\scripts\08-experimentos-e1-e8.ps1 | Experimento: E3 | Inicio: 2026-10-27T21:25:39.4361370-03:00
+com-notify rodada 1 ns2=0.093 s ns3=0.587 s
+com-notify rodada 2 ns2=4.066 s ns3=4.565 s
+com-notify rodada 3 ns2=4.29 s ns3=4.593 s
+com-notify rodada 4 ns2=4.238 s ns3=4.76 s
+com-notify rodada 5 ns2=3.972 s ns3=4.489 s
+sem-notify rodada 1 ns2=27.478 s ns3=24.933 s
+sem-notify rodada 2 ns2=24.507 s ns3=21.968 s
+sem-notify rodada 3 ns2=25.701 s ns3=21.028 s
+sem-notify rodada 4 ns2=25.527 s ns3=23.008 s
+sem-notify rodada 5 ns2=26.636 s ns3=24.108 s
+Evidencias: C:\Users\berna\Desktop\dns-m2-novo\evidencias\E3\20261027-212539
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261027212816
+**********************

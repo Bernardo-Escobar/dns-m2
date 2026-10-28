@@ -1,0 +1,170 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261023204040
+Nome de Usuário: Bortoloci\Gabriel Bortoloci
+Executar como Usuário: Bortoloci\Gabriel Bortoloci
+Nome da Configuração: 
+Computador: BORTOLOCI (Microsoft Windows NT 10.0.26200.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 101592
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcrição iniciada, o arquivo de saída é .\evidencias\E2\e2-execucao-20261023-204039.txt
+PS C:\dns-m2> docker exec resolvedor rndc querylog on
+
+PS C:\dns-m2> docker exec ns1 rndc querylog on
+
+PS C:\dns-m2> docker exec ns2 rndc querylog on
+
+PS C:\dns-m2> docker exec ns3 rndc querylog on
+
+PS C:\dns-m2> docker exec resolvedor rndc flushname app.sd.lab
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer
+
+PS C:\dns-m2> .\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2
+app.sd.lab: 10.0.0.3 -> 10.0.0.2 | serial 2026102314 -> 2026102315
+
+Verifique os secundaries: .\scripts\01-diagnostico.ps1
+PS C:\dns-m2> Start-Sleep -Seconds 5
+PS C:\dns-m2> .\scripts\01-diagnostico.ps1
+=== STATUS DOS CONTEINERES ===
+
+
+=== RESPOSTAS AUTORITATIVAS ===
+NS11 - registro A:
+
+NS11 - SOA:
+
+NS12 - registro A:
+
+NS12 - SOA:
+
+NS13 - registro A:
+
+NS13 - SOA:
+
+
+=== RESPOSTA PELO RESOLVEDOR ===
+
+
+=== CONTROLE DO NS1 ===
+
+PS C:\dns-m2> foreach ($servidor in @("resolvedor", "ns1", "ns2", "ns3")) {
+    docker logs --since 10m $servidor 2>&1 |
+        Out-File -FilePath "$pastaE2\e2-logs-${servidor}-${carimbo}.txt" -Encoding utf8
+}
+PS C:\dns-m2> Select-String -Path "$pastaE2\e2-logs-*-$carimbo.txt" -Pattern "app.sd.lab|notify|transfer"
+
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:101:23-Oct-2026 23:36:29.574 client @0x713f2c7911d0
+172.31.0.100#58175 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:151:23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0
+172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:153:23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0
+172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:155:23-Oct-2026 23:41:00.429 client @0x713f2c76f3b0
+172.30.0.12#45595 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:162:23-Oct-2026 23:41:00.925 client @0x713f2c76f100
+172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:164:23-Oct-2026 23:41:00.925 client @0x713f2c76f100
+172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:166:23-Oct-2026 23:41:00.925 client @0x713f2c76f100
+172.30.0.13#39103 (sd.lab): transfer of 'sd.lab/IN':
+evidencias\E2\e2-logs-ns1-20261023-204039.txt:169:23-Oct-2026 23:41:25.366 client @0x713f2c76d1a0
+172.31.0.100#48992 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:91:23-Oct-2026 23:34:05.145 client @0x70417357d0e0
+172.31.0.11#60352: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:92:23-Oct-2026 23:34:05.145 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.11#60352
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:100:23-Oct-2026 23:41:00.421 client @0x70417358d1d0
+172.30.0.11#53280: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:101:23-Oct-2026 23:41:00.421 zone sd.lab/IN: notify
+from 172.30.0.11#53280: serial 2026102315
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:102:23-Oct-2026 23:41:00.425 zone sd.lab/IN: Transfer
+started.
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:103:23-Oct-2026 23:41:00.425 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: connected using 172.30.0.11#53
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:104:23-Oct-2026 23:41:00.429 zone sd.lab/IN:
+transferred serial 2026102315
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:105:23-Oct-2026 23:41:00.429 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: Transfer status: success
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:106:23-Oct-2026 23:41:00.429 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: Transfer completed: 1
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:109:23-Oct-2026 23:41:00.921 client @0x70417357d0e0
+172.31.0.11#60017: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:110:23-Oct-2026 23:41:00.921 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.11#60017
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:111:23-Oct-2026 23:41:00.925 client @0x70417357a2c0
+172.31.0.13#53692: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:112:23-Oct-2026 23:41:00.925 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.13#53692
+evidencias\E2\e2-logs-ns2-20261023-204039.txt:113:23-Oct-2026 23:41:26.178 client @0x70416d53b310
+172.31.0.100#58357 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:16:23-Oct-2026 23:34:05.105 client @0x74bbc9735410
+172.31.0.12#44708: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:17:23-Oct-2026 23:34:05.105 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.12#44708
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:18:23-Oct-2026 23:34:05.145 client @0x74bbc36d11a0
+172.31.0.11#54107: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:19:23-Oct-2026 23:34:05.145 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.11#54107
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:20:23-Oct-2026 23:34:05.145 client @0x74bbc36a9280
+172.30.0.11#45184: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:21:23-Oct-2026 23:34:05.145 zone sd.lab/IN: notify
+from 172.30.0.11#45184: zone is up to date
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:24:23-Oct-2026 23:36:24.841 client @0x74bbc9735410
+172.31.0.53#47991 (app.sd.lab): query: app.sd.lab IN
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:27:23-Oct-2026 23:40:50.567 client @0x74bbc36e32e0
+172.31.0.53#49450 (app.sd.lab): query: app.sd.lab IN
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:29:23-Oct-2026 23:41:00.433 client @0x74bbc36e5250
+172.31.0.12#57674: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:30:23-Oct-2026 23:41:00.433 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.12#57674
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:31:23-Oct-2026 23:41:00.921 client @0x74bbc36d9180
+172.30.0.11#60497: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:32:23-Oct-2026 23:41:00.921 zone sd.lab/IN: notify
+from 172.30.0.11#60497: serial 2026102315
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:33:23-Oct-2026 23:41:00.921 client @0x74bbc36e5250
+172.31.0.11#37447: received notify for zone 'sd.lab'
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:34:23-Oct-2026 23:41:00.921 zone sd.lab/IN: refused
+notify from non-primary: 172.31.0.11#37447
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:35:23-Oct-2026 23:41:00.921 zone sd.lab/IN: Transfer
+started.
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:36:23-Oct-2026 23:41:00.921 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: connected using 172.30.0.11#53
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:37:23-Oct-2026 23:41:00.925 zone sd.lab/IN:
+transferred serial 2026102315
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:38:23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: Transfer status: success
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:39:23-Oct-2026 23:41:00.925 transfer of 'sd.lab/IN'
+from 172.30.0.11#53: Transfer completed: 1
+evidencias\E2\e2-logs-ns3-20261023-204039.txt:42:23-Oct-2026 23:41:26.846 client @0x74bbc36b7360
+172.31.0.100#55142 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:10:23-Oct-2026 23:36:18.637 received control
+channel command 'flushname app.sd.lab'
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:11:23-Oct-2026 23:36:18.637 flushing name
+'app.sd.lab' in all cache views succeeded
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:12:23-Oct-2026 23:36:24.837 client
+@0x72493a3bf420 172.31.0.100#38633 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:15:23-Oct-2026 23:40:50.087 received control
+channel command 'flushname app.sd.lab'
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:16:23-Oct-2026 23:40:50.091 flushing name
+'app.sd.lab' in all cache views succeeded
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:17:23-Oct-2026 23:40:50.567 client
+@0x72493a3aa2e0 172.31.0.100#44099 (app.sd.lab): query: app.sd.lab
+evidencias\E2\e2-logs-resolvedor-20261023-204039.txt:19:23-Oct-2026 23:41:27.803 client
+@0x72493a3bc490 172.31.0.100#57957 (app.sd.lab): query: app.sd.lab
+
+
+PS C:\dns-m2> Stop-Transcript
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261023204206
+**********************

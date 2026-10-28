@@ -1,0 +1,176 @@
+﻿docker --version
+docker compose version
+docker info
+cd C:\dns-m2
+docker compose up -d --build
+docker compose ps
+docker exec cliente dig @172.31.0.11 app.sd.lab +short
+docker exec cliente dig "@172.31.0.11" app.sd.lab +short
+.\scripts\01-diagnostico.ps1
+docker exec cliente dig "@172.31.0.11" app.sd.lab +short
+docker exec cliente dig "@172.31.0.12" app.sd.lab +short
+docker exec cliente dig "@172.31.0.13" app.sd.lab +short
+docker exec cliente dig "@172.31.0.53" app.sd.lab +short
+cd C:\dns-m2
+.\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2
+.\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2
+.\scripts\01-diagnostico.ps1
+.\scripts\03-medir-replicacao.ps1
+$erros = $null
+[System.Management.Automation.PSParser]::Tokenize(
+    (Get-Content .\scripts\03-medir-replicacao.ps1 -Raw),
+    [ref]$erros
+) | Out-Null
+$erros
+.\scripts\03-medir-replicacao.ps1
+Copy-Item .\evidencias\e3-notify.csv .\evidencias\e3-notify-backup.csv
+notepad .\configs\ns1\named.conf
+docker compose restart ns1
+docker exec ns1 named-checkconf /etc/bind/named.conf
+.\scripts\03-medir-replicacao.ps1
+Copy-Item .\evidencias\e3-notify.csv .\evidencias\e3-sem-notify.csv
+docker compose restart ns1
+Copy-Item .\evidencias\e3-notify.csv .\evidencias\e3-sem-notify.csv -Force
+Copy-Item .\evidencias\e3-notify-backup.csv .\evidencias\e3-notify.csv -Force
+notepad .\configs\ns1\named.conf
+docker compose restart ns1
+docker exec resolvedor rndc -k /etc/bind/rndc.key flushname app.sd.lab
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +answer
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +answer
+.\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.3
+# Consultar diretamente o primário
+docker exec cliente dig "@172.31.0.11" app.sd.lab A +noall +answer
+# Consultar pelo resolvedor com cache
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +answer
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +answer
+cd C:\dns-m2
+.\scripts\07-e4-cache-negativo.ps1
+docker stop ns1
+docker compose ps -a
+docker exec cliente dig "@172.31.0.12" app.sd.lab A +noall +comments +answer
+docker exec cliente dig "@172.31.0.13" app.sd.lab A +noall +comments +answer
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer
+docker exec ns1 rndc reload sd.lab
+docker start ns1
+docker compose ps
+Start-Transcript -Path ".\evidencias\e5-falha-maioria.txt" -Force
+docker stop ns1 ns2
+docker compose ps -a
+docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +noall +comments +answer
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer +time=2 +tries=1
+docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +noall +comments +answer +time=3 +tries=1
+docker exec resolvedor dig "@172.31.0.13" app.sd.lab A +time=3 +tries=1
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer +time=10 +tries=1
+Stop-Transcript
+docker start ns1 ns2
+docker compose ps
+.\scripts\01-diagnostico.ps1
+docker compose ps
+docker exec resolvedor rndc -k /etc/bind/rndc.key querylog on
+docker exec ns1 rndc querylog on
+docker exec ns2 rndc querylog on
+docker exec ns3 rndc querylog on
+docker exec resolvedor rndc -k /etc/bind/rndc.key flushname app.sd.lab
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer
+docker exec cliente dig "@172.31.0.11" app.sd.lab A +norecurse +noall +comments +answer
+docker logs --since 2m resolvedor
+docker logs --since 2m ns1
+1..9 | ForEach-Object {
+    New-Item -ItemType Directory -Path ".\evidencias\E$_" -Force | Out-Null
+}
+cd C:\dns-m2
+$carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+$pastaE2 = ".\evidencias\E2"
+Start-Transcript -Path "$pastaE2\e2-execucao-$carimbo.txt"
+docker exec resolvedor rndc querylog on
+docker exec ns1 rndc querylog on
+docker exec ns2 rndc querylog on
+docker exec ns3 rndc querylog on
+docker exec resolvedor rndc flushname app.sd.lab
+docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer
+.\scripts\02-alterar-ip.ps1 -NovoIP 10.0.0.2
+Start-Sleep -Seconds 5
+.\scripts\01-diagnostico.ps1
+foreach ($servidor in @("resolvedor", "ns1", "ns2", "ns3")) {
+    docker logs --since 10m $servidor 2>&1 |
+        Out-File -FilePath "$pastaE2\e2-logs-${servidor}-${carimbo}.txt" -Encoding utf8
+}
+Select-String -Path "$pastaE2\e2-logs-*-$carimbo.txt" -Pattern "app.sd.lab|notify|transfer"
+Stop-Transcript
+New-Item -ItemType Directory -Path ".\evidencias\E5" -Force | Out-Null
+if (Test-Path ".\evidencias\e5-falha-maioria.txt") {
+    Copy-Item ".\evidencias\e5-falha-maioria.txt" `
+        ".\evidencias\E5\e5-falha-maioria.txt"
+}
+cd C:\dns-m2
+Get-ChildItem .\evidencias -Recurse -File |
+    Select-Object FullName, Length, LastWriteTime |
+    Sort-Object FullName |
+    Out-File .\inventario-evidencias.txt -Width 250
+Get-Content .\inventario-evidencias.txt
+cd C:\dns-m2
+$base = ".\evidencias"
+"E1","E2","E3","E4","E5" | ForEach-Object {
+    New-Item -ItemType Directory -Path "$base\$_" -Force | Out-Null
+}
+$arquivos = @(
+    @("e3-notify.csv", "E3\e3-com-notify.csv"),
+    @("e3-sem-notify.csv", "E3\e3-sem-notify.csv"),
+    @("e4-cache-negativo.txt", "E4\e4-cache-negativo.txt"),
+    @("db.sd.lab.antes-e4", "E4\db.sd.lab.antes-e4")
+)
+foreach ($arquivo in $arquivos) {
+    $origem = Join-Path $base $arquivo[0]
+    $destino = Join-Path $base $arquivo[1]
+
+    if ((Test-Path $origem) -and !(Test-Path $destino)) {
+        Copy-Item $origem $destino
+    }
+}
+$carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+Start-Transcript -Path ".\evidencias\E1\e1-validacao-$carimbo.txt"
+docker compose ps -a
+foreach ($s in 11,12,13) {
+    Write-Host "=== Servidor NS$s ==="
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +short
+}
+docker exec ns1 named -v
+docker compose config |
+    Out-File ".\evidencias\E1\e1-compose-$carimbo.txt" -Encoding utf8
+Stop-Transcript
+cd C:\dns-m2
+$carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+$pasta = ".\evidencias\E1"
+docker logs ns2 2>&1 |
+    Out-File "$pasta\e1-historico-ns2-$carimbo.txt" -Encoding utf8
+docker logs ns3 2>&1 |
+    Out-File "$pasta\e1-historico-ns3-$carimbo.txt" -Encoding utf8
+Select-String -Path "$pasta\e1-historico-ns*-$carimbo.txt" `
+    -Pattern "Transfer started|transferred serial|Transfer status|Transfer completed"
+$diagrama = @'
+flowchart TB
+    C["Cliente - 172.31.0.100"]
+    R["Resolvedor - 172.31.0.53"]
+
+    NS1["NS1 - Primario"]
+    NS2["NS2 - Secundario"]
+    NS3["NS3 - Secundario"]
+
+    C -->|Consulta DNS| R
+    R -->|Consulta| NS1
+    R -->|Consulta| NS2
+    R -->|Consulta| NS3
+
+    NS1 -->|NOTIFY / Transferencia| NS2
+    NS1 -->|NOTIFY / Transferencia| NS3
+'@
+Set-Content -Path ".\evidencias\E1\e1-topologia.mmd" -Value $diagrama -Encoding UTF8
+Get-ChildItem .\evidencias\E1 |
+    Select-Object Name, Length
+cd C:\dns-m2
+$carimbo = Get-Date -Format "yyyyMMdd-HHmmss"
+$pastaBackup = ".\evidencias\backup-sessao-$carimbo"
+New-Item -ItemType Directory -Path $pastaBackup -Force | Out-Null
+# Histórico dos comandos da sessão atual

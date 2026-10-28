@@ -1,0 +1,7 @@
+﻿EXPERIMENTO E6 - PARTICAO DE REDE
+Previsao registrada antes da execucao:
+NS1 e NS2 permanecerao sincronizados.
+NS3 continuara acessivel pela rede de clientes.
+NS3 nao recebera a nova versao da zona enquanto estiver isolado.
+Apos o expire, espera-se que NS3 deixe de servir a zona.
+A analise verificara disponibilidade e consistencia durante a particao.

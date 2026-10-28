@@ -1,0 +1,8 @@
+# Artefatos do teste e backups temporarios
+*.log
+*.tmp
+*.bak
+*.csv
+!evidencias/README.md
+# Nao publicar chaves privadas DNSSEC caso sejam exportadas do volume.
+K*.private

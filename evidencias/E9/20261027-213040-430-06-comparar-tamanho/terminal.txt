@@ -1,0 +1,25 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261027213040
+Nome de Usuário: ESCOBAR\berna
+Executar como Usuário: ESCOBAR\berna
+Nome da Configuração: 
+Computador: ESCOBAR (Microsoft Windows NT 10.0.26300.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 24224
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Evidencias desta execucao: C:\Users\berna\Desktop\dns-m2-novo\evidencias\E9\20261027-213040-430-06-comparar-tamanho
+Script: C:\Users\berna\Desktop\dns-m2-novo\scripts\06-comparar-tamanho.ps1 | Experimento: E9 | Inicio: 2026-10-27T21:30:40.4305108-03:00
+Sem DNSSEC: 55 bytes; com DNSSEC: 157 bytes; diferenca: 102 bytes; aumento: 185.45 %.
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261027213040
+**********************

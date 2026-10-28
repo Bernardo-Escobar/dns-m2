@@ -1,0 +1,6 @@
+﻿NAME         IMAGE               COMMAND                  SERVICE      CREATED         STATUS         PORTS
+cliente      m2-dns-bind-local   "sleep infinity"         cliente      3 minutes ago   Up 3 minutes   53/tcp, 53/udp
+ns1          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns1          3 minutes ago   Up 3 minutes   53/tcp, 53/udp
+ns2          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns2          3 minutes ago   Up 3 minutes   53/tcp, 53/udp
+ns3          m2-dns-bind-local   "named -g -u named -ÔÇª"   ns3          3 minutes ago   Up 3 minutes   53/tcp, 53/udp
+resolvedor   m2-dns-bind-local   "named -g -u named -ÔÇª"   resolvedor   3 minutes ago   Up 3 minutes   53/tcp, 53/udp

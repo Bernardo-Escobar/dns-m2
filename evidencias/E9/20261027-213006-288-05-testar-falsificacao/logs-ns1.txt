@@ -1,0 +1,8 @@
+﻿docker.exe : 28-Oct-2026 00:30:06.383 client @0x7fb37388a3f0 172.30.0.12#39935 (sd.lab): transfer of 'sd.lab/IN': AXFR started (serial 2026102315)
+No C:\Users\berna\Desktop\dns-m2-novo\scripts\_registrar-evidencias.ps1:55 caractere:21
++                     & docker logs --since $desde $servico 2>&1
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (28-Oct-2026 00:...ial 2026102315):String)     [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+28-Oct-2026 00:30:06.383 client @0x7fb37388a3f0 172.30.0.12#39935 (sd.lab): transfer of 'sd.lab/IN': AXFR ended: 1 messages, 29 records, 1873 bytes, 0.001 secs (1873000 bytes/sec) (serial 2026102315)

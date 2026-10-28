@@ -1,0 +1,38 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261023202951
+Nome de Usuário: Bortoloci\Gabriel Bortoloci
+Executar como Usuário: Bortoloci\Gabriel Bortoloci
+Nome da Configuração: 
+Computador: BORTOLOCI (Microsoft Windows NT 10.0.26200.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 101592
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcrição iniciada, o arquivo de saída é .\evidencias\e5-falha-maioria.txt
+PS C:\dns-m2> docker stop ns1 ns2
+
+PS C:\dns-m2> docker compose ps -a
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +noall +comments +answer
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer +time=2 +tries=1
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse +noall +comments +answer +time=3 +tries=1
+
+PS C:\dns-m2> docker exec resolvedor dig "@172.31.0.13" app.sd.lab A +time=3 +tries=1
+
+PS C:\dns-m2> docker exec cliente dig "@172.31.0.53" app.sd.lab A +noall +comments +answer +time=10 +tries=1
+
+PS C:\dns-m2> Stop-Transcript
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261023203356
+**********************

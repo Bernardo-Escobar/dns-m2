@@ -1,0 +1,144 @@
+﻿name: dns-m2
+services:
+  cliente:
+    container_name: cliente
+    command:
+      - sleep
+      - infinity
+    image: m2-dns-bind-local
+    mem_limit: "33554432"
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.100
+    build:
+      context: C:\dns-m2
+      dockerfile: Dockerfile
+    depends_on:
+      resolvedor:
+        condition: service_started
+        required: true
+  ns1:
+    restart: 'no'
+    container_name: ns1
+    image: m2-dns-bind-local
+    mem_limit: "134217728"
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.11
+      interna:
+        ipv4_address: 172.30.0.11
+    volumes:
+      - type: bind
+        source: C:\dns-m2\configs\ns1\named.conf
+        target: /etc/bind/named.conf
+        read_only: true
+        bind: {}
+      - type: bind
+        source: C:\dns-m2\zones\db.sd.lab
+        target: /var/lib/bind/db.sd.lab
+        read_only: true
+        bind: {}
+      - type: volume
+        source: ns1_keys
+        target: /var/lib/bind/keys
+        volume: {}
+    build:
+      context: C:\dns-m2
+      dockerfile: Dockerfile
+  ns2:
+    restart: 'no'
+    container_name: ns2
+    image: m2-dns-bind-local
+    mem_limit: "134217728"
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.12
+      interna:
+        ipv4_address: 172.30.0.12
+    volumes:
+      - type: bind
+        source: C:\dns-m2\configs\ns2\named.conf
+        target: /etc/bind/named.conf
+        read_only: true
+        bind: {}
+    build:
+      context: C:\dns-m2
+      dockerfile: Dockerfile
+    depends_on:
+      ns1:
+        condition: service_started
+        required: true
+  ns3:
+    restart: 'no'
+    container_name: ns3
+    image: m2-dns-bind-local
+    mem_limit: "134217728"
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.13
+      interna:
+        ipv4_address: 172.30.0.13
+    volumes:
+      - type: bind
+        source: C:\dns-m2\configs\ns3\named.conf
+        target: /etc/bind/named.conf
+        read_only: true
+        bind: {}
+    build:
+      context: C:\dns-m2
+      dockerfile: Dockerfile
+    depends_on:
+      ns1:
+        condition: service_started
+        required: true
+  resolvedor:
+    restart: 'no'
+    container_name: resolvedor
+    image: m2-dns-bind-local
+    mem_limit: "134217728"
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.53
+    volumes:
+      - type: bind
+        source: C:\dns-m2\configs\resolvedor\named.conf
+        target: /etc/bind/named.conf
+        read_only: true
+        bind: {}
+      - type: bind
+        source: C:\dns-m2\configs\resolvedor\trust-anchors.conf
+        target: /etc/bind/trust-anchors.conf
+        read_only: true
+        bind: {}
+    build:
+      context: C:\dns-m2
+      dockerfile: Dockerfile
+    depends_on:
+      ns1:
+        condition: service_started
+        required: true
+      ns2:
+        condition: service_started
+        required: true
+      ns3:
+        condition: service_started
+        required: true
+networks:
+  clientes:
+    name: m2_dns_clientes
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24
+  interna:
+    name: m2_dns_interna
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+volumes:
+  ns1_keys:
+    name: dns-m2_ns1_keys
+x-servidor-bind:
+  build: .
+  image: m2-dns-bind-local
+  mem_limit: 128m
+  restart: 'no'

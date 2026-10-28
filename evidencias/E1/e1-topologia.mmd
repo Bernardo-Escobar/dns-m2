@@ -1,0 +1,15 @@
+﻿flowchart TB
+    C["Cliente - 172.31.0.100"]
+    R["Resolvedor - 172.31.0.53"]
+
+    NS1["NS1 - Primario"]
+    NS2["NS2 - Secundario"]
+    NS3["NS3 - Secundario"]
+
+    C -->|Consulta DNS| R
+    R -->|Consulta| NS1
+    R -->|Consulta| NS2
+    R -->|Consulta| NS3
+
+    NS1 -->|NOTIFY / Transferencia| NS2
+    NS1 -->|NOTIFY / Transferencia| NS3

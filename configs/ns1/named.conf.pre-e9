@@ -1,0 +1,18 @@
+// NS1: autoritativo primario, sem DNSSEC (E1-E8).
+include "/etc/bind/rndc.key";
+controls { inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; }; };
+options {
+    directory "/var/lib/bind";
+    recursion no;
+    listen-on port 53 { any; };
+    listen-on-v6 { none; };
+    allow-query { any; };
+    allow-transfer { 172.30.0.12; 172.30.0.13; };
+    notify yes;
+    also-notify { 172.30.0.12; 172.30.0.13; };
+};
+zone "sd.lab" IN {
+    type primary;
+    file "/var/lib/bind/db.sd.lab";
+
+};

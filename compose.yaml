@@ -1,0 +1,99 @@
+# NAO ha portas publicadas no computador hospedeiro.
+# Rede interna: transferencia de zona. Rede clientes: consultas.
+x-servidor-bind: &servidor-bind
+  build: .
+  image: m2-dns-bind-local
+  mem_limit: 128m
+  restart: 'no'
+
+services:
+  ns1:
+    <<: *servidor-bind
+    container_name: ns1
+    volumes:
+      - ./configs/ns1/named.conf:/etc/bind/named.conf:ro
+      - ./zones/db.sd.lab:/var/lib/bind/db.sd.lab:ro
+      - ns1_keys:/var/lib/bind/keys
+    networks:
+      interna:
+        ipv4_address: 172.30.0.11
+      clientes:
+        ipv4_address: 172.31.0.11
+
+  ns2:
+    <<: *servidor-bind
+    container_name: ns2
+    volumes:
+      - ./configs/ns2/named.conf:/etc/bind/named.conf:ro
+    networks:
+      interna:
+        ipv4_address: 172.30.0.12
+      clientes:
+        ipv4_address: 172.31.0.12
+    depends_on:
+      - ns1
+
+  ns3:
+    <<: *servidor-bind
+    container_name: ns3
+    volumes:
+      - ./configs/ns3/named.conf:/etc/bind/named.conf:ro
+    networks:
+      interna:
+        ipv4_address: 172.30.0.13
+      clientes:
+        ipv4_address: 172.31.0.13
+    depends_on:
+      - ns1
+
+  resolvedor:
+    <<: *servidor-bind
+    container_name: resolvedor
+    volumes:
+      - ./configs/resolvedor/named.conf:/etc/bind/named.conf:ro
+      - ./configs/resolvedor/trust-anchors.conf:/etc/bind/trust-anchors.conf:ro
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.53
+    depends_on:
+      - ns1
+      - ns2
+      - ns3
+
+  cliente:
+    image: m2-dns-bind-local
+    build: .
+    container_name: cliente
+    mem_limit: 32m
+    command: ["sleep", "infinity"]
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.100
+    depends_on:
+      - resolvedor
+
+  atacante:
+    <<: *servidor-bind
+    profiles: ["seguranca"]
+    container_name: atacante
+    volumes:
+      - ./configs/atacante/named.conf:/etc/bind/named.conf:ro
+      - ./zones/db.sd.lab.adulterado:/etc/bind/db.sd.lab.adulterado:ro
+    networks:
+      clientes:
+        ipv4_address: 172.31.0.66
+
+volumes:
+  ns1_keys:
+
+networks:
+  interna:
+    name: m2_dns_interna
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  clientes:
+    name: m2_dns_clientes
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24

@@ -1,0 +1,8 @@
+; arquivo provisório; script 05 substitui pelo AXFR assinado adulterado
+; Zona falsa NAO assinada usada apenas no teste E9.
+$TTL 60
+@   IN SOA ns3.sd.lab. admin.sd.lab. (
+        2026102302 30 10 300 20 )
+    IN NS ns3.sd.lab.
+ns3 IN A 172.31.0.66
+app IN A 10.66.66.66

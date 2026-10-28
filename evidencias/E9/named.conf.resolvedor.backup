@@ -1,0 +1,18 @@
+// Resolvedor validador DNSSEC, com ancora de confianca local em sd.lab.
+include "/etc/bind/rndc.key";
+include "/etc/bind/trust-anchors.conf";
+controls { inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; }; };
+options {
+    directory "/var/lib/bind";
+    recursion yes;
+    listen-on port 53 { any; };
+    listen-on-v6 { none; };
+    allow-query { 172.31.0.0/24; localhost; };
+    allow-recursion { 172.31.0.0/24; localhost; };
+    dnssec-validation yes;
+};
+zone "sd.lab" IN {
+    type forward;
+    forward only;
+    forwarders { 172.31.0.11; 172.31.0.12; 172.31.0.13; };
+};

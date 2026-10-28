@@ -1,0 +1,12 @@
+﻿{
+    "script":  "08-experimentos-e1-e8",
+    "experimento":  "E3",
+    "inicio":  "2026-10-27T21:25:39.4361370-03:00",
+    "parametros":  {
+                       "Experimento":  "E3",
+                       "ConfirmarAlteracoes":  {
+                                                   "IsPresent":  true
+                                               },
+                       "Repeticoes":  5
+                   }
+}

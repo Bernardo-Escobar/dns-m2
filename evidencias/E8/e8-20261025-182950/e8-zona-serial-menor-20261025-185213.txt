@@ -1,0 +1,15 @@
+$TTL 60
+@   IN SOA ns1.sd.lab. admin.sd.lab. (
+        2026102322 ; serial (AAAAMMDDnn; aumentar a cada mudanca)
+        30         ; refresh
+        10         ; retry
+        300        ; expire
+        20 )       ; cache negativo
+    IN NS ns1.sd.lab.
+    IN NS ns2.sd.lab.
+    IN NS ns3.sd.lab.
+ns1 IN A 172.31.0.11
+ns2 IN A 172.31.0.12
+ns3 IN A 172.31.0.13
+app IN A 10.0.0.3
+novo IN A 10.0.0.50

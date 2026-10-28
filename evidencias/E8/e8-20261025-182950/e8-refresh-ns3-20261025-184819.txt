@@ -1,0 +1,33 @@
+﻿docker : 2026-10-25T21:48:27.252033568Z 25-Oct-2026 21:48:27.246 received control channel command 
+'refresh sd.lab'
+No linha:1 caractere:1
++ docker logs --since "$desde" --timestamps ns3 2>&1 |
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T21:4...refresh sd.lab':String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T21:48:27.252522818Z 25-Oct-2026 21:48:27.246 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:37.250615455Z 25-Oct-2026 21:48:37.247 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:46.251536091Z 25-Oct-2026 21:48:46.248 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:48:55.253945044Z 25-Oct-2026 21:48:55.249 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:05.257082351Z 25-Oct-2026 21:49:05.253 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:15.257459930Z 25-Oct-2026 21:49:15.254 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:24.260929163Z 25-Oct-2026 21:49:24.255 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:33.257518948Z 25-Oct-2026 21:49:33.255 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:43.261958748Z 25-Oct-2026 21:49:43.256 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)
+2026-10-25T21:49:50.591497948Z 25-Oct-2026 21:49:50.585 client @0x74bbc36d3220 172.31.0.100#51159 
+(sd.lab): query: sd.lab IN SOA -E(0)K (172.31.0.13)
+2026-10-25T21:49:50.723663734Z 25-Oct-2026 21:49:50.717 client @0x74bbc36b7360 172.31.0.100#49347 
+(app.sd.lab): query: app.sd.lab IN A -E(0)K (172.31.0.13)
+2026-10-25T21:49:53.261989935Z 25-Oct-2026 21:49:53.257 zone sd.lab/IN: serial number (2026102322) 
+received from primary 172.30.0.11#53 < ours (2026102323)

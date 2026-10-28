@@ -1,0 +1,2 @@
+﻿Configuracoes restauradas; serial da zona incrementado para preservar monotonicidade.
+ns1: 2026102312

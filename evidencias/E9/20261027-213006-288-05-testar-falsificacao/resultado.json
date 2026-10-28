@@ -1,0 +1,9 @@
+﻿{
+    "script":  "05-testar-falsificacao",
+    "experimento":  "E9",
+    "status":  "SUCESSO",
+    "inicio":  "2026-10-27T21:30:06.2881231-03:00",
+    "fim":  "2026-10-27T21:30:13.8479148-03:00",
+    "duracao_segundos":  7.56,
+    "erro":  null
+}

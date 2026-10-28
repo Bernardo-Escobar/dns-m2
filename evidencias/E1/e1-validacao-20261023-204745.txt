@@ -1,0 +1,40 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261023204745
+Nome de Usuário: Bortoloci\Gabriel Bortoloci
+Executar como Usuário: Bortoloci\Gabriel Bortoloci
+Nome da Configuração: 
+Computador: BORTOLOCI (Microsoft Windows NT 10.0.26200.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 101592
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcrição iniciada, o arquivo de saída é .\evidencias\E1\e1-validacao-20261023-204745.txt
+PS C:\dns-m2> docker compose ps -a
+
+PS C:\dns-m2> foreach ($s in 11,12,13) {
+    Write-Host "=== Servidor NS$s ==="
+    docker exec cliente dig "@172.31.0.$s" sd.lab SOA +short
+}
+=== Servidor NS11 ===
+
+=== Servidor NS12 ===
+
+=== Servidor NS13 ===
+
+PS C:\dns-m2> docker exec ns1 named -v
+
+PS C:\dns-m2> docker compose config |
+    Out-File ".\evidencias\E1\e1-compose-$carimbo.txt" -Encoding utf8
+PS C:\dns-m2> Stop-Transcript
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261023204751
+**********************

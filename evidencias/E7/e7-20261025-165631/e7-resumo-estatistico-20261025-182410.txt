@@ -1,0 +1,34 @@
+﻿E7 - RECUPERACAO E REINTEGRACAO
+Data: 2026-10-25T18:24:11.4033319-03:00
+
+METODOLOGIA
+Particao curta do NS3, alteracao da zona no NS1,
+reconexao do NS3 e NOTIFY explicito pelo primario.
+Tempo medido ate a primeira consulta que confirmou
+o mesmo serial SOA no NS3 e no NS1.
+
+RESULTADOS
+Rodada 03: 1.536 segundos
+Rodada 04: 0.374 segundos
+Rodada 05: 1.541 segundos
+Rodada 06: 1.671 segundos
+Rodada 07: 0.377 segundos
+
+ESTATISTICAS
+Quantidade de amostras: 5
+Media: 1.0998 segundos
+Desvio-padrao amostral: 0.6634 segundos
+Minimo: 0.374 segundos
+Maximo: 1.671 segundos
+
+OBSERVACOES
+As rodadas 01 e 02 foram analisadas separadamente.
+Essas rodadas apresentaram recuperacao tardia e
+condicoes diferentes das cinco medicoes controladas.
+
+O tempo observado inclui reconexao, envio de NOTIFY
+e verificacao do serial SOA via PowerShell.
+Nao representa exclusivamente o tempo de AXFR.
+
+As evidencias originais foram preservadas nas
+pastas individuais das rodadas.

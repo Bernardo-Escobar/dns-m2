@@ -1,0 +1,4 @@
+trust-anchors {
+    sd.lab. static-key 257 3 13
+        "lIa8Dtgk5o5l9IpAHrC4fI9cyJi9wYRMA2Nhfr4UNvxC4SJ60LiY0IEPdg84SP/qoiojeBryUyf/Ei0TEr8z0Q==";
+};

@@ -1,0 +1,36 @@
+﻿**********************
+Início da transcrição do Windows PowerShell
+Hora de início: 20261027212956
+Nome de Usuário: ESCOBAR\berna
+Executar como Usuário: ESCOBAR\berna
+Nome da Configuração: 
+Computador: ESCOBAR (Microsoft Windows NT 10.0.26300.0)
+Aplicativo Host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ID do Processo: 24224
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Evidencias desta execucao: C:\Users\berna\Desktop\dns-m2-novo\evidencias\E9\20261027-212956-549-ativar-dnssec
+Script: C:\Users\berna\Desktop\dns-m2-novo\ativar-dnssec.ps1 | Experimento: E9 | Inicio: 2026-10-27T21:29:56.5492754-03:00
+
+1/4 Ativando assinatura DNSSEC no ns1...
+
+ns1
+2/4 Aguardando DNSKEY publicada pelo ns1 (ate 120 s)...
+3/4 Configurando a ancora publica e ativando a validacao...
+
+resolvedor
+4/4 Testando resposta autenticada (ate 60 s)...
+DNSSEC ativo e validacao confirmada (NOERROR + ad + RRSIG).
+A chave publica esta em configs/resolvedor/trust-anchors.conf; a privada permanece no volume ns1_keys.
+Para consultar: docker exec cliente dig "@172.31.0.53" app.sd.lab A +dnssec
+**********************
+Fim da transcrição do Windows PowerShell
+Hora de término: 20261027213001
+**********************

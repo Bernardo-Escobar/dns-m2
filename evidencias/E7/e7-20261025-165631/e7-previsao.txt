@@ -1,0 +1,6 @@
+﻿E7 - RECUPERACAO
+Previsao registrada antes das medicoes:
+NS3 recuperara a comunicacao com NS1 ao ser reconectado.
+NS3 devera transferir a versao mais recente da zona.
+O serial SOA devera convergir para o mesmo valor de NS1 e NS2.
+A recuperacao sera medida em cinco repeticoes.

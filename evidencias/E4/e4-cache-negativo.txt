@@ -1,0 +1,53 @@
+﻿=== EXPERIMENTO E4 - CACHE NEGATIVO ===
+Iniciado em: 2026-10-23 20:24:37.950
+1) Limpando a entrada negativa no cache do resolvedor...
+2) Consultando novo.sd.lab ANTES de criar (esperado: NXDOMAIN)...
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 18016
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 31104d222361aeff010000006adbecb663e267131b427222 (good)
+;; AUTHORITY SECTION:
+sd.lab.			20	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102313 30 10 300 20
+
+3) Novo registro adicionado no primario: novo.sd.lab -> 10.0.0.50, serial 2026102313 -> 2026102314
+4) Resposta direta do primario (esperado: 10.0.0.50):
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 57330
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 74f240e6b1d8e9f5010000006adbecb7a4339d5cd4015ab2 (good)
+;; ANSWER SECTION:
+novo.sd.lab.		60	IN	A	10.0.0.50
+
+5) Resposta imediata do resolvedor (esperado: NXDOMAIN enquanto TTL negativo estiver ativo):
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 13819
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 55a9a906aab64f44010000006adbecb7abaef9e995e13da3 (good)
+;; AUTHORITY SECTION:
+sd.lab.			19	IN	SOA	ns1.sd.lab. admin.sd.lab. 2026102313 30 10 300 20
+
+RESULTADO: o resolvedor continuou respondendo NXDOMAIN mesmo com o registro criado no NS1.
+6) Consultando o resolvedor a cada 2 segundos ate obter o registro novo...
+Resolvedor atualizado apos cerca de 20.7 s desde o reload:
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 47715
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 0b5766f08469715f010000006adbeccb1b30a0219453bca6 (good)
+;; ANSWER SECTION:
+novo.sd.lab.		60	IN	A	10.0.0.50
+
+Evidencia: C:\dns-m2\evidencias\e4-cache-negativo.txt
+Backup anterior a alteracao: C:\dns-m2\evidencias\db.sd.lab.antes-e4

@@ -1,0 +1,30 @@
+﻿docker : 2026-10-25T21:16:59.570008273Z 25-Oct-2026 21:16:59.565 received control channel command 
+'reload sd.lab'
+No linha:1 caractere:1
++ docker logs --since 10m --timestamps ns1 2>&1 |
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-10-25T21:1...'reload sd.lab':String) [], RemoteExc 
+   eption
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-10-25T21:16:59.574806101Z 25-Oct-2026 21:16:59.569 zone sd.lab/IN: loaded serial 2026102322
+2026-10-25T21:16:59.575104126Z 25-Oct-2026 21:16:59.569 zone sd.lab/IN: sending notifies (serial 
+2026102322)
+2026-10-25T21:16:59.579091823Z 25-Oct-2026 21:16:59.573 client @0x700dcfbf32f0 172.30.0.12#45185 
+(sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+2026-10-25T21:16:59.579304115Z 25-Oct-2026 21:16:59.573 client @0x700dcfbf32f0 172.30.0.12#45185 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102322)
+2026-10-25T21:16:59.580390910Z 25-Oct-2026 21:16:59.577 client @0x700dcfbf32f0 172.30.0.12#45185 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.004 
+secs (61250 bytes/sec) (serial 2026102322)
+2026-10-25T21:17:05.390500834Z 25-Oct-2026 21:17:05.385 received control channel command 'notify 
+sd.lab'
+2026-10-25T21:17:05.390702424Z 25-Oct-2026 21:17:05.385 zone sd.lab/IN: sending notifies (serial 
+2026102322)
+2026-10-25T21:17:05.894111058Z 25-Oct-2026 21:17:05.889 client @0x700dcfbf3300 172.30.0.13#42701 
+(sd.lab): transfer of 'sd.lab/IN': IXFR version not in journal, falling back to AXFR
+2026-10-25T21:17:05.894136127Z 25-Oct-2026 21:17:05.889 client @0x700dcfbf3300 172.30.0.13#42701 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR started (serial 2026102322)
+2026-10-25T21:17:05.895318708Z 25-Oct-2026 21:17:05.889 client @0x700dcfbf3300 172.30.0.13#42701 
+(sd.lab): transfer of 'sd.lab/IN': AXFR-style IXFR ended: 1 messages, 10 records, 245 bytes, 0.001 
+secs (245000 bytes/sec) (serial 2026102322)
