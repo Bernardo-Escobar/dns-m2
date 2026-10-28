@@ -114,16 +114,6 @@ Os testes que alteram o ambiente exigem `-ConfirmarAlteracoes`. Os procedimentos
 - **E7:** verificar uma versão antiga antes da reconexão e a convergência ao serial esperado depois. Repetir ao menos cinco vezes e declarar se a recuperação foi natural, por NOTIFY ou induzida por `rndc refresh`.
 - **E8:** mostrar o primário estático, o serial inferior não adotado pelos secundários e a restauração com versão adequada. Discutir teoricamente dois primários sem coordenação; não é necessário implementar esse cenário para a discussão.
 
-### Limitações atuais das medições automatizadas
-
-A documentação consolidada não altera os scripts. Na versão analisada de `08-experimentos-e1-e8.ps1`:
-
-- **E3:** o cronômetro começa depois da chamada que solicita o reload; a duração dessa chamada fica fora da medição.
-- **E4:** a sondagem do cache positivo começa após aguardar os secundários. Portanto, o tempo registrado não representa toda a janela desde a publicação.
-- **E7:** existe um cronômetro iniciado antes da reconexão, mas o tempo gravado vem de `Esperar`, que inicia outro cronômetro após a reconexão e o refresh. O término é detectado pelo IP, e os seriais são coletados depois.
-
-Antes de usar esses tempos como medidas completas, ajuste a instrumentação ou faça uma medição manual controlada. Para E7, use um único cronômetro desde a reconexão até a primeira consulta que confirme o serial esperado. Não misture séries obtidas com marcos temporais ou métodos diferentes.
-
 ### Alteração manual de um registro
 
 Com DNSSEC desabilitado, edite `zones/db.sd.lab`, altere o registro e incremente o serial SOA. Depois valide e recarregue:
@@ -218,8 +208,6 @@ Os experimentos também geram arquivos próprios. No E1–E8, ficam em uma segun
 
 `SUCESSO` em `resultado.json` significa que o script terminou sem erro detectado pelo coletor; não certifica todos os critérios do experimento. A transcrição pode omitir saídas de programas externos; combine-a com capturas, logs e CSVs. O arquivo `previsao-preencher.txt` é apenas um lembrete: registre a previsão real antes de executar.
 
-Use no relatório os dados da mesma série identificada. Preserve tentativas com erro e explique mudanças de método ou exclusões. Informe as versões efetivamente usadas e calcule média e desvio-padrão amostral das séries com pelo menos cinco rodadas.
-
 ## 7. Recuperação e limpeza
 
 ### Restaurar um teste E9 interrompido
@@ -299,10 +287,6 @@ docker exec cliente dig "@172.31.0.13" app.sd.lab A +norecurse
 ## 9. Organização para entrega
 
 O repositório deve conter `compose.yaml`, `Dockerfile`, `configs/`, `zones/`, `scripts/`, `ativar-dnssec.ps1`, este README e as evidências selecionadas. No `.gitignore`, remova a regra genérica `*.csv` se ela impedir o versionamento das medições; mantenha `K*.private` para não publicar chaves privadas exportadas.
-
-O relatório deve incluir ambiente e URL do repositório, fundamentação, diagramas, E1–E9, Q1–Q14, S1–S4, quadro-síntese, limitações, participação dos integrantes, uso de IA e sua verificação, além das referências. Para cada experimento, relacione previsão, procedimento, evidências, resultado e teoria.
-
-O roteiro orienta 15–25 páginas sem anexos e apresentação de 10 minutos com 5 minutos de arguição, com participação de todos. Há divergência no material sobre vídeos e demonstração ao vivo; alinhe o formato com o professor. A data indicada no roteiro fornecido é 28/11/2026.
 
 ## 10. Fontes
 
